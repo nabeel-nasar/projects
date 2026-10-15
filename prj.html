@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department of Mechanical Engineering - Student Project Showcase</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            navy: {
+              800: '#1e3a8a',
+              900: '#1e40af',
+              950: '#172554',
+            },
+            skyblue: {
+              400: '#38bdf8',
+              500: '#3b82f6',
+              600: '#2563eb',
+            },
+            warmorange: {
+              100: '#ffedd5',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: linear-gradient(to bottom, rgba(248, 250, 252, 0.92), rgba(248, 250, 252, 0.95)), url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #0f172a;
+    }
+    .card-white {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .card-highlight {
+      border: 1px solid #ffedd5;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 237, 0.95) 100%);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <!-- Header / Navigation -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3.5">
+        <div class="w-12 h-12 rounded-xl overflow-hidden shadow-md shadow-blue-500/20 bg-gradient-to-tr from-navy-900 to-sky-500 p-0.5 flex items-center justify-center">
+          <img src="icon1.png" alt="Department Logo" class="w-full h-full object-cover rounded-lg" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';">
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-warmorange-600">Department of Mechanical Engineering</span>
+          <h1 class="text-lg font-bold text-slate-900 leading-none tracking-tight mt-0.5">Engineering Course Projects Showcase</h1>
+          <p class="text-xs text-navy-900 font-medium mt-0.5">Student Innovations, Prototypes & Lab Deliverables</p>
+        </div>
+      </div>
+      
+      <!-- Desktop Course Tabs -->
+      <div class="hidden lg:flex space-x-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200">
+        <button onclick="switchCourse('mce226')" id="tab-btn-mce226" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all">
+          <i class="fa-solid fa-robot mr-1.5 text-warmorange-500"></i>MCE226L Robotics
+        </button>
+        <button onclick="switchCourse('ece310')" id="tab-btn-ece310" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all">
+          <i class="fa-solid fa-microchip mr-1.5 text-sky-500"></i>ECE310 Embedded Systems
+        </button>
+        <button onclick="switchCourse('mce440')" id="tab-btn-mce440" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all">
+          <i class="fa-solid fa-brain mr-1.5 text-emerald-500"></i>MCE440 AI & Control
+        </button>
+        <button onclick="switchCourse('capstone')" id="tab-btn-capstone" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all">
+          <i class="fa-solid fa-trophy mr-1.5 text-amber-500"></i>Senior Capstone
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden">
+        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 text-slate-600 hover:text-navy-900 focus:outline-none">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 space-y-2">
+      <button onclick="switchCourse('mce226'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-white bg-navy-900">
+        <i class="fa-solid fa-robot mr-2 text-warmorange-500"></i>MCE226L Robotics
+      </button>
+      <button onclick="switchCourse('ece310'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-100">
+        <i class="fa-solid fa-microchip mr-2 text-sky-500"></i>ECE310 Embedded Systems
+      </button>
+      <button onclick="switchCourse('mce440'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-100">
+        <i class="fa-solid fa-brain mr-2 text-emerald-500"></i>MCE440 AI & Control
+      </button>
+      <button onclick="switchCourse('capstone'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-100">
+        <i class="fa-solid fa-trophy mr-2 text-amber-500"></i>Senior Capstone
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Global Banner -->
+    <div class="card-highlight rounded-2xl p-6 shadow-sm mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <span id="course-code-badge" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-warmorange-100 text-warmorange-600 border border-warmorange-300 uppercase tracking-wide">
+            Course Overview
+          </span>
+          <h2 id="course-title" class="text-2xl font-bold text-slate-900 mt-2">MCE226L: Mobile Robotics & Autonomous Systems</h2>
+          <p id="course-desc" class="text-slate-600 text-sm mt-1 leading-relaxed">
+            Hands-on design of autonomous mobile robots featuring obstacle avoidance, IMU-based orientation tracking, and line navigation using Arduino microcontrollers.
+          </p>
+        </div>
+        <div class="hidden md:block text-right">
+          <span class="text-xs font-semibold text-slate-500 block">Total Projects Showcase</span>
+          <span id="project-count" class="text-2xl font-extrabold text-navy-900">3 Featured Projects</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COURSE 1: MCE226L ROBOTICS PROJECTS -->
+    <div id="view-mce226" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Project Card 1 -->
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-robot text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-navy-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Smart Robot V4</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">Autonomous Line-Following Robot</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Integrated IR line-tracking modules with closed-loop PID control and software motor direction flipping.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Arduino Uno</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">IR Sensors</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">PWM Control</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Team Alpha</span>
+          <button onclick="openProjectDetails('Smart Robot V4', 'Fully autonomous robot capable of following high-contrast tracks with 98% accuracy using infrared sensor arrays.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Project Card 2 -->
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-radar text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-navy-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Sonar Avoidance</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">Ultrasonic Obstacle Navigation</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Real-time sonar distance sampling with non-blocking 30ms pulse timeout logic to prevent software freezing.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">HC-SR04</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Servo Motor</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">C++</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Team Beta</span>
+          <button onclick="openProjectDetails('Ultrasonic Navigation', 'Features dynamic scanning head mounted on a servo motor to map 180-degree escape routes.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Project Card 3 -->
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-compass text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-navy-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">6-Axis IMU</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">MPU6050 Gyro Orientation Stabilization</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              I2C bus sensor integration providing angular velocity and acceleration metrics to maintain straight trajectory.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">MPU6050</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">I2C Protocol</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Kalman Filter</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Team Gamma</span>
+          <button onclick="openProjectDetails('MPU6050 Stabilizer', 'Uses I2C sensor fusion to detect drift and compensate motor drive outputs in real time.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COURSE 2: ECE310 EMBEDDED SYSTEMS -->
+    <div id="view-ece310" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-microchip text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">STM32 ARM</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">RTOS Task Scheduler & CAN Gateway</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Real-time operating system kernel setup with FreeRTOS to manage high-priority CAN bus telemetry logs.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">FreeRTOS</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">CAN Bus</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">C Language</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Lab Group 1</span>
+          <button onclick="openProjectDetails('FreeRTOS Scheduler', 'Deterministically schedules CAN frame transmission with minimal jitter.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COURSE 3: MCE440 AI & CONTROL -->
+    <div id="view-mce440" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-brain text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Edge AI</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">Neural Network Predictive Thermal Control</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Embedded machine learning model deployed on microcontrollers for adaptive heat dissipation management.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">TensorFlow Lite</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Python</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">PID Tuning</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Control Group A</span>
+          <button onclick="openProjectDetails('Edge AI Control', 'Reduces power consumption by 24% compared to classical PID controllers.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COURSE 4: SENIOR CAPSTONE -->
+    <div id="view-capstone" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
+            <i class="fa-solid fa-plane text-6xl text-slate-600"></i>
+            <span class="absolute top-3 right-3 bg-amber-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Capstone Gold</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-base text-slate-900">Autonomous Pipeline Inspection Drone</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Custom quadcopter platform with computer vision inspection payload and onboard ultrasonic thickness gauge.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">ROS2</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">OpenCV</span>
+              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">CAD / FEA</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500 font-medium">Capstone Team 04</span>
+          <button onclick="openProjectDetails('Pipeline Inspection Drone', 'Winner of the 2026 Engineering Design Showcase Award.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
+            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Project Details Modal -->
+  <div id="project-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="card-white rounded-2xl max-w-lg w-full p-6 space-y-4 relative shadow-2xl">
+      <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 id="modal-title" class="text-lg font-bold text-slate-900">Project Title</h3>
+      <p id="modal-desc" class="text-xs text-slate-600 leading-relaxed">Project details description...</p>
+      <div class="pt-4 border-t border-slate-200 flex justify-end">
+        <button onclick="closeProjectModal()" class="px-4 py-2 bg-navy-900 text-white rounded-xl text-xs font-semibold">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING ASSISTANT BOT (PERMANENT) -->
+  <div id="floating-chat-container" class="fixed bottom-5 right-5 z-50">
+    <button id="floating-chat-btn" onclick="toggleFloatingChat()" class="w-14 h-14 bg-navy-900 hover:bg-navy-800 text-white rounded-full flex items-center justify-center shadow-xl border-2 border-white transition-all transform hover:scale-105">
+      <i id="chat-icon-open" class="fa-solid fa-robot text-xl"></i>
+      <i id="chat-icon-close" class="fa-solid fa-xmark text-xl hidden"></i>
+    </button>
+
+    <div id="floating-chat-window" class="hidden absolute bottom-16 right-0 w-[92vw] sm:w-[380px] h-[480px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+      <div class="p-3.5 bg-navy-900 text-white flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-robot text-sky-400"></i>
+          <span class="font-bold text-xs">Showcase Assistant</span>
+        </div>
+        <button onclick="toggleFloatingChat()" class="text-slate-300 hover:text-white text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="widget-chat-messages" class="flex-grow p-3 overflow-y-auto space-y-3 bg-slate-50 text-xs">
+        <div class="bg-white border border-slate-200 rounded-xl p-3 text-slate-700 shadow-sm">
+          Welcome to the Student Project Showcase! Select a course tab above or ask me about any project team or course requirement.
+        </div>
+      </div>
+
+      <form onsubmit="handleWidgetChatSubmit(event)" class="p-2 bg-white border-t border-slate-200 flex gap-1.5">
+        <input type="text" id="widget-chat-input" placeholder="Ask about projects or courses..." class="flex-grow bg-slate-100 text-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-navy-900">
+        <button type="submit" class="bg-navy-900 text-white px-3 py-2 rounded-lg text-xs font-semibold">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const COURSE_DATA = {
+      mce226: {
+        badge: "Course Overview",
+        title: "MCE226L: Mobile Robotics & Autonomous Systems",
+        desc: "Hands-on design of autonomous mobile robots featuring obstacle avoidance, IMU-based orientation tracking, and line navigation using Arduino microcontrollers.",
+        count: "3 Featured Projects"
+      },
+      ece310: {
+        badge: "Course Overview",
+        title: "ECE310: Embedded Microcontroller Systems",
+        desc: "Advanced ARM Cortex-M architecture programming, RTOS task management, hardware timers, interrupts, and serial communication protocols.",
+        count: "1 Featured Project"
+      },
+      mce440: {
+        badge: "Course Overview",
+        title: "MCE440: AI Applications in Dynamic Control",
+        desc: "Integration of edge neural networks, predictive state estimation, and classical feedback control systems for mechatronic applications.",
+        count: "1 Featured Project"
+      },
+      capstone: {
+        badge: "Senior Design",
+        title: "ME Capstone Graduation Projects",
+        desc: "Multi-disciplinary senior engineering design projects demonstrating full lifecycle prototyping, FEA stress modeling, testing, and industry deployment.",
+        count: "1 Award Winner"
+      }
+    };
+
+    function switchCourse(courseId) {
+      const courses = ['mce226', 'ece310', 'mce440', 'capstone'];
+      courses.forEach(c => {
+        document.getElementById(`view-${c}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${c}`);
+        if (btn) {
+          btn.className = 'px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all';
+        }
+      });
+
+      document.getElementById(`view-${courseId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${courseId}`);
+      if (activeBtn) {
+        activeBtn.className = 'px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all';
+      }
+
+      // Update Header Text
+      const info = COURSE_DATA[courseId];
+      if (info) {
+        document.getElementById('course-code-badge').innerText = info.badge;
+        document.getElementById('course-title').innerText = info.title;
+        document.getElementById('course-desc').innerText = info.desc;
+        document.getElementById('project-count').innerText = info.count;
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function toggleFloatingChat() {
+      document.getElementById('floating-chat-window').classList.toggle('hidden');
+      document.getElementById('chat-icon-open').classList.toggle('hidden');
+      document.getElementById('chat-icon-close').classList.toggle('hidden');
+    }
+
+    function openProjectDetails(title, desc) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-desc').innerText = desc;
+      document.getElementById('project-modal').classList.remove('hidden');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+    }
+
+    function handleWidgetChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('widget-chat-input');
+      const query = input.value.trim();
+      if (!query) return;
+
+      const win = document.getElementById('widget-chat-messages');
+      const userDiv = document.createElement('div');
+      userDiv.className = 'text-right';
+      userDiv.innerHTML = `<span class="inline-block bg-navy-900 text-white px-3 py-1.5 rounded-xl text-xs">${escapeHTML(query)}</span>`;
+      win.appendChild(userDiv);
+      input.value = '';
+
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'bg-white border border-slate-200 rounded-xl p-3 text-slate-800 text-xs shadow-sm';
+        botDiv.innerHTML = `You asked about: <strong>${escapeHTML(query)}</strong>. Switch tabs above to inspect project deliverables for each engineering course!`;
+        win.appendChild(botDiv);
+        win.scrollTop = win.scrollHeight;
+      }, 300);
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[tag] || tag));
+    }
+  </script>
+</body>
+</html>

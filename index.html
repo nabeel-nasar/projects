@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Department of Mechanical Engineering - Senior Design Showcase</title>
+  <title>Department of Mechanical Engineering - SDP Showcase</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts: Inter & JetBrains Mono -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -43,349 +43,333 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-image: linear-gradient(to bottom, rgba(248, 250, 252, 0.92), rgba(248, 250, 252, 0.95)), url('background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
+      background-color: #f8fafc;
       color: #0f172a;
     }
     .card-white {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(8px);
       border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease-in-out;
+    }
+    .card-white:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
     }
     .card-highlight {
       border: 1px solid #ffedd5;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 237, 0.95) 100%);
-      backdrop-filter: blur(8px);
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
 
   <!-- Header / Navigation -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <header class="bg-navy-950 text-white sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Title with Logo -->
       <div class="flex items-center space-x-3.5">
-        <div class="w-12 h-12 rounded-xl overflow-hidden shadow-md shadow-blue-500/20 bg-gradient-to-tr from-navy-900 to-sky-500 p-0.5 flex items-center justify-center">
-          <img src="icon1.png" alt="Department Logo" class="w-full h-full object-cover rounded-lg" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-warmorange-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-orange-500/20">
+          <div class="w-full h-full bg-navy-950 rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-gear text-warmorange-500 text-xl animate-spin-slow"></i>
+          </div>
         </div>
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-warmorange-600">Department of Mechanical Engineering</span>
-          <h1 class="text-lg font-bold text-slate-900 leading-none tracking-tight mt-0.5">Senior Design Project (SDP) Showcase</h1>
-          <p class="text-xs text-navy-900 font-medium mt-0.5">Capstone Engineering Prototypes & Innovations</p>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-warmorange-400">Department of Mechanical Engineering</span>
+          <h1 class="text-base sm:text-lg font-bold text-white leading-none tracking-tight mt-0.5">Senior Design Project (SDP) Portal</h1>
         </div>
       </div>
       
-      <!-- Desktop Semester Selection Tabs -->
-      <div class="hidden lg:flex space-x-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200">
-        <button onclick="switchSemester('spring2026')" id="tab-btn-spring2026" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all">
-          <i class="fa-solid fa-graduation-cap mr-1.5 text-warmorange-500"></i>Spring 2026
+      <!-- Admin Controls & Action Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openFacultyModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-slate-700 transition-all">
+          <i class="fa-solid fa-user-graduate text-sky-400"></i>
+          <span class="hidden sm:inline">Manage Faculty</span>
         </button>
-        <button onclick="switchSemester('fall2025')" id="tab-btn-fall2025" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all">
-          <i class="fa-solid fa-calendar-days mr-1.5 text-sky-500"></i>Fall 2025
+
+        <button onclick="openPostModal()" class="px-3.5 py-2 bg-gradient-to-r from-warmorange-500 to-warmorange-600 hover:from-warmorange-600 hover:to-warmorange-700 text-white rounded-xl text-xs font-bold shadow-md shadow-orange-600/30 flex items-center gap-1.5 transition-all transform active:scale-95">
+          <i class="fa-solid fa-plus text-sm"></i>
+          <span>Post New SDP</span>
         </button>
-        <button onclick="switchSemester('spring2025')" id="tab-btn-spring2025" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all">
-          <i class="fa-solid fa-clock-rotate-left mr-1.5 text-emerald-500"></i>Spring 2025
+
+        <button onclick="toggleDataMenu()" class="p-2 text-slate-400 hover:text-white focus:outline-none" title="Data Backup Options">
+          <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
         </button>
       </div>
 
-      <!-- Mobile Menu Button -->
-      <div class="lg:hidden">
-        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 text-slate-600 hover:text-navy-900 focus:outline-none">
-          <i class="fa-solid fa-bars text-xl"></i>
-        </button>
-      </div>
     </div>
 
-    <!-- Mobile Dropdown -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 space-y-2">
-      <button onclick="switchSemester('spring2026'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-white bg-navy-900">
-        <i class="fa-solid fa-graduation-cap mr-2 text-warmorange-500"></i>Spring 2026
-      </button>
-      <button onclick="switchSemester('fall2025'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-100">
-        <i class="fa-solid fa-calendar-days mr-2 text-sky-500"></i>Fall 2025
-      </button>
-      <button onclick="switchSemester('spring2025'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-100">
-        <i class="fa-solid fa-clock-rotate-left mr-2 text-emerald-500"></i>Spring 2025
-      </button>
+    <!-- Sub-Header Data Options Menu (Hidden by default) -->
+    <div id="data-menu" class="hidden bg-slate-900 border-b border-slate-800 px-4 py-2.5">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-database text-sky-400"></i>
+          <span>Data Management: All changes auto-save to browser storage.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportDataJSON()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-slate-200 border border-slate-700"><i class="fa-solid fa-download mr-1"></i>Export JSON</button>
+          <label class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded text-slate-200 border border-slate-700 cursor-pointer">
+            <i class="fa-solid fa-upload mr-1"></i>Import JSON
+            <input type="file" id="import-json-file" accept=".json" class="hidden" onchange="importDataJSON(event)">
+          </label>
+          <button onclick="resetToDemoData()" class="px-2.5 py-1 bg-red-900/40 hover:bg-red-800/60 text-red-300 rounded border border-red-700/50"><i class="fa-solid fa-rotate-left mr-1"></i>Reset Demo</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- Main Container -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    <!-- Global Banner -->
-    <div class="card-highlight rounded-2xl p-6 shadow-sm mb-8">
+    <!-- Global Banner (Stats / Number badges removed as requested) -->
+    <div class="card-highlight rounded-2xl p-5 sm:p-6 shadow-sm mb-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <span id="semester-badge" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-warmorange-100 text-warmorange-600 border border-warmorange-300 uppercase tracking-wide">
-            Spring 2026 Capstone
+            Spring 2026 Showcase
           </span>
-          <h2 id="semester-title" class="text-2xl font-bold text-slate-900 mt-2">Senior Design Projects — Spring 2026</h2>
-          <p id="semester-desc" class="text-slate-600 text-sm mt-1 leading-relaxed">
-            Multi-disciplinary senior mechanical engineering projects showcasing design, testing, simulation, and working physical prototypes.
+          <h2 id="semester-title" class="text-xl sm:text-2xl font-bold text-slate-900 mt-2">Senior Design Projects — Spring 2026</h2>
+          <p id="semester-desc" class="text-slate-600 text-xs sm:text-sm mt-1 leading-relaxed">
+            Dynamic capstone project directory. Browse, search, or create new project submissions linked directly to department faculty advisors.
           </p>
         </div>
-        <div class="hidden md:block text-right whitespace-nowrap">
-          <span class="text-xs font-semibold text-slate-500 block">Total Capstone Projects</span>
-          <span id="project-count" class="text-2xl font-extrabold text-navy-900">3 Projects</span>
-        </div>
       </div>
     </div>
 
-    <!-- Category Filter Controls -->
-    <div class="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/70 p-3.5 rounded-xl border border-slate-200 backdrop-blur-sm">
-      <div class="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
-        <i class="fa-solid fa-filter text-warmorange-500"></i>
-        <span>Filter Category:</span>
-      </div>
-      <div class="flex flex-wrap gap-2">
-        <button onclick="filterCategory('All')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all" data-cat="All">All Categories</button>
-        <button onclick="filterCategory('Robotics & Autonomous Systems')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" data-cat="Robotics & Autonomous Systems">Robotics & Autonomous Systems</button>
-        <button onclick="filterCategory('Thermal & Energy Systems')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" data-cat="Thermal & Energy Systems">Thermal & Energy Systems</button>
-        <button onclick="filterCategory('Aerospace & Mechatronics')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" data-cat="Aerospace & Mechatronics">Aerospace & Mechatronics</button>
-        <button onclick="filterCategory('Manufacturing & Materials')" class="category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all" data-cat="Manufacturing & Materials">Manufacturing & Materials</button>
-      </div>
-    </div>
-
-    <!-- SEMESTER VIEW: SPRING 2026 -->
-    <div id="view-spring2026" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sdp-grid">
+    <!-- Filters & Search Navigation Bar -->
+    <div class="space-y-4 mb-6">
       
-      <!-- Project 1 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Aerospace & Mechatronics">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-plane text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-amber-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Aerospace & Mechatronics</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">Autonomous Pipeline Inspection Drone</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Quadcopter platform featuring onboard computer vision inspection payloads and ultrasonic sensor thickness measurement.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Marcus Vance
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">ROS2</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">OpenCV</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">FEA Analysis</span>
-            </div>
-          </div>
-        </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 01</span>
-          <button onclick="openProjectDetails('Autonomous Pipeline Inspection Drone', 'Dr. Marcus Vance', 'Aerospace & Mechatronics', 'Spring 2026', 'Winner of the 2026 Engineering Design Showcase Award. Uses ROS2 and custom FEA-optimized drone frame for pipe integrity audits.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
+      <!-- Semester Tabs -->
+      <div class="flex overflow-x-auto pb-1 space-x-1 bg-slate-200/80 p-1.5 rounded-xl border border-slate-300" id="semester-tabs-container">
+        <!-- Injected via JavaScript -->
       </div>
 
-      <!-- Project 2 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Thermal & Energy Systems">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-solar-panel text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Thermal & Energy Systems</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">Hybrid Solar Thermal Distillation Plant</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Parabolic trough solar collector integrated with heat recovery modules for high-efficiency point-of-use water desalination.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Elena Rostova
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Thermodynamics</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Solar Concentrators</span>
-            </div>
-          </div>
+      <!-- Search & Category Filters -->
+      <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+        
+        <!-- Search Input -->
+        <div class="relative flex-grow max-w-md">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search project, team, faculty (e.g. Dr. A), or tech tag..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-navy-900 focus:bg-white transition-all">
         </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 02</span>
-          <button onclick="openProjectDetails('Hybrid Solar Thermal Distillation Plant', 'Dr. Elena Rostova', 'Thermal & Energy Systems', 'Spring 2026', 'Combines parabolic solar thermal collectors with phase-change heat sinks to produce 40 liters/day purified water.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-      </div>
 
-      <!-- Project 3 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Robotics & Autonomous Systems">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-hand-holding-hand text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Robotics & Autonomous Systems</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">Adaptive Upper-Limb Exoskeleton</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              EMG-guided powered assistive sleeve for post-stroke elbow rehabilitation utilizing active torque feedback loops.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Sarah Al-Maktoum
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Biomechanics</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">EMG Sensing</span>
-            </div>
-          </div>
+        <!-- Category Filter Pills -->
+        <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0" id="category-pills-container">
+          <!-- Injected via JavaScript -->
         </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 03</span>
-          <button onclick="openProjectDetails('Adaptive Upper-Limb Exoskeleton', 'Dr. Sarah Al-Maktoum', 'Robotics & Autonomous Systems', 'Spring 2026', 'Employs surface electromyography (sEMG) signals to trigger linear actuators for rehab assistive motion.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-      </div>
 
+      </div>
     </div>
 
-    <!-- SEMESTER VIEW: FALL 2025 -->
-    <div id="view-fall2025" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sdp-grid">
-      
-      <!-- Project 4 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Manufacturing & Materials">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-cubes text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Manufacturing & Materials</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">Recycled Filament Extruder & 3D Printer</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Closed-loop PET bottle shredder and filament extruder feeding directly into a large-format custom 3D printer.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Arthur Pendelton
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Polymer Processing</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">PID Thermal</span>
-            </div>
-          </div>
-        </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 08</span>
-          <button onclick="openProjectDetails('Recycled Filament Extruder & 3D Printer', 'Dr. Arthur Pendelton', 'Manufacturing & Materials', 'Fall 2025', 'Converts waste plastics into standard 1.75mm diameter filament with closed-loop optical diameter sensor correction.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Project 5 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Robotics & Autonomous Systems">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-truck-monster text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Robotics & Autonomous Systems</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">All-Terrain Search & Rescue Rover</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Rocker-bogie suspension unmanned vehicle equipped with thermal cameras and LiDAR mapping capabilities.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Marcus Vance
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Rocker-Bogie</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">SLAM LiDAR</span>
-            </div>
-          </div>
-        </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 09</span>
-          <button onclick="openProjectDetails('All-Terrain Search & Rescue Rover', 'Dr. Marcus Vance', 'Robotics & Autonomous Systems', 'Fall 2025', '6-wheeled rocker-bogie vehicle capable of climbing 30-degree obstacles while streaming real-time thermal video feeds.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-      </div>
-
+    <!-- SDP Projects Grid -->
+    <div id="sdp-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Injected dynamically via JS -->
     </div>
 
-    <!-- SEMESTER VIEW: SPRING 2025 -->
-    <div id="view-spring2025" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sdp-grid">
-      
-      <!-- Project 6 -->
-      <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between sdp-card" data-category="Thermal & Energy Systems">
-        <div>
-          <div class="h-44 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-            <i class="fa-solid fa-wind text-6xl text-slate-600"></i>
-            <span class="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Thermal & Energy Systems</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-base text-slate-900">Vertical-Axis Micro Wind Turbine</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Omnidirectional low-wind speed urban vertical turbine using custom carbon-fiber Darrieus blades.
-            </p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-500 font-medium block">Faculty Advisor:</span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 mt-0.5">
-                <i class="fa-solid fa-user-tie text-warmorange-500"></i> Dr. Elena Rostova
-              </span>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">CFD Simulation</span>
-              <span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">Composite Fabrication</span>
-            </div>
-          </div>
-        </div>
-        <div class="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500 font-medium">SDP Team 14</span>
-          <button onclick="openProjectDetails('Vertical-Axis Micro Wind Turbine', 'Dr. Elena Rostova', 'Thermal & Energy Systems', 'Spring 2025', 'Generates 500W power in cut-in wind speeds of 2.5 m/s, optimized using ANSYS Fluent CFD modeling.')" class="text-xs font-semibold text-navy-900 hover:text-sky-600 flex items-center gap-1">
-            <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-      </div>
-
+    <!-- Empty State Message -->
+    <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300 my-4">
+      <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3 block"></i>
+      <h3 class="text-base font-bold text-slate-700">No Senior Design Projects Found</h3>
+      <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Try selecting a different semester/category, or click below to post a new project.</p>
+      <button onclick="openPostModal()" class="mt-4 px-4 py-2 bg-navy-900 text-white rounded-xl text-xs font-bold hover:bg-navy-800 transition-all">
+        <i class="fa-solid fa-plus mr-1"></i> Post New Project
+      </button>
     </div>
 
   </main>
 
-  <!-- Project Details Modal -->
-  <div id="project-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="card-white rounded-2xl max-w-lg w-full p-6 space-y-4 relative shadow-2xl">
-      <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
+  <!-- MODAL 1: ADD / EDIT PROJECT POST -->
+  <div id="post-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="card-white rounded-2xl max-w-2xl w-full p-6 space-y-4 relative shadow-2xl my-8">
+      <button onclick="closePostModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <div>
-        <span id="modal-category" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-100 text-sky-700 border border-sky-200">Category</span>
-        <h3 id="modal-title" class="text-lg font-bold text-slate-900 mt-1.5">Project Title</h3>
+
+      <div class="flex items-center space-x-2 border-b border-slate-200 pb-3">
+        <i class="fa-solid fa-pen-to-square text-warmorange-500 text-lg"></i>
+        <h3 id="post-modal-heading" class="text-base font-bold text-slate-900">Post New Senior Design Project</h3>
       </div>
-      
-      <div class="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+
+      <form id="sdp-form" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-project-id" value="">
+
+        <!-- Title -->
         <div>
-          <span class="text-slate-500 font-medium block">Faculty Advisor:</span>
-          <span id="modal-advisor" class="font-bold text-navy-900">Dr. Name</span>
+          <label class="block font-semibold text-slate-700 mb-1">Project Title *</label>
+          <input type="text" id="form-title" required placeholder="e.g. Autonomous Solar-Powered Seawater Desalination Plant" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
         </div>
+
+        <!-- Semester & Category -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Semester Term *</label>
+            <select id="form-semester" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+              <option value="Spring 2026">Spring 2026</option>
+              <option value="Fall 2025">Fall 2025</option>
+              <option value="Spring 2025">Spring 2025</option>
+              <option value="Summer 2025">Summer 2025</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Category Domain *</label>
+            <select id="form-category" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+              <option value="Robotics & Autonomous Systems">Robotics & Autonomous Systems</option>
+              <option value="Thermal & Energy Systems">Thermal & Energy Systems</option>
+              <option value="Aerospace & Mechatronics">Aerospace & Mechatronics</option>
+              <option value="Manufacturing & Materials">Manufacturing & Materials</option>
+              <option value="Bio-Mechatronics">Bio-Mechatronics</option>
+              <option value="Energy Storage">Energy Storage</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tag Faculty Advisor (Multi-select) & Team Name -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Tag Faculty Advisor(s) * <span class="text-[10px] text-slate-400 font-normal">(Hold Ctrl/Cmd to select multiple)</span></label>
+            <select id="form-faculty" multiple required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900 font-bold text-navy-900 h-24">
+              <!-- Dynamically Populated from Faculty Directory -->
+            </select>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">Can select 1 or more advisors. Manage list in "Manage Faculty".</span>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Team Name / Number *</label>
+            <input type="text" id="form-team" required placeholder="e.g. SDP Team 05" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+          </div>
+        </div>
+
+        <!-- Tech Tags & Icon Picker -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Key Technologies / Tools (Comma Separated)</label>
+            <input type="text" id="form-tags" placeholder="e.g. ROS2, SolidWorks, FEA, Arduino" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Card Icon</label>
+            <select id="form-icon" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+              <option value="fa-robot">Robot (fa-robot)</option>
+              <option value="fa-plane">Aerospace (fa-plane)</option>
+              <option value="fa-solar-panel">Solar & Thermal (fa-solar-panel)</option>
+              <option value="fa-cubes">Manufacturing / Materials (fa-cubes)</option>
+              <option value="fa-hand-holding-hand">Bio-Mechatronics (fa-hand-holding-hand)</option>
+              <option value="fa-car-battery">Energy Storage (fa-car-battery)</option>
+              <option value="fa-microchip">Electronics (fa-microchip)</option>
+              <option value="fa-gear">General Mechanical (fa-gear)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Short Abstract / Summary -->
         <div>
-          <span class="text-slate-500 font-medium block">Semester Term:</span>
-          <span id="modal-term" class="font-bold text-slate-800">Term Year</span>
+          <label class="block font-semibold text-slate-700 mb-1">Short Abstract / Summary *</label>
+          <textarea id="form-summary" required rows="2" placeholder="Brief 2-line summary of prototype and key engineering achievements..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900"></textarea>
+        </div>
+
+        <!-- Full Technical Description -->
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Full Technical Details & Specifications</label>
+          <textarea id="form-details" rows="4" placeholder="Deep technical description, testing methodology, CAD modeling notes, component lists, performance metrics..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900"></textarea>
+        </div>
+
+        <!-- Submit Controls -->
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
+          <button type="button" onclick="closePostModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-semibold">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-navy-900 hover:bg-navy-800 text-white rounded-xl text-xs font-bold shadow-md">
+            <i class="fa-solid fa-paper-plane mr-1"></i> Save SDP Post
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL 2: FACULTY DIRECTORY MANAGEMENT -->
+  <div id="faculty-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="card-white rounded-2xl max-w-lg w-full p-6 space-y-4 relative shadow-2xl">
+      <button onclick="closeFacultyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center space-x-2 border-b border-slate-200 pb-3">
+        <i class="fa-solid fa-user-tie text-warmorange-500 text-lg"></i>
+        <div>
+          <h3 class="text-base font-bold text-slate-900">Faculty Directory Management</h3>
+          <p class="text-[11px] text-slate-500">Add, edit or remove department professors available for tagging in SDP projects.</p>
         </div>
       </div>
 
-      <p id="modal-desc" class="text-xs text-slate-600 leading-relaxed">Project details description...</p>
+      <!-- Add New Faculty Form -->
+      <form onsubmit="handleAddFaculty(event)" class="flex gap-2">
+        <input type="text" id="new-faculty-name" required placeholder="e.g. Dr. F or Dr. John Smith" class="flex-grow px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:outline-none focus:border-navy-900">
+        <button type="submit" class="px-4 py-2 bg-warmorange-500 hover:bg-warmorange-600 text-white rounded-lg text-xs font-bold shadow-sm whitespace-nowrap">
+          <i class="fa-solid fa-plus mr-1"></i> Add Faculty
+        </button>
+      </form>
+
+      <!-- Active Faculty List -->
+      <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="faculty-list-container">
+        <!-- Dynamically rendered -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 flex justify-end">
+        <button onclick="closeFacultyModal()" class="px-4 py-2 bg-navy-900 text-white rounded-xl text-xs font-semibold">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: VIEW FULL SDP PROJECT DETAILS -->
+  <div id="project-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="card-white rounded-2xl max-w-xl w-full p-6 space-y-4 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div>
+        <span id="modal-category" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-sky-100 text-sky-700 border border-sky-200">Category</span>
+        <h3 id="modal-title" class="text-lg font-bold text-slate-900 mt-2">Project Title</h3>
+      </div>
       
-      <div class="pt-4 border-t border-slate-200 flex justify-end">
+      <div class="grid grid-cols-3 gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-center">
+        <div>
+          <span class="text-slate-400 font-medium text-[10px] block uppercase">Advisor(s)</span>
+          <span id="modal-advisor" class="font-bold text-navy-900 text-xs">Dr. A</span>
+        </div>
+        <div>
+          <span class="text-slate-400 font-medium text-[10px] block uppercase">Semester</span>
+          <span id="modal-term" class="font-bold text-slate-800 text-xs">Spring 2026</span>
+        </div>
+        <div>
+          <span class="text-slate-400 font-medium text-[10px] block uppercase">Team</span>
+          <span id="modal-team" class="font-bold text-warmorange-600 text-xs">Team 01</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Abstract</h4>
+        <p id="modal-summary" class="text-xs text-slate-600 leading-relaxed bg-amber-50/50 p-3 rounded-lg border border-amber-100">Project summary...</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Technical Details & Specifications</h4>
+        <p id="modal-details" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">Technical specs...</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Technologies Used</h4>
+        <div id="modal-tags" class="flex flex-wrap gap-1.5">
+          <!-- Tag pills injected here -->
+        </div>
+      </div>
+      
+      <div class="pt-4 border-t border-slate-200 flex justify-between items-center">
+        <button id="modal-edit-btn" onclick="" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
+          <i class="fa-solid fa-pen mr-1"></i> Edit Post
+        </button>
         <button onclick="closeProjectModal()" class="px-4 py-2 bg-navy-900 text-white rounded-xl text-xs font-semibold">Close</button>
       </div>
     </div>
@@ -393,15 +377,15 @@
 
   <!-- FLOATING ASSISTANT BOT -->
   <div id="floating-chat-container" class="fixed bottom-5 right-5 z-50">
-    <button id="floating-chat-btn" onclick="toggleFloatingChat()" class="w-14 h-14 bg-navy-900 hover:bg-navy-800 text-white rounded-full flex items-center justify-center shadow-xl border-2 border-white transition-all transform hover:scale-105">
-      <i id="chat-icon-open" class="fa-solid fa-robot text-xl"></i>
-      <i id="chat-icon-close" class="fa-solid fa-xmark text-xl hidden"></i>
+    <button id="floating-chat-btn" onclick="toggleFloatingChat()" class="w-13 h-13 bg-navy-900 hover:bg-navy-800 text-white rounded-full flex items-center justify-center shadow-xl border-2 border-white transition-all transform hover:scale-105 p-3.5">
+      <i id="chat-icon-open" class="fa-solid fa-robot text-lg"></i>
+      <i id="chat-icon-close" class="fa-solid fa-xmark text-lg hidden"></i>
     </button>
 
-    <div id="floating-chat-window" class="hidden absolute bottom-16 right-0 w-[92vw] sm:w-[380px] h-[480px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
-      <div class="p-3.5 bg-navy-900 text-white flex justify-between items-center">
+    <div id="floating-chat-window" class="hidden absolute bottom-16 right-0 w-[92vw] sm:w-[360px] h-[450px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+      <div class="p-3.5 bg-navy-950 text-white flex justify-between items-center">
         <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-robot text-sky-400"></i>
+          <i class="fa-solid fa-robot text-warmorange-400"></i>
           <span class="font-bold text-xs">SDP Showcase Assistant</span>
         </div>
         <button onclick="toggleFloatingChat()" class="text-slate-300 hover:text-white text-sm">
@@ -411,12 +395,12 @@
 
       <div id="widget-chat-messages" class="flex-grow p-3 overflow-y-auto space-y-3 bg-slate-50 text-xs">
         <div class="bg-white border border-slate-200 rounded-xl p-3 text-slate-700 shadow-sm">
-          Welcome to the Senior Design Project (SDP) Showcase! Filter projects by semester or category, or ask me about faculty advisors!
+          Welcome to the Senior Design Project Showcase! You can filter projects by semester or category, tag multiple faculty advisors, or post new projects anytime without coding!
         </div>
       </div>
 
       <form onsubmit="handleWidgetChatSubmit(event)" class="p-2 bg-white border-t border-slate-200 flex gap-1.5">
-        <input type="text" id="widget-chat-input" placeholder="Ask about professors or capstone projects..." class="flex-grow bg-slate-100 text-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-navy-900">
+        <input type="text" id="widget-chat-input" placeholder="Ask about faculty or posting..." class="flex-grow bg-slate-100 text-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-navy-900">
         <button type="submit" class="bg-navy-900 text-white px-3 py-2 rounded-lg text-xs font-semibold">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
@@ -425,118 +409,521 @@
   </div>
 
   <script>
-    // Faculty Directory
-    const FACULTY_LIST = [
-      "Dr. Marcus Vance",
-      "Dr. Elena Rostova",
-      "Dr. Sarah Al-Maktoum",
-      "Dr. Arthur Pendelton"
+    // INITIAL DEMO FACULTY (Default Format: Dr. A, Dr. B, Dr. C, Dr. D, Dr. E)
+    const DEFAULT_FACULTY = ["Dr. A", "Dr. B", "Dr. C", "Dr. D", "Dr. E"];
+
+    // INITIAL DEMO PROJECTS (Updated to support faculty array / multiple faculty tags)
+    const DEFAULT_PROJECTS = [
+      {
+        id: "sdp-1",
+        title: "Autonomous Seawater Desalination Unit",
+        semester: "Spring 2026",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. A", "Dr. C"],
+        team: "SDP Team 01",
+        tags: ["Solar Thermal", "Desalination", "Thermodynamics", "CAD"],
+        icon: "fa-solar-panel",
+        summary: "Parabolic solar thermal concentrator with phase-change heat recovery for decentralized coastal clean water generation.",
+        details: "Designed and prototyped a solar desalination system yielding 45 liters of potable water per day. Features automated solar azimuth tracking, custom titanium heat exchangers, and closed-loop pressure monitoring."
+      },
+      {
+        id: "sdp-2",
+        title: "Quadruped Inspection Robot for Hazardous Labs",
+        semester: "Spring 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. B"],
+        team: "SDP Team 02",
+        tags: ["ROS2", "LiDAR SLAM", "Inverse Kinematics", "C++"],
+        icon: "fa-robot",
+        summary: "Four-legged autonomous legged robot with 12-DOF for traversing uneven terrain in chemical facility inspection missions.",
+        details: "Built with custom planetary gear actuators and carbon fiber legs. Integrated ROS2 Navigation stack, gas sensing array, and real-time thermal camera streaming over private 5G."
+      },
+      {
+        id: "sdp-3",
+        title: "Composite Drone Frame FEA Optimization",
+        semester: "Spring 2026",
+        category: "Aerospace & Mechatronics",
+        faculty: ["Dr. C", "Dr. E"],
+        team: "SDP Team 03",
+        tags: ["ANSYS FEA", "Carbon Fiber", "Aerodynamics", "SolidWorks"],
+        icon: "fa-plane",
+        summary: "Lightweight generative-designed carbon fiber quadcopter chassis optimized for heavy payload delivery.",
+        details: "Achieved a 34% weight reduction compared to aluminum counterparts while maintaining a safety factor of 2.8 under maximum thrust stress. Tested in department subsonic wind tunnel."
+      },
+      {
+        id: "sdp-4",
+        title: "Recycled Filament Industrial Extruder",
+        semester: "Fall 2025",
+        category: "Manufacturing & Materials",
+        faculty: ["Dr. D", "Dr. A"],
+        team: "SDP Team 08",
+        tags: ["Extrusion", "PID Thermal", "Polymers", "Arduino"],
+        icon: "fa-cubes",
+        summary: "Closed-loop plastic shredder and filament extruder turning waste PET bottles into standard 1.75mm 3D printing filament.",
+        details: "Incorporates laser micrometers to dynamically adjust spooling speed and extrusion temperature, ensuring precise +/- 0.03mm filament diameter tolerance."
+      }
     ];
 
-    // Semester Metadata
-    const SEMESTER_DATA = {
-      spring2026: {
-        badge: "Spring 2026 Capstone",
-        title: "Senior Design Projects — Spring 2026",
-        desc: "Multi-disciplinary senior mechanical engineering projects showcasing design, testing, simulation, and working physical prototypes.",
-        count: "3 Projects"
-      },
-      fall2025: {
-        badge: "Fall 2025 Capstone",
-        title: "Senior Design Projects — Fall 2025",
-        desc: "Featured capstone engineering projects completed during the Fall 2025 academic term.",
-        count: "2 Projects"
-      },
-      spring2025: {
-        badge: "Spring 2025 Archive",
-        title: "Senior Design Projects — Spring 2025",
-        desc: "Archived capstone project deliverables and award winners from Spring 2025.",
-        count: "1 Project"
-      }
+    const SEMESTER_LIST = ["Spring 2026", "Fall 2025", "Spring 2025", "Summer 2025"];
+    const CATEGORY_LIST = ["All", "Robotics & Autonomous Systems", "Thermal & Energy Systems", "Aerospace & Mechatronics", "Manufacturing & Materials", "Bio-Mechatronics", "Energy Storage"];
+
+    // STATE VARIABLES
+    let facultyData = [];
+    let projectsData = [];
+    let activeSemester = "Spring 2026";
+    let activeCategory = "All";
+    let searchQuery = "";
+
+    // INITIALIZATION ON PAGE LOAD
+    window.onload = function() {
+      loadLocalStorageData();
+      renderSemesterTabs();
+      renderCategoryPills();
+      renderShowcase();
     };
 
-    let activeSemester = 'spring2026';
-    let activeCategory = 'All';
+    // LOCAL STORAGE MANAGEMENT
+    function loadLocalStorageData() {
+      const storedFaculty = localStorage.getItem('me_sdp_faculty');
+      const storedProjects = localStorage.getItem('me_sdp_projects');
 
-    function switchSemester(semId) {
-      activeSemester = semId;
-      const semesters = ['spring2026', 'fall2025', 'spring2025'];
+      if (storedFaculty) {
+        facultyData = JSON.parse(storedFaculty);
+      } else {
+        facultyData = [...DEFAULT_FACULTY];
+        saveFacultyToStorage();
+      }
+
+      if (storedProjects) {
+        projectsData = JSON.parse(storedProjects);
+        // Migration check: ensure faculty is stored as array
+        projectsData.forEach(p => {
+          if (typeof p.faculty === 'string') {
+            p.faculty = [p.faculty];
+          }
+        });
+      } else {
+        projectsData = [...DEFAULT_PROJECTS];
+        saveProjectsToStorage();
+      }
+    }
+
+    function saveFacultyToStorage() {
+      localStorage.setItem('me_sdp_faculty', JSON.stringify(facultyData));
+    }
+
+    function saveProjectsToStorage() {
+      localStorage.setItem('me_sdp_projects', JSON.stringify(projectsData));
+    }
+
+    function resetToDemoData() {
+      if (confirm("Reset all project posts and faculty directory back to initial demo state?")) {
+        facultyData = [...DEFAULT_FACULTY];
+        projectsData = [...DEFAULT_PROJECTS];
+        saveFacultyToStorage();
+        saveProjectsToStorage();
+        renderSemesterTabs();
+        renderShowcase();
+        alert("Showcase reset to initial demo data.");
+      }
+    }
+
+    // UI RENDERING FUNCTIONS
+    function renderSemesterTabs() {
+      const container = document.getElementById('semester-tabs-container');
+      container.innerHTML = SEMESTER_LIST.map(sem => `
+        <button onclick="selectSemester('${sem}')" id="sem-tab-${sem.replace(/\s+/g, '')}" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg whitespace-nowrap transition-all ${activeSemester === sem ? 'bg-navy-900 text-white shadow-sm' : 'text-slate-600 hover:text-navy-900 hover:bg-white'}">
+          <i class="fa-solid fa-graduation-cap mr-1.5 text-warmorange-500"></i>${sem}
+        </button>
+      `).join('');
+    }
+
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills-container');
+      container.innerHTML = CATEGORY_LIST.map(cat => `
+        <button onclick="selectCategory('${cat}')" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-navy-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+          ${cat}
+        </button>
+      `).join('');
+    }
+
+    function renderShowcase() {
+      const grid = document.getElementById('sdp-grid');
+      const emptyState = document.getElementById('empty-state');
+
+      // Filter Projects
+      const filtered = projectsData.filter(p => {
+        const matchSemester = p.semester === activeSemester;
+        const matchCategory = activeCategory === 'All' || p.category === activeCategory;
+        const query = searchQuery.toLowerCase();
+        
+        const facultyArray = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+        const matchFaculty = facultyArray.some(f => f.toLowerCase().includes(query));
+
+        const matchSearch = !query || 
+          p.title.toLowerCase().includes(query) ||
+          matchFaculty ||
+          p.team.toLowerCase().includes(query) ||
+          p.tags.some(t => t.toLowerCase().includes(query)) ||
+          p.summary.toLowerCase().includes(query);
+
+        return matchSemester && matchCategory && matchSearch;
+      });
+
+      document.getElementById('semester-badge').innerText = `${activeSemester} Showcase`;
+      document.getElementById('semester-title').innerText = `Senior Design Projects — ${activeSemester}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(p => {
+        const facultyList = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+        const facultyDisplay = facultyList.map(f => escapeHTML(f)).join(', ');
+
+        return `
+        <div class="card-white rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div>
+            <!-- Image / Icon Top Banner -->
+            <div class="h-40 bg-slate-900 relative overflow-hidden flex items-center justify-center">
+              <i class="fa-solid ${p.icon || 'fa-gear'} text-5xl text-slate-700"></i>
+              <span class="absolute top-3 right-3 bg-navy-900/90 text-white text-[10px] font-bold px-2 py-0.5 rounded border border-navy-700">
+                ${p.category}
+              </span>
+            </div>
+
+            <!-- Content Details -->
+            <div class="p-5">
+              <h3 class="font-bold text-base text-slate-900 leading-snug hover:text-navy-900 transition-colors">
+                ${escapeHTML(p.title)}
+              </h3>
+              
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">
+                ${escapeHTML(p.summary)}
+              </p>
+
+              <!-- Faculty Tagged Row (Supports multiple advisors) -->
+              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div>
+                  <span class="text-[10px] text-slate-400 font-medium block uppercase">Faculty Advisor(s)</span>
+                  <span class="inline-flex items-center gap-1 text-xs font-extrabold text-navy-900">
+                    <i class="fa-solid fa-user-tie text-warmorange-500"></i> ${facultyDisplay}
+                  </span>
+                </div>
+                <div class="text-right whitespace-nowrap">
+                  <span class="text-[10px] text-slate-400 font-medium block uppercase">Team</span>
+                  <span class="text-xs font-bold text-slate-700">${escapeHTML(p.team)}</span>
+                </div>
+              </div>
+
+              <!-- Tech Tag Pills -->
+              <div class="flex flex-wrap gap-1 mt-3">
+                ${p.tags.map(tag => `<span class="px-1.5 py-0.5 text-[9px] bg-slate-100 font-mono text-slate-600 rounded border border-slate-200">${escapeHTML(tag)}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Card Controls -->
+          <div class="p-4 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <button onclick="openEditProject('${p.id}')" class="text-slate-400 hover:text-navy-900" title="Edit Post">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button onclick="deleteProject('${p.id}')" class="text-slate-400 hover:text-red-600" title="Delete Post">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+            <button onclick="openProjectDetails('${p.id}')" class="font-bold text-navy-900 hover:text-warmorange-600 flex items-center gap-1">
+              <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+      `}).join('');
+    }
+
+    // FACULTY MANAGEMENT MODAL LOGIC
+    function openFacultyModal() {
+      renderFacultyList();
+      document.getElementById('faculty-modal').classList.remove('hidden');
+    }
+
+    function closeFacultyModal() {
+      document.getElementById('faculty-modal').classList.add('hidden');
+    }
+
+    function renderFacultyList() {
+      const container = document.getElementById('faculty-list-container');
+      container.innerHTML = facultyData.map((f, idx) => `
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-user-tie text-warmorange-500"></i>
+            <span class="font-bold text-slate-800">${escapeHTML(f)}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="editFacultyPrompt(${idx})" class="text-slate-400 hover:text-navy-900"><i class="fa-solid fa-pen"></i></button>
+            <button onclick="removeFaculty(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAddFaculty(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-faculty-name');
+      const name = input.value.trim();
+      if (!name) return;
+
+      if (!facultyData.includes(name)) {
+        facultyData.push(name);
+        saveFacultyToStorage();
+        renderFacultyList();
+        renderShowcase();
+        input.value = '';
+      } else {
+        alert('Faculty member already exists in list.');
+      }
+    }
+
+    function editFacultyPrompt(idx) {
+      const oldName = facultyData[idx];
+      const newName = prompt("Edit Faculty Name:", oldName);
+      if (newName && newName.trim() !== "") {
+        const trimmed = newName.trim();
+        facultyData[idx] = trimmed;
+        
+        // Update projects tagged with old name
+        projectsData.forEach(p => {
+          if (Array.isArray(p.faculty)) {
+            p.faculty = p.faculty.map(f => f === oldName ? trimmed : f);
+          } else if (p.faculty === oldName) {
+            p.faculty = [trimmed];
+          }
+        });
+
+        saveFacultyToStorage();
+        saveProjectsToStorage();
+        renderFacultyList();
+        renderShowcase();
+      }
+    }
+
+    function removeFaculty(idx) {
+      const name = facultyData[idx];
+      if (confirm(`Remove ${name} from faculty directory?`)) {
+        facultyData.splice(idx, 1);
+        saveFacultyToStorage();
+        renderFacultyList();
+        renderShowcase();
+      }
+    }
+
+    // POST MODAL LOGIC (ADD & EDIT MULTIPLE FACULTY)
+    function openPostModal() {
+      populateFacultyDropdown();
+      document.getElementById('sdp-form').reset();
+      document.getElementById('edit-project-id').value = '';
+      document.getElementById('post-modal-heading').innerText = "Post New Senior Design Project";
+      document.getElementById('form-semester').value = activeSemester;
+      document.getElementById('post-modal').classList.remove('hidden');
+    }
+
+    function closePostModal() {
+      document.getElementById('post-modal').classList.add('hidden');
+    }
+
+    function populateFacultyDropdown(selectedFaculty = []) {
+      const dropdown = document.getElementById('form-faculty');
+      dropdown.innerHTML = facultyData.map(f => {
+        const isSelected = selectedFaculty.includes(f) ? 'selected' : '';
+        return `<option value="${escapeHTML(f)}" ${isSelected}>${escapeHTML(f)}</option>`;
+      }).join('');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-project-id').value;
+
+      const title = document.getElementById('form-title').value.trim();
+      const semester = document.getElementById('form-semester').value;
+      const category = document.getElementById('form-category').value;
       
-      semesters.forEach(s => {
-        document.getElementById(`view-${s}`).classList.add('hidden');
-        const btn = document.getElementById(`tab-btn-${s}`);
-        if (btn) {
-          btn.className = 'px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-navy-900 hover:bg-white transition-all';
-        }
-      });
-
-      document.getElementById(`view-${semId}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-btn-${semId}`);
-      if (activeBtn) {
-        activeBtn.className = 'px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all';
+      // Get selected multiple faculty
+      const facultySelect = document.getElementById('form-faculty');
+      const faculty = Array.from(facultySelect.selectedOptions).map(opt => opt.value);
+      
+      if (faculty.length === 0) {
+        alert("Please select at least one faculty advisor.");
+        return;
       }
 
-      // Update Banner Meta
-      const info = SEMESTER_DATA[semId];
-      if (info) {
-        document.getElementById('semester-badge').innerText = info.badge;
-        document.getElementById('semester-title').innerText = info.title;
-        document.getElementById('semester-desc').innerText = info.desc;
-        document.getElementById('project-count').innerText = info.count;
+      const team = document.getElementById('form-team').value.trim();
+      const tagsStr = document.getElementById('form-tags').value.trim();
+      const icon = document.getElementById('form-icon').value;
+      const summary = document.getElementById('form-summary').value.trim();
+      const details = document.getElementById('form-details').value.trim();
+
+      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()) : ['ME Capstone'];
+
+      if (editId) {
+        // Edit existing
+        const pIndex = projectsData.findIndex(p => p.id === editId);
+        if (pIndex !== -1) {
+          projectsData[pIndex] = { id: editId, title, semester, category, faculty, team, tags, icon, summary, details };
+        }
+      } else {
+        // Create new
+        const newProject = {
+          id: 'sdp-' + Date.now(),
+          title,
+          semester,
+          category,
+          faculty,
+          team,
+          tags,
+          icon,
+          summary,
+          details
+        };
+        projectsData.unshift(newProject);
       }
 
-      // Re-apply active category filter
-      filterCategory(activeCategory);
+      saveProjectsToStorage();
+      closePostModal();
+      selectSemester(semester);
+      renderShowcase();
     }
 
-    function filterCategory(category) {
-      activeCategory = category;
+    function openEditProject(id) {
+      const p = projectsData.find(item => item.id === id);
+      if (!p) return;
 
-      // Update button styles
-      const buttons = document.querySelectorAll('.category-btn');
-      buttons.forEach(btn => {
-        if (btn.getAttribute('data-cat') === category) {
-          btn.className = 'category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-navy-900 text-white shadow-sm transition-all';
-        } else {
-          btn.className = 'category-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all';
-        }
-      });
+      const facultyList = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+      populateFacultyDropdown(facultyList);
 
-      // Filter visible cards in active semester grid
-      const currentContainer = document.getElementById(`view-${activeSemester}`);
-      const cards = currentContainer.querySelectorAll('.sdp-card');
+      document.getElementById('edit-project-id').value = p.id;
+      document.getElementById('form-title').value = p.title;
+      document.getElementById('form-semester').value = p.semester;
+      document.getElementById('form-category').value = p.category;
+      document.getElementById('form-team').value = p.team;
+      document.getElementById('form-tags').value = p.tags.join(', ');
+      document.getElementById('form-icon').value = p.icon || 'fa-gear';
+      document.getElementById('form-summary').value = p.summary;
+      document.getElementById('form-details').value = p.details;
 
-      cards.forEach(card => {
-        const cardCat = card.getAttribute('data-category');
-        if (category === 'All' || cardCat === category) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      document.getElementById('post-modal-heading').innerText = "Edit Senior Design Project";
+      document.getElementById('post-modal').classList.remove('hidden');
     }
 
-    function toggleMobileMenu() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
+    function deleteProject(id) {
+      if (confirm("Are you sure you want to delete this SDP post?")) {
+        projectsData = projectsData.filter(p => p.id !== id);
+        saveProjectsToStorage();
+        renderShowcase();
+      }
     }
 
-    function toggleFloatingChat() {
-      document.getElementById('floating-chat-window').classList.toggle('hidden');
-      document.getElementById('chat-icon-open').classList.toggle('hidden');
-      document.getElementById('chat-icon-close').classList.toggle('hidden');
-    }
+    // PROJECT DETAILS VIEW MODAL
+    function openProjectDetails(id) {
+      const p = projectsData.find(item => item.id === id);
+      if (!p) return;
 
-    function openProjectDetails(title, advisor, category, term, desc) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-advisor').innerText = advisor;
-      document.getElementById('modal-category').innerText = category;
-      document.getElementById('modal-term').innerText = term;
-      document.getElementById('modal-desc').innerText = desc;
+      const facultyList = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+
+      document.getElementById('modal-title').innerText = p.title;
+      document.getElementById('modal-category').innerText = p.category;
+      document.getElementById('modal-advisor').innerText = facultyList.join(', ');
+      document.getElementById('modal-term').innerText = p.semester;
+      document.getElementById('modal-team').innerText = p.team;
+      document.getElementById('modal-summary').innerText = p.summary;
+      document.getElementById('modal-details').innerText = p.details || "No extended technical specifications provided.";
+
+      const tagsContainer = document.getElementById('modal-tags');
+      tagsContainer.innerHTML = p.tags.map(t => `<span class="px-2 py-0.5 text-[10px] bg-slate-100 font-mono text-slate-700 rounded border border-slate-200">${escapeHTML(t)}</span>`).join('');
+
+      document.getElementById('modal-edit-btn').onclick = function() {
+        closeProjectModal();
+        openEditProject(p.id);
+      };
+
       document.getElementById('project-modal').classList.remove('hidden');
     }
 
     function closeProjectModal() {
       document.getElementById('project-modal').classList.add('hidden');
+    }
+
+    // FILTER & SEARCH LOGIC
+    function selectSemester(sem) {
+      activeSemester = sem;
+      renderSemesterTabs();
+      renderShowcase();
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderCategoryPills();
+      renderShowcase();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value;
+      renderShowcase();
+    }
+
+    function toggleDataMenu() {
+      document.getElementById('data-menu').classList.toggle('hidden');
+    }
+
+    // JSON EXPORT / IMPORT BACKUP
+    function exportDataJSON() {
+      const data = {
+        faculty: facultyData,
+        projects: projectsData
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ME_SDP_Showcase_Backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importDataJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (parsed.faculty && parsed.projects) {
+            facultyData = parsed.faculty;
+            projectsData = parsed.projects;
+            saveFacultyToStorage();
+            saveProjectsToStorage();
+            renderSemesterTabs();
+            renderShowcase();
+            alert('Showcase data imported successfully!');
+          } else {
+            alert('Invalid backup file format.');
+          }
+        } catch(err) {
+          alert('Error parsing JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // FLOATING CHAT BOT
+    function toggleFloatingChat() {
+      document.getElementById('floating-chat-window').classList.toggle('hidden');
+      document.getElementById('chat-icon-open').classList.toggle('hidden');
+      document.getElementById('chat-icon-close').classList.toggle('hidden');
     }
 
     function handleWidgetChatSubmit(e) {
@@ -555,14 +942,25 @@
       setTimeout(() => {
         const botDiv = document.createElement('div');
         botDiv.className = 'bg-white border border-slate-200 rounded-xl p-3 text-slate-800 text-xs shadow-sm';
-        botDiv.innerHTML = `You asked about: <strong>${escapeHTML(query)}</strong>. Switch terms or filter by category above to view faculty advisors and SDP deliverables!`;
+        
+        let response = `You asked about: <strong>${escapeHTML(query)}</strong>. `;
+        if (query.toLowerCase().includes('faculty') || query.toLowerCase().includes('dr')) {
+          response += `Current active faculty list: ${facultyData.join(', ')}. You can manage them or tag multiple advisors when posting!`;
+        } else if (query.toLowerCase().includes('post') || query.toLowerCase().includes('add')) {
+          response += `To post a project, click "+ Post New SDP" at the top right. You can select multiple faculty advisors!`;
+        } else {
+          response += `Switch terms, search titles/tech tags, or click "+ Post New SDP" to publish new projects!`;
+        }
+
+        botDiv.innerHTML = response;
         win.appendChild(botDiv);
         win.scrollTop = win.scrollHeight;
       }, 300);
     }
 
     function escapeHTML(str) {
-      return str.replace(/[&<>'"]/g, tag => ({
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
       }[tag] || tag));
     }

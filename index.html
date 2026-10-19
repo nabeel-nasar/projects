@@ -61,27 +61,33 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
 
-  <!-- Header / Navigation -->
-  <header class="bg-sky-400 text-slate-900 sticky top-0 z-40 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-      
-      <!-- Brand & Title with Logo -->
-      <div class="flex items-center space-x-3.5">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-warmorange-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-orange-500/20 overflow-hidden">
-          <img 
-            src="icon1.png" 
-            alt="Department Logo" 
-            class="w-full h-full object-cover rounded-[10px]" 
-            onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';"
-          />
-        </div>
-        <div>
-          <!-- Title 1 added above Department Name -->
-          <span class="text-xs font-extrabold uppercase tracking-wider text-sky-950 block leading-tight">Title 1</span>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-800 block">Department of Mechanical Engineering</span>
-          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-none tracking-tight mt-0.5">Senior Design Project (SDP) Portal</h1>
-        </div>
-      </div>
+<!-- Brand & Title with Logo -->
+<div class="flex items-center space-x-4">
+  <div class="w-14 h-14 rounded-xl bg-gradient-to-tr from-warmorange-500 to-amber-400 p-0.5 flex-shrink-0 flex items-center justify-center shadow-lg shadow-orange-500/20 overflow-hidden">
+    <img 
+      src="icon1.png" 
+      alt="Department Logo" 
+      class="w-full h-full object-cover rounded-[10px]" 
+      onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';"
+    />
+  </div>
+  <div class="flex flex-col space-y-0.5">
+    <!-- 1. Title 1: Bold Royal Navy/Indigo Color -->
+    <span class="text-sm sm:text-base font-black uppercase tracking-widest text-indigo-900 block leading-none">
+      Title 1
+    </span>
+    
+    <!-- 2. Department Name: Orangish Theme Color -->
+    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-warmorange-600 block leading-tight">
+      Department of Mechanical Engineering
+    </span>
+
+    <!-- 3. SDP Portal: Large Deep Emerald Green Color -->
+    <h1 class="text-lg sm:text-2xl font-extrabold text-emerald-800 tracking-tight leading-none mt-1">
+      Senior Design Project (SDP) Portal
+    </h1>
+  </div>
+</div>
       
       <!-- Admin Controls & Action Buttons -->
       <div class="flex items-center gap-2 sm:gap-3">

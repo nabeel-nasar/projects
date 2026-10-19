@@ -65,16 +65,19 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
 
-  <!-- Header / Navigation -->
+<!-- Header / Navigation -->
   <header class="bg-navy-950 text-white sticky top-0 z-40 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
       
       <!-- Brand & Title with Logo -->
       <div class="flex items-center space-x-3.5">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-warmorange-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-orange-500/20">
-          <div class="w-full h-full bg-navy-950 rounded-[10px] flex items-center justify-center">
-            <i class="fa-solid fa-gear text-warmorange-500 text-xl animate-spin-slow"></i>
-          </div>
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-warmorange-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-orange-500/20 overflow-hidden">
+          <img 
+            src="icon1.png" 
+            alt="Department Logo" 
+            class="w-full h-full object-cover rounded-[10px]" 
+            onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';"
+          />
         </div>
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider text-warmorange-400">Department of Mechanical Engineering</span>

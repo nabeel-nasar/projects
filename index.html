@@ -144,8 +144,8 @@
 
     /* ---------- Hero ---------- */
     .hero { position: relative; overflow: hidden; }
-    .hero::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
+    .hero .sheen {
+      position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
       background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
       background-size: 250% 100%; animation: sheen 6s ease-in-out infinite;
     }
@@ -182,7 +182,7 @@
       position: relative; transform-style: preserve-3d; transition: transform .15s ease-out, box-shadow .3s ease;
       border-radius: 1.25rem; overflow: hidden; height: 100%;
       display: flex; flex-direction: column; justify-content: space-between;
-      animation: cardIn .7s cubic-bezier(.2,.8,.2,1) both;
+      animation: cardIn .7s cubic-bezier(.2,.8,.2,1) backwards;
     }
     .tilt-card:hover { box-shadow: 0 25px 60px rgba(14,165,233,0.3), 0 0 0 1px rgba(14,165,233,0.45); }
     .tilt-card .glare {
@@ -280,9 +280,6 @@
     ::-webkit-scrollbar-track { background: rgba(186,230,253,0.4); }
     ::-webkit-scrollbar-thumb { background: linear-gradient(#38bdf8, #6366f1); border-radius: 8px; }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
@@ -352,6 +349,7 @@
 
     <!-- Hero banner -->
     <section class="glass hud hero rounded-3xl p-6 sm:p-8 mb-6">
+      <div class="sheen" aria-hidden="true"></div>
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative">
         <div class="flex-1">
           <span id="semester-badge" class="px-3 py-1 text-[11px] font-bold rounded-full bg-sky-100 text-sky-700 border border-sky-300 uppercase tracking-widest">
@@ -868,7 +866,6 @@
 
     // ================= 3D TILT =================
     function initTilt() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       document.querySelectorAll('.tilt-card').forEach(card => {
         card.addEventListener('mousemove', e => {
           const r = card.getBoundingClientRect();
@@ -946,7 +943,6 @@
       window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
       resize();
 
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       function draw() {
         ctx.clearRect(0, 0, w, h);
         for (let i = 0; i < particles.length; i++) {
@@ -977,7 +973,7 @@
             ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
           }
         }
-        if (!reduce) requestAnimationFrame(draw);
+        requestAnimationFrame(draw);
       }
       draw();
     }

@@ -1719,12 +1719,15 @@
       })(t0);
     }
     function updateStats() {
-      const inTerm = projectsData.filter(p => p.semester === activeSemester);
-      const advisors = new Set();
-      inTerm.forEach(p => (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).forEach(f => advisors.add(f)));
-      animateCount(document.getElementById('stat-projects'), inTerm.length);
-      animateCount(document.getElementById('stat-faculty'), advisors.size);
-      animateCount(document.getElementById('stat-terms'), semesterList.length);
+      const totalAdvisors = new Set();
+  projectsData.forEach(p => {
+    (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).forEach(f => totalAdvisors.add(f));
+  });
+
+  // Display grand total metrics across all 8 terms (2022 - 2026)
+  animateCount(document.getElementById('stat-projects'), projectsData.length);
+  animateCount(document.getElementById('stat-faculty'), totalAdvisors.size);
+  animateCount(document.getElementById('stat-terms'), semesterList.length);
     }
 
     let typingStarted = false;

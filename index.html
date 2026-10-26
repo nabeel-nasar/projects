@@ -386,13 +386,12 @@
       <div class="space-y-4 mb-6">
         <div class="glass flex overflow-x-auto pb-1 space-x-1 p-1.5 rounded-xl" id="semester-tabs-container"></div>
 
-<div class="glass flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between p-3.5 rounded-xl">
+        <div class="glass flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between p-3.5 rounded-xl">
           <div class="relative flex-grow max-w-md">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 text-xs"></i>
             <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search title, student, faculty (e.g. Dr. Jaradat), or team..." class="w-full pl-9 pr-3 py-2 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-sky-500 focus:bg-white transition-all">
           </div>
           
-          <!-- ADD THIS SELECT DROPDOWN -->
           <div class="flex items-center gap-2">
             <select id="faculty-filter" onchange="handleFacultyFilter(this.value)" class="px-3 py-2 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-sky-500 font-semibold transition-all">
             </select>
@@ -400,6 +399,7 @@
 
           <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0" id="category-pills-container"></div>
         </div>
+      </div>
 
       <div id="sdp-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
@@ -706,7 +706,6 @@
         summary: "",
         details: "Student Team:\n• Khaled Al Zubaidi\n• Omar Ahmed\n• Amin Baidas"
       },
-
       {
         id: "sdp-f26-15",
         title: "Adaptive Coolant Flow Distribution for Direct-to-Chip Cooling of AI Data Centers in UAE",
@@ -928,7 +927,6 @@
         summary: "",
         details: "Student Team:\n• Anas Saleh\n• Abdelrahmnan Yahia\n• Saifallah Hewala\n• Zeyad Elmenshawy"
       },
-
       {
         id: "sdp-f26-9",
         title: "Design of a Control System for Leak Detection",
@@ -942,7 +940,6 @@
         summary: "",
         details: "Student Team:\n• Mohamed Ahmed\n• Al Harath Sabrah\n• Iskander Zakirov"
       },
-
       {
         id: "sdp-f26-13",
         title: "Design of an Autonomous Sailing USV Using Wind and Solar Power",
@@ -969,7 +966,6 @@
         summary: "",
         details: "Student Team:\n• Ammar Khalid\n• Khaled Alfayomy\n• Nasser-allah Awad\n• Mouhammad Cisse"
       },
-
       {
         id: "sdp-s24-5",
         title: "Design of a Smart Irrigation System",
@@ -1061,7 +1057,6 @@
         summary: "",
         details: "Student Team:\n• Omar Abdeldayem\n• Kamel Aref Elsayed\n• Abdelrahman Toulba\n• Karim Diab"
       },
-
       {
         id: "sdp-f22-7",
         title: "Enhancement of Fatigue Properties in TiNB Biocompatible Shape Memory Alloys",
@@ -1088,7 +1083,6 @@
         summary: "",
         details: "Student Team:\n• Kanza Khan\n• Raghad Alshikh Ali\n• Saad Sajid"
       },
-
       {
         id: "sdp-f24-8",
         title: "Evaluating and Improving a Handheld Remote Docking Joystick for Unmanned Surface Vessels",
@@ -1115,7 +1109,6 @@
         summary: "",
         details: "Student Team:\n• Christopher Idoko\n• Abdelrahman Abouelyousr\n• Samuel Philip Ballesteros\n• Mohamed El Mustafa El Hussen"
       },
-
       {
         id: "sdp-f24-5",
         title: "Frame and Suspension of a Space Rover",
@@ -1155,7 +1148,6 @@
         summary: "",
         details: "Student Team:\n• Mazin Alnajjar\n• Ziad Abdelghany\n• Utkarsh Chauhan\n• Muhammed Omar Ahmed\n• Mahmood Nabeel"
       },
-
       {
         id: "sdp-s23-2",
         title: "Implementation of a Moving Robot Arm for Wheelchair",
@@ -1169,7 +1161,6 @@
         summary: "",
         details: "Student Team:\n• Mikhail Aslam\n• Suhayb Mizan\n• Hasan Omran\n• Adel Safa"
       },
-
       {
         id: "sdp-f25-2",
         title: "Intelligent Speed Bump",
@@ -1183,7 +1174,6 @@
         summary: "",
         details: "Student Team:\n• Donia El Sayed\n• Maahi Saiyed\n• Maryam Al Blooshi"
       },
-
       {
         id: "sdp-f22-3",
         title: "Levitating Frictionless Vertical Windmill",
@@ -1197,7 +1187,6 @@
         summary: "",
         details: "Student Team:\n• Ahmed Mohamed\n• Mohamed Ibrahim\n• Ouhanis Kalajian\n• Rola Fayed"
       },
-
       {
         id: "sdp-f22-11",
         title: "Miniature Jet Engine",
@@ -1211,7 +1200,6 @@
         summary: "",
         details: "Student Team:\n• Ali Younes\n• Majed Wardeh\n• Walid Elmeshad\n• Motasem Alshakghanm"
       },
-
       {
         id: "sdp-f24-4",
         title: "Multifunctional Robotic Arm for Satellite Docking",
@@ -1225,7 +1213,6 @@
         summary: "",
         details: "Student Team:\n• Ibrahim Mohamed\n• Ayman Ahmed\n• Seifeldin Fayed\n• Ziad Alsuluh"
       },
-
       {
         id: "sdp-f25-4",
         title: "NDT System (Non-Destructive Testing)",
@@ -1239,7 +1226,6 @@
         summary: "",
         details: "Student Team:\n• Mostafa Fahmy\n• Jad Abukhaled\n• Omar Eldesoky"
       },
-
       {
         id: "sdp-s25-3",
         title: "Noise Reduction for Robot Applications",
@@ -1318,7 +1304,6 @@
         summary: "",
         details: "Student Team:\n• Abdul Sameen\n• Omar Alhabil (ISME)\n• Youssef Elghazi Elhoussaini"
       },
-
       {
         id: "sdp-f22-5",
         title: "Plastic Deformation Assessment of Al2024-T4 Alloy Using Eddy Current",
@@ -1397,7 +1382,6 @@
         summary: "",
         details: "Student Team:\n• Alhasan Emam\n• Elshafey Elshafey"
       },
-
       {
         id: "sdp-f23-4",
         title: "Smartphone-Based Fluorescent Biosensor",
@@ -1463,7 +1447,6 @@
         summary: "",
         details: "Student Team:\n• Marwan Hashemi\n• Abdalhadi Fayad\n• Naveed Mohammad Ali\n• Mohammed Abusafieh"
       },
-
       {
         id: "sdp-s25-4",
         title: "Thermal Analysis of a Nano Lunar Rover Structure",
@@ -1477,7 +1460,6 @@
         summary: "",
         details: "Student Team:\n• Saba Alansari\n• Rouda Alameeri"
       },
-
       {
         id: "sdp-f26-5",
         title: "UAE-Based Autonomous Harvesting Agricultural Robot",
@@ -1547,6 +1529,16 @@
 
     let facultyData = [], semesterList = [], projectsData = [];
     let activeSemester = "Fall 2026", activeCategory = "All", activeFaculty = "All", searchQuery = "";
+    let currentView = 'showcase';
+    
+    // News feed state
+    let newsSemester = "Fall 2026";
+    let newsIndex = 0;
+    let newsPlaying = true;
+    let newsInterval = null;
+    let newsProgressInterval = null;
+    let newsProgressVal = 0;
+
     window.onload = function () {
       loadLocalStorageData();
       renderSemesterTabs();
@@ -1557,6 +1549,16 @@
       startTyping();
       initParticles();
     };
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
 
     function loadLocalStorageData() {
       const sf = localStorage.getItem('me_sdp_faculty');
@@ -1579,8 +1581,7 @@
     function saveCategoriesToStorage() { localStorage.setItem('me_sdp_categories', JSON.stringify(CATEGORY_LIST)); }
     function saveProjectsToStorage() { localStorage.setItem('me_sdp_projects', JSON.stringify(projectsData)); }
 
-  
-   function resetToDemoData() {
+    function resetToDemoData() {
       if (confirm("Reset showcase back to standard compiled project dataset (Fall 2022 - Fall 2026)?")) {
         localStorage.clear();
         facultyData = [...DEFAULT_FACULTY];
@@ -1608,6 +1609,45 @@
       }
     }
 
+    function setView(view) {
+      currentView = view;
+      const showcaseView = document.getElementById('view-showcase');
+      const newsView = document.getElementById('view-news');
+      const tabShowcase = document.getElementById('tab-showcase');
+      const tabNews = document.getElementById('tab-news');
+
+      if (view === 'showcase') {
+        showcaseView.classList.remove('hidden');
+        newsView.classList.add('hidden');
+        tabShowcase.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-active";
+        tabNews.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-idle";
+        stopNewsTimer();
+      } else {
+        showcaseView.classList.add('hidden');
+        newsView.classList.remove('hidden');
+        tabShowcase.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-idle";
+        tabNews.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-active";
+        renderNews();
+      }
+    }
+
+    function selectSemester(sem) {
+      activeSemester = sem;
+      renderSemesterTabs();
+      renderShowcase();
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderCategoryPills();
+      renderShowcase();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value;
+      renderShowcase();
+    }
+
     function renderSemesterTabs() {
       const c = document.getElementById('semester-tabs-container');
       c.innerHTML = semesterList.map(sem => `
@@ -1623,6 +1663,7 @@
         <button data-cat="${escapeHTML(cat)}" class="cat-pill px-2.5 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${activeCategory === cat ? 'pill-active' : 'pill-idle'}">${escapeHTML(cat)}</button>`).join('');
       c.querySelectorAll('.cat-pill').forEach(b => b.addEventListener('click', () => selectCategory(b.dataset.cat)));
     }
+
     function populateFacultyFilterDropdown() {
       const select = document.getElementById('faculty-filter');
       if (!select) return;
@@ -1641,7 +1682,7 @@
     }
 
     function renderTicker() {
-      const items = CATEGORY_LIST.filter(c => c !== 'All').map(c => `<span><i class="fa-solid fa-bolt text-warmorange-500 mr-2"></i>${c}</span>`).join('');
+      const items = CATEGORY_LIST.filter(c => c !== 'All').map(c => `<span><i class="fa-solid fa-bolt text-warmorange-500 mr-2"></i>${escapeHTML(c)}</span>`).join('');
       document.getElementById('ticker-track').innerHTML = items + items;
     }
 
@@ -1657,15 +1698,14 @@
         const q = searchQuery.toLowerCase();
         const matchFacultySearch = facList.some(f => f.toLowerCase().includes(q));
         const matchSearch = !q || p.title.toLowerCase().includes(q) || matchFacultySearch ||
-          p.team.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q)) ||
-          p.summary.toLowerCase().includes(q) || (p.details && p.details.toLowerCase().includes(q));
+          p.team.toLowerCase().includes(q) || (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
+          (p.summary && p.summary.toLowerCase().includes(q)) || (p.details && p.details.toLowerCase().includes(q));
         return matchSemester && matchCategory && matchFacultyFilter && matchSearch;
       });
 
       document.getElementById('semester-badge').innerText = `${activeSemester} Showcase`;
       document.getElementById('semester-title').innerText = `Senior Design Projects — ${activeSemester}`;
       updateStats();
-      if (currentView === 'news') renderNews(true);
 
       if (filtered.length === 0) {
         grid.innerHTML = '';
@@ -1692,7 +1732,7 @@
               </div>
               <div class="p-5">
                 <h3 class="font-bold text-base text-slate-900 leading-snug">${escapeHTML(p.title)}</h3>
-                <p class="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">${escapeHTML(p.summary)}</p>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">${escapeHTML(p.summary || 'Capstone mechanical engineering research project.')}</p>
                 <div class="mt-4 pt-3 border-t border-sky-100 flex items-center justify-between gap-2">
                   <div>
                     <span class="text-[10px] text-slate-400 font-medium block uppercase">Faculty Advisor(s)</span>
@@ -1704,7 +1744,7 @@
                   </div>
                 </div>
                 <div class="flex flex-wrap gap-1 mt-3">
-                  ${p.tags.map(t => `<span class="tech-pill px-1.5 py-0.5 text-[9px] bg-sky-50 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('')}
+                  ${p.tags ? p.tags.map(t => `<span class="tech-pill px-1.5 py-0.5 text-[9px] bg-sky-50 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('') : ''}
                 </div>
               </div>
             </div>
@@ -1740,6 +1780,7 @@
     }
 
     function animateCount(el, target) {
+      if (!el) return;
       const start = parseInt(el.innerText) || 0;
       if (start === target) { el.innerText = target; return; }
       const dur = 800, t0 = performance.now();
@@ -1750,188 +1791,295 @@
         if (p < 1) requestAnimationFrame(step);
       })(t0);
     }
+
     function updateStats() {
       const totalAdvisors = new Set();
-  projectsData.forEach(p => {
-    (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).forEach(f => totalAdvisors.add(f));
-  });
+      projectsData.forEach(p => {
+        (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).forEach(f => totalAdvisors.add(f));
+      });
 
-  animateCount(document.getElementById('stat-projects'), projectsData.length);
-  animateCount(document.getElementById('stat-faculty'), totalAdvisors.size);
-  animateCount(document.getElementById('stat-terms'), semesterList.length);
+      animateCount(document.getElementById('stat-projects'), projectsData.length);
+      animateCount(document.getElementById('stat-faculty'), totalAdvisors.size);
+      animateCount(document.getElementById('stat-terms'), semesterList.length);
     }
 
     let typingStarted = false;
     function startTyping() {
-      if (typingStarted) return; typingStarted = true;
-      const phrases = [
-        "Comprehensive Departmental Senior Design Project Archive.",
-        "Browse capstone projects from Fall 2022 to Fall 2026.",
-        "Search by advisor, project title, or student names.",
-        "Engineering the future through mechanical design."
-      ];
-      const el = document.getElementById('typed-text');
-      let pi = 0, ci = 0, del = false;
-      (function tick() {
-        const word = phrases[pi];
-        el.textContent = word.substring(0, ci);
-        if (!del && ci < word.length) { ci++; setTimeout(tick, 45); }
-        else if (!del) { del = true; setTimeout(tick, 1800); }
-        else if (ci > 0) { ci--; setTimeout(tick, 22); }
-        else { del = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 350); }
-      })();
-    }
+      if (typingStarted) return; 
+      typingStarted = true;
+      const text = "Comprehensive showcase platform displaying innovative capstone senior design projects, cutting-edge research, and engineering prototypes developed by Mechanical Engineering students at the American University of Sharjah.";
+      const target = document.getElementById('typed-text');
+      let idx = 0;
 
-    function initParticles() {
-      const canvas = document.getElementById('bg-canvas');
-      const ctx = canvas.getContext('2d');
-      let w, h, particles = [];
-      const mouse = { x: -999, y: -999 };
-      const colors = ['14,165,233', '99,102,241', '56,189,248'];
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-        const count = Math.min(110, Math.floor((w * h) / 16000));
-        particles = Array.from({ length: count }, () => ({
-          x: Math.random() * w, y: Math.random() * h,
-          vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5,
-          r: Math.random() * 2 + 1, c: colors[Math.floor(Math.random() * colors.length)]
-        }));
-      }
-      window.addEventListener('resize', resize);
-      window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-      resize();
-
-      function draw() {
-        ctx.clearRect(0, 0, w, h);
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0 || p.x > w) p.vx *= -1;
-          if (p.y < 0 || p.y > h) p.vy *= -1;
-          const dxm = p.x - mouse.x, dym = p.y - mouse.y, dm = Math.hypot(dxm, dym);
-          if (dm < 130) { p.x += dxm / dm * 1.3; p.y += dym / dm * 1.3; }
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${p.c},0.75)`;
-          ctx.shadowColor = `rgba(${p.c},0.9)`; ctx.shadowBlur = 10;
-          ctx.fill(); ctx.shadowBlur = 0;
-
-          for (let j = i + 1; j < particles.length; j++) {
-            const q = particles[j];
-            const d = Math.hypot(p.x - q.x, p.y - q.y);
-            if (d < 140) {
-              ctx.strokeStyle = `rgba(14,165,233,${(1 - d / 140) * 0.28})`;
-              ctx.lineWidth = 1;
-              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-            }
-          }
-          if (dm < 170) {
-            ctx.strokeStyle = `rgba(249,115,22,${(1 - dm / 170) * 0.45})`;
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-          }
+      function typeChar() {
+        if (idx <= text.length) {
+          target.innerText = text.slice(0, idx);
+          idx++;
+          setTimeout(typeChar, 18);
         }
-        requestAnimationFrame(draw);
       }
-      draw();
+      typeChar();
     }
 
-    function populateSemesterDropdown(selected = activeSemester) {
-      document.getElementById('form-semester').innerHTML = semesterList.map(s =>
-        `<option value="${escapeHTML(s)}" ${s === selected ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('');
+    // --- News Feed View Implementation ---
+    function populateNewsSemesterDropdown() {
+      const select = document.getElementById('news-semester');
+      if (!select) return;
+      select.innerHTML = semesterList.map(s => `<option value="${escapeHTML(s)}" ${s === newsSemester ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('');
     }
-    function toggleNewSemesterInput() { document.getElementById('new-semester-block').classList.toggle('hidden'); }
+
+    function handleNewsSemester(val) {
+      newsSemester = val;
+      newsIndex = 0;
+      renderNews();
+    }
+
+    function renderNews() {
+      populateNewsSemesterDropdown();
+      const list = projectsData.filter(p => p.semester === newsSemester);
+      const track = document.getElementById('news-track');
+      const dots = document.getElementById('news-dots');
+      const thumbs = document.getElementById('news-thumbs');
+      const countLabel = document.getElementById('news-count-label');
+
+      if (!list || list.length === 0) {
+        track.innerHTML = `<div class="p-12 text-center text-slate-500 font-semibold">No news entries available for ${escapeHTML(newsSemester)}.</div>`;
+        dots.innerHTML = '';
+        thumbs.innerHTML = '';
+        if (countLabel) countLabel.innerText = '';
+        stopNewsTimer();
+        return;
+      }
+
+      if (newsIndex >= list.length) newsIndex = 0;
+      if (countLabel) countLabel.innerText = `PROJECT ${newsIndex + 1} OF ${list.length}`;
+
+      track.innerHTML = list.map((p, i) => {
+        const active = i === newsIndex ? 'active' : '';
+        const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+        const facList = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).join(', ');
+        const countStr = (i + 1) < 10 ? `0${i + 1}` : `${i + 1}`;
+        return `
+          <div class="news-slide ${active}">
+            <img src="${imgSrc}" class="bg" alt="${escapeHTML(p.title)}" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+            <div class="veil"></div>
+            <div class="panel">
+              <div class="news-count news-anim" style="--d:0">${countStr}<small>/ ${list.length}</small></div>
+              <span class="news-anim inline-block px-3 py-1 bg-sky-500/20 text-sky-800 border border-sky-400/40 rounded-full text-xs font-bold uppercase tracking-wider mb-2" style="--d:1">${escapeHTML(p.category)}</span>
+              <h3 class="news-title news-anim font-tech text-xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3" style="--d:2">${escapeHTML(p.title)}</h3>
+              <p class="news-anim text-slate-700 text-xs sm:text-sm line-clamp-3 mb-4 leading-relaxed max-w-xl" style="--d:3">${escapeHTML(p.summary || 'Capstone engineering design project.')}</p>
+              <div class="news-anim flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-800" style="--d:4">
+                <span class="bg-white/80 px-3 py-1.5 rounded-lg border border-sky-200"><i class="fa-solid fa-user-tie text-warmorange-500 mr-1.5"></i>${escapeHTML(facList)}</span>
+                <span class="bg-white/80 px-3 py-1.5 rounded-lg border border-sky-200"><i class="fa-solid fa-users text-sky-600 mr-1.5"></i>${escapeHTML(p.team)}</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+      dots.innerHTML = list.map((_, i) => `<button onclick="setNewsIndex(${i})" class="news-dot ${i === newsIndex ? 'active' : ''}"></button>`).join('');
+
+      thumbs.innerHTML = list.map((p, i) => {
+        const active = i === newsIndex ? 'active' : '';
+        const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+        return `
+          <div onclick="setNewsIndex(${i})" class="news-thumb ${active}">
+            <img src="${imgSrc}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent p-2 flex flex-col justify-end">
+              <span class="text-[10px] font-bold text-white truncate">${escapeHTML(p.title)}</span>
+            </div>
+          </div>`;
+      }).join('');
+
+      startNewsTimer();
+    }
+
+    function setNewsIndex(idx) {
+      newsIndex = idx;
+      renderNews();
+    }
+
+    function newsNext() {
+      const list = projectsData.filter(p => p.semester === newsSemester);
+      if (list.length === 0) return;
+      newsIndex = (newsIndex + 1) % list.length;
+      renderNews();
+    }
+
+    function newsPrev() {
+      const list = projectsData.filter(p => p.semester === newsSemester);
+      if (list.length === 0) return;
+      newsIndex = (newsIndex - 1 + list.length) % list.length;
+      renderNews();
+    }
+
+    function toggleNewsPlay() {
+      newsPlaying = !newsPlaying;
+      const btn = document.getElementById('news-play-btn');
+      if (btn) btn.innerHTML = newsPlaying ? `<i class="fa-solid fa-pause"></i>` : `<i class="fa-solid fa-play"></i>`;
+      if (newsPlaying) startNewsTimer(); else stopNewsTimer();
+    }
+
+    function startNewsTimer() {
+      stopNewsTimer();
+      if (!newsPlaying) return;
+      newsProgressVal = 0;
+      const bar = document.getElementById('news-progress-bar');
+      newsProgressInterval = setInterval(() => {
+        newsProgressVal += 1.5;
+        if (bar) bar.style.width = `${newsProgressVal}%`;
+        if (newsProgressVal >= 100) {
+          newsNext();
+        }
+      }, 100);
+    }
+
+    function stopNewsTimer() {
+      if (newsProgressInterval) clearInterval(newsProgressInterval);
+      const bar = document.getElementById('news-progress-bar');
+      if (bar) bar.style.width = '0%';
+    }
+
+    function toggleNewsFullscreen() {
+      const stage = document.getElementById('news-stage');
+      if (!document.fullscreenElement) {
+        if (stage.requestFullscreen) stage.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // --- Data Backup Menu & File Export/Import ---
+    function toggleDataMenu() {
+      document.getElementById('data-menu').classList.toggle('hidden');
+    }
+
+    function exportDataJSON() {
+      const payload = { faculty: facultyData, semesters: semesterList, categories: CATEGORY_LIST, projects: projectsData };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `aus_me_sdp_data_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importDataJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.faculty && data.semesters && data.projects) {
+            facultyData = data.faculty;
+            semesterList = data.semesters;
+            if (data.categories) CATEGORY_LIST = data.categories;
+            projectsData = data.projects;
+            saveFacultyToStorage(); saveSemestersToStorage(); saveCategoriesToStorage(); saveProjectsToStorage();
+            populateFacultyFilterDropdown(); renderSemesterTabs(); renderCategoryPills(); renderShowcase();
+            if (currentView === 'news') renderNews();
+            alert("Dataset successfully imported!");
+          } else {
+            alert("Invalid JSON data format.");
+          }
+        } catch (err) {
+          alert("Error parsing JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // --- Modal Management & Form Handlers ---
+    function openPostModal(editId = null) {
+      const modal = document.getElementById('post-modal');
+      const heading = document.getElementById('post-modal-heading');
+      const editInput = document.getElementById('edit-project-id');
+
+      populateFormDropdowns();
+
+      if (editId) {
+        const p = projectsData.find(x => x.id === editId);
+        if (p) {
+          heading.innerText = "Edit Senior Design Project";
+          editInput.value = p.id;
+          document.getElementById('form-title').value = p.title;
+          document.getElementById('form-semester').value = p.semester;
+          document.getElementById('form-category').value = p.category;
+          document.getElementById('form-image').value = p.image || '';
+          document.getElementById('form-team').value = p.team;
+          document.getElementById('form-tags').value = p.tags ? p.tags.join(', ') : '';
+          document.getElementById('form-icon').value = p.icon || 'fa-gear';
+          document.getElementById('form-summary').value = p.summary || '';
+          document.getElementById('form-details').value = p.details || '';
+
+          const selectFac = document.getElementById('form-faculty');
+          const facs = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+          Array.from(selectFac.options).forEach(opt => {
+            opt.selected = facs.includes(opt.value);
+          });
+        }
+      } else {
+        heading.innerText = "Post New Senior Design Project";
+        editInput.value = "";
+        document.getElementById('sdp-form').reset();
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closePostModal() {
+      document.getElementById('post-modal').classList.add('hidden');
+    }
+
+    function populateFormDropdowns() {
+      const semSelect = document.getElementById('form-semester');
+      semSelect.innerHTML = semesterList.map(s => `<option value="${escapeHTML(s)}">${escapeHTML(s)}</option>`).join('');
+
+      const catSelect = document.getElementById('form-category');
+      catSelect.innerHTML = CATEGORY_LIST.filter(c => c !== 'All').map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+
+      const facSelect = document.getElementById('form-faculty');
+      facSelect.innerHTML = facultyData.map(f => `<option value="${escapeHTML(f)}">${escapeHTML(f)}</option>`).join('');
+    }
+
+    function toggleNewSemesterInput() {
+      document.getElementById('new-semester-block').classList.toggle('hidden');
+    }
+
     function addNewSemester() {
       const input = document.getElementById('new-semester-name');
-      const s = input.value.trim();
-      if (!s) return;
-      if (!semesterList.includes(s)) {
-        semesterList.unshift(s);
-        saveSemestersToStorage(); renderSemesterTabs(); populateSemesterDropdown(s);
-        input.value = ''; toggleNewSemesterInput(); updateStats();
-        alert(`New semester term "${s}" created!`);
-      } else alert('Semester already exists.');
+      const val = input.value.trim();
+      if (val && !semesterList.includes(val)) {
+        semesterList.unshift(val);
+        saveSemestersToStorage();
+        renderSemesterTabs();
+        populateFormDropdowns();
+        document.getElementById('form-semester').value = val;
+        input.value = '';
+        toggleNewSemesterInput();
+      }
     }
 
-    function populateCategoryDropdown(selected = CATEGORY_LIST[1]) {
-      const select = document.getElementById('form-category');
-      select.innerHTML = CATEGORY_LIST.filter(c => c !== 'All').map(c =>
-        `<option value="${escapeHTML(c)}" ${c === selected ? 'selected' : ''}>${escapeHTML(c)}</option>`
-      ).join('');
+    function toggleNewCategoryInput() {
+      document.getElementById('new-category-block').classList.toggle('hidden');
     }
-    function toggleNewCategoryInput() { document.getElementById('new-category-block').classList.toggle('hidden'); }
+
     function addNewCategory() {
       const input = document.getElementById('new-category-name');
-      const cat = input.value.trim();
-      if (!cat) return;
-      if (!CATEGORY_LIST.includes(cat)) {
-        CATEGORY_LIST.push(cat);
+      const val = input.value.trim();
+      if (val && !CATEGORY_LIST.includes(val)) {
+        CATEGORY_LIST.push(val);
         saveCategoriesToStorage();
         renderCategoryPills();
         renderTicker();
-        populateCategoryDropdown(cat);
+        populateFormDropdowns();
+        document.getElementById('form-category').value = val;
         input.value = '';
         toggleNewCategoryInput();
-        alert(`New category domain "${cat}" added successfully!`);
-      } else alert('Category already exists.');
-    }
-
-    function openFacultyModal() { renderFacultyList(); document.getElementById('faculty-modal').classList.remove('hidden'); }
-    function closeFacultyModal() { document.getElementById('faculty-modal').classList.add('hidden'); }
-    function renderFacultyList() {
-      document.getElementById('faculty-list-container').innerHTML = facultyData.map((f, idx) => `
-        <div class="flex items-center justify-between p-2.5 bg-sky-50/80 rounded-xl border border-sky-100 text-xs msg-in" style="animation-delay:${idx * 30}ms">
-          <div class="flex items-center space-x-2"><i class="fa-solid fa-user-tie text-warmorange-500"></i><span class="font-bold text-slate-800">${escapeHTML(f)}</span></div>
-          <div class="flex items-center gap-2">
-            <button onclick="editFacultyPrompt(${idx})" class="text-slate-400 hover:text-sky-600"><i class="fa-solid fa-pen"></i></button>
-            <button onclick="removeFaculty(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>`).join('');
-    }
-    function handleAddFaculty(e) {
-      e.preventDefault();
-      const input = document.getElementById('new-faculty-name');
-      const name = input.value.trim();
-      if (!name) return;
-      if (!facultyData.includes(name)) {
-        facultyData.push(name); saveFacultyToStorage(); renderFacultyList(); renderShowcase(); input.value = '';
-      } else alert('Faculty member already exists.');
-    }
-    function editFacultyPrompt(idx) {
-      const oldName = facultyData[idx];
-      const nn = prompt("Edit Faculty Name:", oldName);
-      if (nn && nn.trim() !== "") {
-        const t = nn.trim();
-        facultyData[idx] = t;
-        projectsData.forEach(p => { if (Array.isArray(p.faculty)) p.faculty = p.faculty.map(f => f === oldName ? t : f); });
-        saveFacultyToStorage(); saveProjectsToStorage(); renderFacultyList(); renderShowcase();
-      }
-    }
-    function removeFaculty(idx) {
-      const name = facultyData[idx];
-      if (confirm(`Remove ${name} from directory?`)) {
-        facultyData.splice(idx, 1); saveFacultyToStorage(); renderFacultyList(); renderShowcase();
       }
     }
 
-    function openPostModal() {
-      populateSemesterDropdown(activeSemester);
-      populateFacultyDropdown();
-      populateCategoryDropdown();
-      document.getElementById('sdp-form').reset();
-      document.getElementById('edit-project-id').value = '';
-      document.getElementById('new-semester-block').classList.add('hidden');
-      document.getElementById('new-category-block').classList.add('hidden');
-      document.getElementById('post-modal-heading').innerText = "Post New Senior Design Project";
-      document.getElementById('post-modal').classList.remove('hidden');
-    }
-    function closePostModal() { document.getElementById('post-modal').classList.add('hidden'); }
-    function populateFacultyDropdown(selected = []) {
-      document.getElementById('form-faculty').innerHTML = facultyData.map(f =>
-        `<option value="${escapeHTML(f)}" ${selected.includes(f) ? 'selected' : ''}>${escapeHTML(f)}</option>`).join('');
-    }
     function handleFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById('edit-project-id').value;
@@ -1939,298 +2087,225 @@
       const semester = document.getElementById('form-semester').value;
       const category = document.getElementById('form-category').value;
       const image = document.getElementById('form-image').value.trim();
-      const faculty = Array.from(document.getElementById('form-faculty').selectedOptions).map(o => o.value);
-      if (faculty.length === 0) { alert("Please select at least one faculty advisor."); return; }
       const team = document.getElementById('form-team').value.trim();
-      const tagsStr = document.getElementById('form-tags').value.trim();
+      const tagsRaw = document.getElementById('form-tags').value;
       const icon = document.getElementById('form-icon').value;
       const summary = document.getElementById('form-summary').value.trim();
       const details = document.getElementById('form-details').value.trim();
-      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : ['ME Capstone'];
+
+      const facSelect = document.getElementById('form-faculty');
+      const selectedFaculties = Array.from(facSelect.selectedOptions).map(o => o.value);
+
+      const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
 
       if (editId) {
-        const i = projectsData.findIndex(p => p.id === editId);
-        if (i !== -1) projectsData[i] = { id: editId, title, semester, category, image, faculty, team, tags, icon, summary, details };
+        const idx = projectsData.findIndex(x => x.id === editId);
+        if (idx !== -1) {
+          projectsData[idx] = { id: editId, title, semester, category, faculty: selectedFaculties, team, image, tags, icon, summary, details };
+        }
       } else {
-        projectsData.unshift({ id: 'sdp-' + Date.now(), title, semester, category, image, faculty, team, tags, icon, summary, details });
+        const newProj = {
+          id: `sdp-custom-${Date.now()}`,
+          title, semester, category, faculty: selectedFaculties, team, image, tags, icon, summary, details
+        };
+        projectsData.unshift(newProj);
       }
-      saveProjectsToStorage(); closePostModal(); selectSemester(semester); renderShowcase();
+
+      saveProjectsToStorage();
+      renderShowcase();
+      if (currentView === 'news') renderNews();
+      closePostModal();
     }
+
     function openEditProject(id) {
-      const p = projectsData.find(i => i.id === id);
-      if (!p) return;
-      populateSemesterDropdown(p.semester);
-      populateCategoryDropdown(p.category);
-      populateFacultyDropdown(Array.isArray(p.faculty) ? p.faculty : [p.faculty]);
-      document.getElementById('edit-project-id').value = p.id;
-      document.getElementById('form-title').value = p.title;
-      document.getElementById('form-category').value = p.category;
-      document.getElementById('form-image').value = p.image || '';
-      document.getElementById('form-team').value = p.team;
-      document.getElementById('form-tags').value = p.tags.join(', ');
-      document.getElementById('form-icon').value = p.icon || 'fa-gear';
-      document.getElementById('form-summary').value = p.summary;
-      document.getElementById('form-details').value = p.details;
-      document.getElementById('post-modal-heading').innerText = "Edit Senior Design Project";
-      document.getElementById('post-modal').classList.remove('hidden');
+      openPostModal(id);
     }
+
     function deleteProject(id) {
-      if (confirm("Are you sure you want to delete this SDP post?")) {
+      if (confirm("Are you sure you want to delete this senior design project entry?")) {
         projectsData = projectsData.filter(p => p.id !== id);
-        saveProjectsToStorage(); renderShowcase();
+        saveProjectsToStorage();
+        renderShowcase();
+        if (currentView === 'news') renderNews();
       }
     }
 
     function openProjectDetails(id) {
-      const p = projectsData.find(i => i.id === id);
+      const p = projectsData.find(x => x.id === id);
       if (!p) return;
-      const fl = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
-      document.getElementById('modal-image').src = p.image && p.image.trim() !== "" ? p.image : GENERIC_SDP_IMAGE;
-      document.getElementById('modal-title').innerText = p.title;
+
+      const modal = document.getElementById('project-modal');
+      const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+      document.getElementById('modal-image').src = imgSrc;
       document.getElementById('modal-category').innerText = p.category;
-      document.getElementById('modal-advisor').innerText = fl.join(', ');
+      document.getElementById('modal-title').innerText = p.title;
+
+      const facList = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).join(', ');
+      document.getElementById('modal-advisor').innerText = facList;
       document.getElementById('modal-term').innerText = p.semester;
       document.getElementById('modal-team').innerText = p.team;
-      document.getElementById('modal-summary').innerText = p.summary;
-      document.getElementById('modal-details').innerText = p.details || "No extended team member details specified.";
-      document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="tech-pill px-2 py-0.5 text-[10px] bg-sky-50 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('');
-      document.getElementById('modal-edit-btn').onclick = function () { closeProjectModal(); openEditProject(p.id); };
-      document.getElementById('project-modal').classList.remove('hidden');
-    }
-    function closeProjectModal() { document.getElementById('project-modal').classList.add('hidden'); }
 
-    function selectSemester(sem) { activeSemester = sem; renderSemesterTabs(); renderShowcase(); }
-    function selectCategory(cat) { activeCategory = cat; renderCategoryPills(); renderShowcase(); }
-    function handleSearch() { searchQuery = document.getElementById('search-input').value; renderShowcase(); }
-    function toggleDataMenu() { document.getElementById('data-menu').classList.toggle('hidden'); }
+      document.getElementById('modal-summary').innerText = p.summary || 'No overview abstract submitted.';
+      document.getElementById('modal-details').innerText = p.details || 'No expanded technical details provided.';
 
-    function exportDataJSON() {
-      const data = { faculty: facultyData, semesters: semesterList, categories: CATEGORY_LIST, projects: projectsData };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = `ME_SDP_Full_Database_${new Date().toISOString().slice(0, 10)}.json`;
-      a.click(); URL.revokeObjectURL(url);
-    }
-    function importDataJSON(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (evt) {
-        try {
-          const parsed = JSON.parse(evt.target.result);
-          if (parsed.faculty && parsed.projects) {
-            facultyData = parsed.faculty; projectsData = parsed.projects;
-            if (parsed.semesters) semesterList = parsed.semesters;
-            if (parsed.categories) CATEGORY_LIST = parsed.categories;
-            saveFacultyToStorage(); saveSemestersToStorage(); saveCategoriesToStorage(); saveProjectsToStorage();
-            renderSemesterTabs(); renderCategoryPills(); renderTicker(); renderShowcase();
-            alert('Showcase dataset imported successfully!');
-          } else alert('Invalid backup file format.');
-        } catch (err) { alert('Error parsing JSON file.'); }
-      };
-      reader.readAsText(file);
+      const tagsWrap = document.getElementById('modal-tags');
+      tagsWrap.innerHTML = p.tags ? p.tags.map(t => `<span class="px-2 py-0.5 text-[10px] bg-sky-100 font-mono text-sky-800 rounded-md border border-sky-200">${escapeHTML(t)}</span>`).join('') : '';
+
+      const editBtn = document.getElementById('modal-edit-btn');
+      editBtn.onclick = function() { closeProjectModal(); openEditProject(p.id); };
+
+      modal.classList.remove('hidden');
     }
 
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+    }
+
+    // --- Faculty Directory Management ---
+    function openFacultyModal() {
+      renderFacultyList();
+      document.getElementById('faculty-modal').classList.remove('hidden');
+    }
+
+    function closeFacultyModal() {
+      document.getElementById('faculty-modal').classList.add('hidden');
+    }
+
+    function renderFacultyList() {
+      const c = document.getElementById('faculty-list-container');
+      c.innerHTML = facultyData.map((f, i) => `
+        <div class="flex items-center justify-between p-2 rounded-lg bg-sky-50 border border-sky-100 text-xs">
+          <span class="font-bold text-slate-800"><i class="fa-solid fa-user-tie text-warmorange-500 mr-2"></i>${escapeHTML(f)}</span>
+          <button onclick="removeFaculty(${i})" class="text-slate-400 hover:text-red-600 transition-colors"><i class="fa-solid fa-trash"></i></button>
+        </div>`).join('');
+    }
+
+    function handleAddFaculty(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-faculty-name');
+      const val = input.value.trim();
+      if (val && !facultyData.includes(val)) {
+        facultyData.push(val);
+        saveFacultyToStorage();
+        populateFacultyFilterDropdown();
+        renderFacultyList();
+        input.value = '';
+      }
+    }
+
+    function removeFaculty(idx) {
+      if (confirm(`Remove ${facultyData[idx]} from faculty directory?`)) {
+        facultyData.splice(idx, 1);
+        saveFacultyToStorage();
+        populateFacultyFilterDropdown();
+        renderFacultyList();
+      }
+    }
+
+    // --- Dynamic Chatbot Logic ---
     function toggleFloatingChat() {
-      document.getElementById('floating-chat-window').classList.toggle('hidden');
-      document.getElementById('chat-icon-open').classList.toggle('hidden');
-      document.getElementById('chat-icon-close').classList.toggle('hidden');
+      const win = document.getElementById('floating-chat-window');
+      const openIcon = document.getElementById('chat-icon-open');
+      const closeIcon = document.getElementById('chat-icon-close');
+      win.classList.toggle('hidden');
+      openIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
     }
+
     function handleWidgetChatSubmit(e) {
       e.preventDefault();
       const input = document.getElementById('widget-chat-input');
-      const query = input.value.trim();
-      if (!query) return;
-      const win = document.getElementById('widget-chat-messages');
-      const u = document.createElement('div');
-      u.className = 'text-right msg-in';
-      u.innerHTML = `<span class="inline-block bg-gradient-to-r from-sky-500 to-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs">${escapeHTML(query)}</span>`;
-      win.appendChild(u); input.value = ''; win.scrollTop = win.scrollHeight;
+      const q = input.value.trim();
+      if (!q) return;
+
+      appendChatMessage('user', q);
+      input.value = '';
 
       setTimeout(() => {
-        const b = document.createElement('div');
-        b.className = 'msg-in bg-white border border-sky-100 rounded-xl p-3 text-slate-800 text-xs shadow-sm';
-        const lq = query.toLowerCase();
-        let r = `Searching for: <strong>${escapeHTML(query)}</strong>. `;
-        if (lq.includes('faculty') || lq.includes('dr')) r += `Registered active faculty: ${facultyData.slice(0, 6).map(escapeHTML).join(', ')}... (use search bar to view all projects).`;
-        else if (lq.includes('post') || lq.includes('add')) r += `Click "Post New SDP" to enter new projects or add new semester terms!`;
-        else r += `You can search by student names, advisor names, or project titles directly in the search bar!`;
-        b.innerHTML = r; win.appendChild(b); win.scrollTop = win.scrollHeight;
-      }, 350);
+        const reply = processChatQuery(q);
+        appendChatMessage('assistant', reply);
+      }, 300);
     }
 
-    const NEWS_INTERVAL = 6500;
-    let currentView = 'showcase';
-    let newsItems = [], newsIndex = 0, newsPlaying = true, newsHover = false;
-    let newsElapsed = 0, newsLast = 0, newsRaf = null, newsSemester = 'All';
-
-    function viewTabClass(active) {
-      return 'px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ' + (active ? 'tab-active' : 'tab-idle');
+    function appendChatMessage(sender, text) {
+      const msgBox = document.getElementById('widget-chat-messages');
+      const isUser = sender === 'user';
+      const div = document.createElement('div');
+      div.className = `msg-in ${isUser ? 'bg-sky-500 text-white ml-auto' : 'bg-white border border-sky-100 text-slate-700'} rounded-xl p-3 max-w-[85%] shadow-sm leading-relaxed`;
+      div.innerText = text;
+      msgBox.appendChild(div);
+      msgBox.scrollTop = msgBox.scrollHeight;
     }
 
-    function setView(v) {
-      currentView = v;
-      document.getElementById('view-showcase').classList.toggle('hidden', v !== 'showcase');
-      document.getElementById('view-news').classList.toggle('hidden', v !== 'news');
-      document.getElementById('tab-showcase').className = viewTabClass(v === 'showcase');
-      document.getElementById('tab-news').className = viewTabClass(v === 'news');
-      if (v === 'news') { renderNews(); newsElapsed = 0; startNewsLoop(); }
-      else stopNewsLoop();
-    }
+    function processChatQuery(query) {
+      const q = query.toLowerCase();
 
-    
-    function getNewsProjects() {
-      const idx = s => { const i = semesterList.indexOf(s); return i === -1 ? 999 : i; };
-      return (projectsData || [])
-        .map((p, i) => ({ p, i }))
-        .filter(x => newsSemester === 'All' || x.p.semester === newsSemester)
-        .filter(x => activeCategory === 'All' || x.p.category === activeCategory)
-        .filter(x => activeFaculty === 'All' || (Array.isArray(x.p.faculty) ? x.p.faculty : [x.p.faculty]).includes(activeFaculty))
-        .sort((a, b) => idx(a.p.semester) - idx(b.p.semester) || a.i - b.i)
-        .map(x => x.p);
-    }
-
-    function renderNews(keep) {
-      if (newsSemester !== 'All' && !semesterList.includes(newsSemester)) newsSemester = 'All';
-      document.getElementById('news-semester').innerHTML = ['All', ...semesterList].map(s =>
-        `<option value="${escapeHTML(s)}" ${s === newsSemester ? 'selected' : ''}>${s === 'All' ? 'All Semesters' : escapeHTML(s)}</option>`).join('');
-
-      newsItems = getNewsProjects();
-      const n = newsItems.length;
-      const track = document.getElementById('news-track');
-      const dots = document.getElementById('news-dots');
-      const thumbs = document.getElementById('news-thumbs');
-      document.getElementById('news-count-label').innerText = `${n} PROJECT${n === 1 ? '' : 'S'} ON AIR`;
-      if (!keep || newsIndex >= n) newsIndex = 0;
-
-      if (n === 0) {
-        track.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center text-center text-slate-500"><i class="fa-solid fa-satellite-dish text-4xl text-sky-400 mb-3 badge-float"></i><p class="text-sm font-semibold">No projects to broadcast yet</p></div>`;
-        dots.innerHTML = ''; thumbs.innerHTML = '';
-        return;
+      // Check for faculty query
+      const matchedFaculty = facultyData.filter(f => f.toLowerCase().includes(q));
+      if (matchedFaculty.length > 0) {
+        const facName = matchedFaculty[0];
+        const facProjects = projectsData.filter(p => {
+          const fl = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+          return fl.some(f => f.toLowerCase().includes(facName.toLowerCase()));
+        });
+        if (facProjects.length > 0) {
+          const projectTitles = facProjects.slice(0, 3).map(p => `• ${p.title} (${p.semester})`).join('\n');
+          return `${facName} is advising ${facProjects.length} SDP project(s):\n${projectTitles}`;
+        } else {
+          return `${facName} is currently listed in the faculty directory.`;
+        }
       }
 
-      const pad = x => String(x).padStart(2, '0');
-      track.innerHTML = newsItems.map((p, i) => {
-        const fl = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).map(f => escapeHTML(f)).join(', ');
-        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
-        return `
-        <div class="news-slide">
-          <img class="bg" src="${img}" alt="" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
-          <div class="veil"></div>
-          <div class="panel">
-            <div class="news-count news-anim" style="--d:0">${pad(i + 1)}<small>/ ${pad(n)}</small></div>
-            <div class="flex flex-wrap items-center gap-2 news-anim" style="--d:1">
-              <span class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow"><i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}</span>
-              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 text-sky-700 border border-sky-200"><i class="fa-solid fa-graduation-cap text-warmorange-500 mr-1"></i>${escapeHTML(p.semester)}</span>
-            </div>
-            <h3 class="news-title font-tech text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-3 news-anim" style="--d:2">${escapeHTML(p.title)}</h3>
-            <p class="text-sm text-slate-700 mt-3 leading-relaxed line-clamp-3 news-anim" style="--d:3">${escapeHTML(p.summary)}</p>
-            <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs news-anim" style="--d:4">
-              <span class="font-extrabold text-sky-700"><i class="fa-solid fa-user-tie text-warmorange-500 mr-1.5"></i>${fl}</span>
-              <span class="font-bold text-slate-700"><i class="fa-solid fa-people-group text-indigo-500 mr-1.5"></i>${escapeHTML(p.team)}</span>
-            </div>
-            <div class="flex flex-wrap gap-1 mt-3 news-anim" style="--d:5">
-              ${p.tags.slice(0, 5).map(t => `<span class="px-1.5 py-0.5 text-[9px] bg-white/80 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('')}
-            </div>
-            <div class="mt-5 news-anim" style="--d:6">
-              <button onclick="openProjectDetails('${escapeHTML(p.id)}')" class="btn-glow px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md">
-                View Details <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
-              </button>
-            </div>
-          </div>
-        </div>`;
-      }).join('');
+      // Check matching projects
+      const matches = projectsData.filter(p => 
+        p.title.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
+        (p.tags && p.tags.some(t => t.toLowerCase().includes(q)))
+      );
 
-      dots.innerHTML = newsItems.map((p, i) => `<button class="news-dot" onclick="showSlide(${i})" aria-label="Go to project ${i + 1}"></button>`).join('');
+      if (matches.length > 0) {
+        const sample = matches.slice(0, 3).map(p => `• ${p.title} (${p.semester})`).join('\n');
+        return `Found ${matches.length} matching project(s):\n${sample}`;
+      }
 
-      thumbs.innerHTML = newsItems.map((p, i) => {
-        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
-        return `
-        <button class="news-thumb" onclick="showSlide(${i})" title="${escapeHTML(p.title)}">
-          <img src="${img}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
-          <span class="absolute inset-x-0 bottom-0 p-2 text-[10px] font-bold text-white bg-gradient-to-t from-sky-950/85 to-transparent text-left truncate">${escapeHTML(p.title)}</span>
-        </button>`;
-      }).join('');
-
-      showSlide(newsIndex);
+      return `I couldn't find any specific match for "${query}". You can search for faculty names (e.g. Dr. Jaradat), categories, or keywords like "Solar" or "Robot".`;
     }
 
-    function showSlide(i) {
-      const n = newsItems.length;
-      if (!n) return;
-      newsIndex = ((i % n) + n) % n;
-      newsElapsed = 0;
-      document.querySelectorAll('.news-slide').forEach((el, k) => el.classList.toggle('active', k === newsIndex));
-      document.querySelectorAll('.news-dot').forEach((el, k) => el.classList.toggle('active', k === newsIndex));
-      const ths = document.querySelectorAll('.news-thumb');
-      ths.forEach((el, k) => el.classList.toggle('active', k === newsIndex));
-      const t = ths[newsIndex], box = document.getElementById('news-thumbs');
-      if (t) box.scrollTo({ left: t.offsetLeft - (box.clientWidth - t.clientWidth) / 2, behavior: 'smooth' });
-    }
+    // Background Canvas Particles
+    function initParticles() {
+      const canvas = document.getElementById('bg-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = window.innerWidth;
+      let h = canvas.height = window.innerHeight;
 
-    function newsNext() { showSlide(newsIndex + 1); }
-    function newsPrev() { showSlide(newsIndex - 1); }
-
-    function toggleNewsPlay() {
-      newsPlaying = !newsPlaying;
-      document.querySelector('#news-play-btn i').className = 'fa-solid ' + (newsPlaying ? 'fa-pause' : 'fa-play');
-    }
-
-    function toggleNewsFullscreen() {
-      const el = document.getElementById('news-stage');
-      if (document.fullscreenElement) document.exitFullscreen();
-      else if (el.requestFullscreen) el.requestFullscreen();
-    }
-
-    function handleNewsSemester(v) { newsSemester = v; newsIndex = 0; renderNews(); newsElapsed = 0; }
-
-    function startNewsLoop() {
-      if (newsRaf) return;
-      newsLast = performance.now();
-      newsRaf = requestAnimationFrame(newsLoop);
-    }
-    function stopNewsLoop() {
-      if (newsRaf) cancelAnimationFrame(newsRaf);
-      newsRaf = null;
-    }
-    function newsLoop(t) {
-      if (currentView !== 'news') { newsRaf = null; return; }
-      const dt = Math.min(t - newsLast, 100);
-      newsLast = t;
-      const modalOpen = ['project-modal', 'post-modal', 'faculty-modal'].some(id => !document.getElementById(id).classList.contains('hidden'));
-      const hoverPause = newsHover && !document.fullscreenElement;
-      if (newsPlaying && !hoverPause && !modalOpen && !document.hidden && newsItems.length > 1) newsElapsed += dt;
-      document.getElementById('news-progress-bar').style.width = Math.min(newsElapsed / NEWS_INTERVAL * 100, 100) + '%';
-      if (newsElapsed >= NEWS_INTERVAL) showSlide(newsIndex + 1);
-      newsRaf = requestAnimationFrame(newsLoop);
-    }
-
-    (function initNewsControls() {
-      const el = document.getElementById('news-slides');
-      let sx = null;
-      el.addEventListener('mouseenter', () => { newsHover = true; });
-      el.addEventListener('mouseleave', () => { newsHover = false; });
-      el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-      el.addEventListener('touchend', e => {
-        if (sx === null) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        if (Math.abs(dx) > 50) { dx < 0 ? newsNext() : newsPrev(); }
-        sx = null;
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
       });
-      document.addEventListener('keydown', e => {
-        if (currentView !== 'news') return;
-        const tag = e.target.tagName;
-        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
-        if (e.key === 'ArrowRight') newsNext();
-        else if (e.key === 'ArrowLeft') newsPrev();
-        else if (e.key === ' ' && tag !== 'BUTTON') { e.preventDefault(); toggleNewsPlay(); }
-      });
-    })();
 
-    function escapeHTML(str) {
-      if (!str) return '';
-      return String(str).replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t));
+      const particles = Array.from({ length: 30 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.4,
+        dy: (Math.random() - 0.5) * 0.4
+      }));
+
+      function render() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(14, 165, 233, 0.25)';
+        particles.forEach(p => {
+          p.x += p.dx; p.y += p.dy;
+          if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(render);
+      }
+      render();
     }
   </script>
 </body>

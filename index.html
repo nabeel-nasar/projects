@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>American University of Sharjah - Department of Mechanical Engineering - SDP Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            tech: ['Orbitron', 'sans-serif'],
+          },
+          colors: {
+            skyblue: { 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+            warmorange: { 100: '#ffedd5', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-1: rgba(230, 244, 255, 0.75);
+      --bg-2: rgba(207, 233, 255, 0.75);
+      --bg-3: rgba(185, 222, 252, 0.75);
+      --ink: #0b2545;
+      --accent: #0ea5e9;
+      --accent-2: #38bdf8;
+      --accent-3: #6366f1;
+      --glow: rgba(14, 165, 233, 0.35);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+      background-size: 200% 200%;
+      animation: bgShift 18s ease-in-out infinite;
+      overflow-x: hidden;
+    }
+    @keyframes bgShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .hidden { display: none !important; }
+
+    #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    .grid-floor {
+      position: fixed; left: -50%; right: -50%; bottom: -10%; height: 55vh; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(14,165,233,0.28) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.28) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(500px) rotateX(62deg);
+      transform-origin: center bottom;
+      animation: gridMove 4s linear infinite;
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent 85%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent 85%);
+    }
+    @keyframes gridMove { from { background-position: 0 0; } to { background-position: 0 60px; } }
+    .orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: .55; z-index: 0; pointer-events: none; }
+    .orb.o1 { width: 420px; height: 420px; background: #7dd3fc; top: -120px; left: -100px; animation: float1 14s ease-in-out infinite; }
+    .orb.o2 { width: 360px; height: 360px; background: #a5b4fc; top: 30%; right: -120px; animation: float2 17s ease-in-out infinite; }
+    .orb.o3 { width: 320px; height: 320px; background: #bae6fd; bottom: -80px; left: 25%; animation: float3 20s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(120px,80px) scale(1.2); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-140px,-60px) scale(1.15); } }
+    @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(90px,-90px) scale(1.25); } }
+    .scanline {
+      position: fixed; left: 0; right: 0; height: 120px; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, rgba(14,165,233,0.07), transparent);
+      animation: scan 7s linear infinite;
+    }
+    @keyframes scan { from { top: -140px; } to { top: 100%; } }
+    .content-layer { position: relative; z-index: 10; }
+
+    .glass {
+      background: rgba(255,255,255,0.62);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.85);
+      box-shadow: 0 10px 40px rgba(14,165,233,0.14), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .hud { position: relative; }
+    .hud::before, .hud::after {
+      content: ''; position: absolute; width: 18px; height: 18px; pointer-events: none;
+      border: 2px solid var(--accent); transition: all .3s ease;
+    }
+    .hud::before { top: 8px; left: 8px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
+    .hud::after { bottom: 8px; right: 8px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
+    .hud:hover::before, .hud:hover::after { width: 30px; height: 30px; border-color: #f97316; }
+
+    .site-header {
+      background: rgba(235,247,255,0.72);
+      backdrop-filter: blur(18px) saturate(170%);
+      -webkit-backdrop-filter: blur(18px) saturate(170%);
+      border-bottom: 1px solid rgba(14,165,233,0.25);
+      position: sticky; top: 0; z-index: 40;
+    }
+    .site-header::after {
+      content: ''; position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+      background: linear-gradient(90deg, transparent, #0ea5e9, #6366f1, #f97316, transparent);
+      background-size: 200% 100%; animation: borderFlow 4s linear infinite;
+    }
+    @keyframes borderFlow { from { background-position: 0% 0; } to { background-position: 200% 0; } }
+    .logo-ring { position: relative; width: 60px; height: 60px; flex-shrink: 0; }
+    .logo-ring::before {
+      content: ''; position: absolute; inset: -4px; border-radius: 18px;
+      background: conic-gradient(from 0deg, #0ea5e9, #6366f1, #f97316, #38bdf8, #0ea5e9);
+      animation: spin 4s linear infinite; filter: blur(1px);
+    }
+    .logo-ring .inner { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; background: #fff; z-index: 1; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #0369a1, #0ea5e9, #6366f1, #0ea5e9, #0369a1);
+      background-size: 250% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: textFlow 6s linear infinite;
+    }
+    @keyframes textFlow { from { background-position: 0% 0; } to { background-position: 250% 0; } }
+
+    .btn-glow { position: relative; overflow: hidden; transition: transform .2s, box-shadow .3s; }
+    .btn-glow::after {
+      content: ''; position: absolute; top: 0; left: -80%; width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
+      transform: skewX(-20deg); transition: left .6s ease;
+    }
+    .btn-glow:hover::after { left: 130%; }
+    .btn-glow:hover { box-shadow: 0 0 22px var(--glow); transform: translateY(-1px); }
+    .pulse-btn { animation: pulseRing 2.4s infinite; }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(249,115,22,0.55); }
+      70% { box-shadow: 0 0 0 14px rgba(249,115,22,0); }
+      100% { box-shadow: 0 0 0 0 rgba(249,115,22,0); }
+    }
+
+    .hero { position: relative; overflow: hidden; }
+    .hero .sheen {
+      position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
+      background-size: 250% 100%; animation: sheen 6s ease-in-out infinite;
+    }
+    @keyframes sheen { 0% { background-position: 150% 0; } 60%,100% { background-position: -100% 0; } }
+    .orbit-wrap { position: relative; width: 190px; height: 190px; flex-shrink: 0; }
+    .orbit-wrap .ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed rgba(14,165,233,0.55); }
+    .orbit-wrap .r1 { animation: spin 14s linear infinite; }
+    .orbit-wrap .r2 { inset: 22px; border-style: solid; border-color: rgba(99,102,241,0.45); animation: spin 9s linear infinite reverse; }
+    .orbit-wrap .r3 { inset: 46px; border-color: rgba(249,115,22,0.55); animation: spin 6s linear infinite; }
+    .orbit-wrap .dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; top: -6px; left: calc(50% - 6px); background: #0ea5e9; box-shadow: 0 0 14px #0ea5e9; }
+    .orbit-wrap .r2 .dot { background: #6366f1; box-shadow: 0 0 14px #6366f1; }
+    .orbit-wrap .r3 .dot { background: #f97316; box-shadow: 0 0 14px #f97316; }
+    .orbit-core {
+      position: absolute; inset: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle, #fff, #bae6fd); color: #0284c7; font-size: 26px;
+      box-shadow: 0 0 30px rgba(14,165,233,0.6); animation: corePulse 2.5s ease-in-out infinite;
+    }
+    .orbit-core i { animation: gearSpin 8s linear infinite; }
+    @keyframes gearSpin { to { transform: rotate(360deg); } }
+    @keyframes corePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+    .stat-num { font-family: 'Orbitron', sans-serif; }
+    .typing-cursor::after { content: '▍'; margin-left: 2px; color: #0ea5e9; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .ticker { overflow: hidden; white-space: nowrap; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .ticker-track { display: inline-flex; gap: 2.5rem; animation: marquee 32s linear infinite; }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .tilt-wrap { perspective: 1000px; }
+    .tilt-card {
+      position: relative; transform-style: preserve-3d; transition: transform .15s ease-out, box-shadow .3s ease;
+      border-radius: 1.25rem; overflow: hidden; height: 100%;
+      display: flex; flex-direction: column; justify-content: space-between;
+      animation: cardIn .7s cubic-bezier(.2,.8,.2,1) backwards;
+    }
+    .tilt-card:hover { box-shadow: 0 25px 60px rgba(14,165,233,0.3), 0 0 0 1px rgba(14,165,233,0.45); }
+    .tilt-card .glare {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+      background: radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,0.65), transparent 55%);
+      z-index: 5;
+    }
+    .tilt-card:hover .glare { opacity: 1; }
+    .tilt-card .card-img { transition: transform .8s ease; }
+    .tilt-card:hover .card-img { transform: scale(1.12) rotate(.6deg); }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(50px) rotateX(18deg) scale(.95); } to { opacity: 1; transform: none; } }
+    .img-overlay { background: linear-gradient(to top, rgba(11,37,69,0.55), transparent 60%); }
+    .badge-float { animation: bob 3s ease-in-out infinite; }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    .tech-pill { transition: all .2s; }
+    .tech-pill:hover { background: #0ea5e9; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px var(--glow); }
+
+    .tab-active { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; box-shadow: 0 6px 18px rgba(14,165,233,0.45); }
+    .tab-idle { color: #334e68; }
+    .tab-idle:hover { background: rgba(255,255,255,0.9); color: #0284c7; }
+    .pill-active { background: linear-gradient(135deg, #0ea5e9, #38bdf8); color: #fff; box-shadow: 0 4px 14px rgba(14,165,233,0.4); }
+    .pill-idle { background: rgba(255,255,255,0.7); color: #475569; border: 1px solid rgba(14,165,233,0.2); }
+    .pill-idle:hover { background: #fff; color: #0284c7; transform: translateY(-1px); }
+
+    .modal-overlay { animation: fadeIn .25s ease both; }
+    .modal-panel { animation: popIn .4s cubic-bezier(.2,.9,.3,1.2) both; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { opacity: 0; transform: scale(.85) translateY(30px); } to { opacity: 1; transform: none; } }
+    .modal-panel input:focus, .modal-panel select:focus, .modal-panel textarea:focus,
+    #search-input:focus { box-shadow: 0 0 0 3px rgba(14,165,233,0.25), 0 0 18px rgba(14,165,233,0.25); }
+
+    .chat-fab { animation: fabFloat 3.5s ease-in-out infinite; }
+    @keyframes fabFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .chat-fab::before {
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      border: 2px solid rgba(14,165,233,0.5); animation: ripple 2.2s ease-out infinite;
+    }
+    @keyframes ripple { from { transform: scale(.9); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+    .msg-in { animation: msgIn .35s ease both; }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; animation: livePulse 1.4s infinite; }
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(239,68,68,.7); }
+      70% { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+      100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+    }
+    .news-slides { position: relative; height: 520px; overflow: hidden; background: #dbeafe; }
+    .news-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility .9s; }
+    .news-slide.active { opacity: 1; visibility: visible; z-index: 2; }
+    .news-slide .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
+    .news-slide.active .bg { animation: kenburns 9s ease-out forwards; }
+    @keyframes kenburns { from { transform: scale(1.02) translate(0,0); } to { transform: scale(1.14) translate(-1.5%,-1%); } }
+    .news-slide .veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(230,244,255,.97) 0%, rgba(230,244,255,.9) 38%, rgba(230,244,255,.3) 68%, transparent 100%); }
+    .news-slide .panel { position: absolute; left: 0; top: 0; bottom: 0; width: min(680px, 100%); padding: 2.2rem 2.5rem 4rem 4.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .news-anim { opacity: 0; transform: translateX(-40px); }
+    .news-slide.active .news-anim { animation: slideText .8s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--d, 0) * 120ms + 250ms); }
+    @keyframes slideText { to { opacity: 1; transform: none; } }
+    .news-count { font-family: 'Orbitron', sans-serif; font-size: 4.5rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(14,165,233,.55); margin-bottom: .6rem; }
+    .news-count small { font-size: 1.1rem; -webkit-text-stroke: 0; color: rgba(2,132,199,.7); margin-left: .4rem; }
+    .news-progress { height: 4px; background: rgba(14,165,233,.15); }
+    .news-progress > div { height: 100%; width: 0; background: linear-gradient(90deg,#0ea5e9,#6366f1,#f97316); box-shadow: 0 0 12px rgba(14,165,233,.7); }
+    .news-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.85); border: 1px solid rgba(14,165,233,.35); color: #0284c7;
+      display: flex; align-items: center; justify-content: center; transition: all .25s; box-shadow: 0 6px 18px rgba(14,165,233,.25);
+    }
+    .news-arrow:hover { background: #0ea5e9; color: #fff; transform: translateY(-50%) scale(1.12); box-shadow: 0 0 22px var(--glow); }
+    .news-dot { width: 9px; height: 9px; border-radius: 99px; background: rgba(14,165,233,.35); transition: all .3s; cursor: pointer; border: none; padding: 0; }
+    .news-dot:hover { background: rgba(14,165,233,.7); }
+    .news-dot.active { width: 28px; background: linear-gradient(90deg,#0ea5e9,#6366f1); }
+    .news-thumb {
+      flex: 0 0 190px; height: 105px; position: relative; overflow: hidden; border-radius: 14px; cursor: pointer; padding: 0;
+      border: 2px solid transparent; opacity: .6; transition: all .3s;
+    }
+    .news-thumb:hover { opacity: .9; }
+    .news-thumb.active { opacity: 1; border-color: #0ea5e9; box-shadow: 0 8px 24px rgba(14,165,233,.4); transform: translateY(-3px); }
+    #news-stage:fullscreen { display: flex; flex-direction: column; border-radius: 0; background: linear-gradient(135deg, #e6f4ff, #b9defc); }
+    #news-stage:fullscreen .news-slides { flex: 1; height: auto; }
+    #news-stage:fullscreen .news-slide .panel { padding-left: 6rem; }
+    #news-stage:fullscreen h3.news-title { font-size: 3rem; }
+    @media (max-width: 640px) {
+      .news-slides { height: 580px; }
+      .news-slide .panel { width: 100%; padding: 1.2rem 1.2rem 3.5rem; justify-content: flex-end; }
+      .news-slide .veil { background: linear-gradient(0deg, rgba(230,244,255,.98) 0%, rgba(230,244,255,.88) 58%, rgba(230,244,255,.1) 100%); }
+      .news-count { display: none; }
+      .news-arrow { top: 28%; }
+    }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(186,230,253,0.4); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(#38bdf8, #6366f1); border-radius: 8px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+    <img src="background.jpg" alt="" class="w-full h-full object-cover opacity-25 filter brightness-105 contrast-90">
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="grid-floor"></div>
+  <div class="scanline"></div>
+
+  <div class="content-layer flex flex-col min-h-screen">
+
+  <header class="site-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between gap-4">
+      <div class="flex items-center space-x-4">
+        <div class="logo-ring">
+          <div class="inner">
+            <img src="icon1.png" alt="Department Logo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=ME';">
+          </div>
+        </div>
+        <div class="flex flex-col space-y-0.5 items-start text-left">
+          <span class="text-xs sm:text-sm font-black uppercase tracking-widest text-indigo-950 block leading-none">AUS - College of Engineering</span>
+          <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-warmorange-600 block leading-tight">Department of Mechanical Engineering</span>
+          <h1 class="font-tech text-sm sm:text-lg font-bold gradient-text tracking-wide leading-none mt-1">Senior Design Project (SDP) Portal</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openFacultyModal()" class="btn-glow px-3.5 py-2 bg-gradient-to-r from-sky-500 to-sky-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-md">
+          <i class="fa-solid fa-user-graduate"></i><span class="hidden sm:inline">Manage Faculty</span>
+        </button>
+        <button onclick="openPostModal()" class="btn-glow pulse-btn px-3.5 py-2 bg-gradient-to-r from-warmorange-500 to-warmorange-600 text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-1.5 active:scale-95">
+          <i class="fa-solid fa-plus text-sm"></i><span>Post New SDP</span>
+        </button>
+        <button onclick="toggleDataMenu()" class="p-2 text-slate-600 hover:text-sky-600 focus:outline-none transition-transform hover:rotate-90" title="Data Backup Options">
+          <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="data-menu" class="hidden bg-sky-100/80 backdrop-blur border-b border-sky-200 px-4 py-2.5">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-xs text-slate-700 gap-2">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-database text-sky-600"></i>
+          <span>Data Management: All changes auto-save to browser storage.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportDataJSON()" class="btn-glow px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-800 rounded border border-slate-300 font-medium"><i class="fa-solid fa-download mr-1"></i>Export JSON</button>
+          <label class="btn-glow px-2.5 py-1 bg-white hover:bg-slate-50 text-slate-800 rounded border border-slate-300 font-medium cursor-pointer">
+            <i class="fa-solid fa-upload mr-1"></i>Import JSON
+            <input type="file" id="import-json-file" accept=".json" class="hidden" onchange="importDataJSON(event)">
+          </label>
+          <button onclick="resetToDemoData()" class="btn-glow px-2.5 py-1 bg-red-500 hover:bg-red-600 text-white rounded"><i class="fa-solid fa-rotate-left mr-1"></i>Reset Standard Data</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <section class="glass hud hero rounded-3xl p-6 sm:p-8 mb-6">
+      <div class="sheen" aria-hidden="true"></div>
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative">
+        <div class="flex-1">
+          <span id="semester-badge" class="px-3 py-1 text-[11px] font-bold rounded-full bg-sky-100 text-sky-700 border border-sky-300 uppercase tracking-widest">
+            Fall 2026 Showcase
+          </span>
+          <h2 id="semester-title" class="font-tech text-2xl sm:text-3xl font-bold text-slate-900 mt-3 leading-tight">Senior Design Projects — Fall 2026</h2>
+          <p class="text-slate-600 text-sm mt-3 leading-relaxed max-w-xl">
+            <span id="typed-text" class="typing-cursor"></span>
+          </p>
+
+          <div class="grid grid-cols-3 gap-3 mt-6 max-w-lg">
+            <div class="rounded-2xl bg-white/70 border border-sky-200 p-3 text-center">
+              <div id="stat-projects" class="stat-num text-2xl font-black text-sky-600">0</div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Projects</div>
+            </div>
+            <div class="rounded-2xl bg-white/70 border border-indigo-200 p-3 text-center">
+              <div id="stat-faculty" class="stat-num text-2xl font-black text-indigo-600">0</div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Advisors</div>
+            </div>
+            <div class="rounded-2xl bg-white/70 border border-orange-200 p-3 text-center">
+              <div id="stat-terms" class="stat-num text-2xl font-black text-warmorange-500">0</div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Terms</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbit-wrap mx-auto lg:mx-0" aria-hidden="true">
+          <div class="ring r1"><span class="dot"></span></div>
+          <div class="ring r2"><span class="dot"></span></div>
+          <div class="ring r3"><span class="dot"></span></div>
+          <div class="orbit-core"><i class="fa-solid fa-gear"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-xl py-2.5 mb-6 ticker">
+      <div class="ticker-track text-[11px] font-mono font-semibold text-sky-700 uppercase tracking-widest" id="ticker-track"></div>
+    </div>
+
+    <div class="flex justify-center mb-6">
+      <div class="glass inline-flex p-1.5 rounded-2xl gap-1">
+        <button id="tab-showcase" onclick="setView('showcase')" class="px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-active">
+          <i class="fa-solid fa-table-cells-large"></i> Showcase
+        </button>
+        <button id="tab-news" onclick="setView('news')" class="px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-idle">
+          <span class="live-dot"></span><i class="fa-solid fa-newspaper"></i> News
+        </button>
+      </div>
+    </div>
+
+    <div id="view-showcase">
+      <div class="space-y-4 mb-6">
+        <div class="glass flex overflow-x-auto pb-1 space-x-1 p-1.5 rounded-xl" id="semester-tabs-container"></div>
+
+        <div class="glass flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between p-3.5 rounded-xl">
+          <div class="relative flex-grow max-w-md">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 text-xs"></i>
+            <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search title, student, faculty (e.g. Dr. Jaradat), or team..." class="w-full pl-9 pr-3 py-2 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-sky-500 focus:bg-white transition-all">
+          </div>
+          <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0" id="category-pills-container"></div>
+        </div>
+      </div>
+
+      <div id="sdp-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <div id="empty-state" class="hidden glass text-center py-16 rounded-2xl border border-dashed border-sky-300 my-4">
+        <i class="fa-solid fa-folder-open text-4xl text-sky-400 mb-3 block badge-float"></i>
+        <h3 class="text-base font-bold text-slate-700">No Senior Design Projects Found</h3>
+        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Try selecting a different semester/category, or click below to post a new project.</p>
+        <button onclick="openPostModal()" class="btn-glow mt-4 px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl text-xs font-bold shadow-sm">
+          <i class="fa-solid fa-plus mr-1"></i> Post New Project
+        </button>
+      </div>
+    </div>
+
+    <div id="view-news" class="hidden">
+      <div id="news-stage" class="glass hud rounded-3xl overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3 border-b border-sky-100 bg-white/50">
+          <div class="flex items-center gap-2.5">
+            <span class="live-dot"></span>
+            <span class="font-tech text-xs sm:text-sm font-bold tracking-widest text-sky-800">SDP NEWS FEED</span>
+            <span id="news-count-label" class="text-[10px] font-mono text-slate-500 hidden sm:inline"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="news-semester" onchange="handleNewsSemester(this.value)" class="px-2.5 py-1.5 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-sky-500"></select>
+            <button id="news-play-btn" onclick="toggleNewsPlay()" class="btn-glow w-8 h-8 rounded-lg bg-white/80 border border-sky-200 text-sky-600 text-xs" title="Pause / Play"><i class="fa-solid fa-pause"></i></button>
+            <button onclick="toggleNewsFullscreen()" class="btn-glow w-8 h-8 rounded-lg bg-white/80 border border-sky-200 text-sky-600 text-xs" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+          </div>
+        </div>
+
+        <div class="news-slides" id="news-slides">
+          <div id="news-track"></div>
+          <button class="news-arrow left-4" onclick="newsPrev()" aria-label="Previous project"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="news-arrow right-4" onclick="newsNext()" aria-label="Next project"><i class="fa-solid fa-chevron-right"></i></button>
+          <div id="news-dots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-[6]"></div>
+        </div>
+        <div class="news-progress"><div id="news-progress-bar"></div></div>
+      </div>
+
+      <div id="news-thumbs" class="relative flex gap-3 overflow-x-auto mt-4 pb-3 px-1"></div>
+    </div>
+  </main>
+
+  <footer class="text-center text-[11px] text-slate-500 py-6 font-mono tracking-wider">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5 align-middle" style="animation: corePulse 1.6s infinite;"></span>
+    AUS · MECHANICAL ENGINEERING · SDP SHOWCASE — SYSTEM ONLINE
+  </footer>
+
+  </div>
+
+  <div id="post-modal" class="modal-overlay hidden fixed inset-0 bg-sky-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-panel glass rounded-2xl max-w-2xl w-full p-6 space-y-4 relative my-8 max-h-[90vh] overflow-y-auto" style="background:rgba(255,255,255,0.92)">
+      <button onclick="closePostModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg transition-transform hover:rotate-90"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="flex items-center space-x-2 border-b border-sky-100 pb-3">
+        <i class="fa-solid fa-pen-to-square text-warmorange-500 text-lg"></i>
+        <h3 id="post-modal-heading" class="font-tech text-base font-bold text-slate-900">Post New Senior Design Project</h3>
+      </div>
+
+      <form id="sdp-form" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-project-id" value="">
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Project Title *</label>
+          <input type="text" id="form-title" required placeholder="e.g. Autonomous Solar-Powered Seawater Desalination Plant" class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-semibold text-slate-700">Semester Term *</label>
+            <button type="button" onclick="toggleNewSemesterInput()" class="text-[11px] font-bold text-sky-600 hover:text-sky-700"><i class="fa-solid fa-plus-circle mr-1"></i>Create New Semester</button>
+          </div>
+          <select id="form-semester" required class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500"></select>
+          <div id="new-semester-block" class="hidden mt-2 p-2.5 bg-sky-50 border border-sky-200 rounded-lg flex items-center gap-2">
+            <input type="text" id="new-semester-name" placeholder="e.g. Spring 2027" class="flex-grow px-2.5 py-1.5 bg-white border border-sky-300 rounded text-xs focus:outline-none">
+            <button type="button" onclick="addNewSemester()" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded text-xs font-bold whitespace-nowrap">Add Term</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-semibold text-slate-700">Category Domain *</label>
+            <button type="button" onclick="toggleNewCategoryInput()" class="text-[11px] font-bold text-sky-600 hover:text-sky-700"><i class="fa-solid fa-plus-circle mr-1"></i>Create New Category</button>
+          </div>
+          <select id="form-category" required class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500"></select>
+          <div id="new-category-block" class="hidden mt-2 p-2.5 bg-sky-50 border border-sky-200 rounded-lg flex items-center gap-2">
+            <input type="text" id="new-category-name" placeholder="e.g. Renewable Energy Systems" class="flex-grow px-2.5 py-1.5 bg-white border border-sky-300 rounded text-xs focus:outline-none">
+            <button type="button" onclick="addNewCategory()" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded text-xs font-bold whitespace-nowrap">Add Category</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Project Image URL / Path <span class="text-[10px] text-slate-400 font-normal">(Leave blank to use generic image)</span></label>
+          <input type="text" id="form-image" placeholder="e.g. project1.jpg or https://example.com/image.jpg" class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Tag Faculty Advisor(s) * <span class="text-[10px] text-slate-400 font-normal">(Hold Ctrl/Cmd for multiple)</span></label>
+            <select id="form-faculty" multiple required class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500 font-bold text-sky-700 h-24"></select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Team Name / Number *</label>
+            <input type="text" id="form-team" required placeholder="e.g. Group 1" class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Key Tech Tags / Team Members</label>
+            <input type="text" id="form-tags" placeholder="e.g. Student A, Student B, SolidWorks" class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Card Icon Badge</label>
+            <select id="form-icon" class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+              <option value="fa-robot">Robot (fa-robot)</option>
+              <option value="fa-solar-panel">Solar & Energy (fa-solar-panel)</option>
+              <option value="fa-plane">Aerospace & Drones (fa-plane)</option>
+              <option value="fa-water">Fluid Mechanics & Water (fa-water)</option>
+              <option value="fa-gear">General Mechanical (fa-gear)</option>
+              <option value="fa-temperature-arrow-down">Cooling & HVAC (fa-temperature-arrow-down)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Short Abstract / Summary *</label>
+          <textarea id="form-summary" required rows="2" placeholder="Brief summary of capstone design..." class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Full Technical Details & Student Members</label>
+          <textarea id="form-details" rows="3" placeholder="List group members, IDs, and extended technical parameters..." class="w-full px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-sky-100 flex justify-end gap-2">
+          <button type="button" onclick="closePostModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-semibold">Cancel</button>
+          <button type="submit" class="btn-glow px-5 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md"><i class="fa-solid fa-paper-plane mr-1"></i> Save SDP Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="faculty-modal" class="modal-overlay hidden fixed inset-0 bg-sky-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-panel glass rounded-2xl max-w-lg w-full p-6 space-y-4 relative" style="background:rgba(255,255,255,0.92)">
+      <button onclick="closeFacultyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg transition-transform hover:rotate-90"><i class="fa-solid fa-xmark"></i></button>
+      <div class="flex items-center space-x-2 border-b border-sky-100 pb-3">
+        <i class="fa-solid fa-user-tie text-warmorange-500 text-lg"></i>
+        <div>
+          <h3 class="font-tech text-base font-bold text-slate-900">Faculty Directory</h3>
+          <p class="text-[11px] text-slate-500">Add, edit or remove department professors.</p>
+        </div>
+      </div>
+      <form onsubmit="handleAddFaculty(event)" class="flex gap-2">
+        <input type="text" id="new-faculty-name" required placeholder="e.g. Dr. John Doe" class="flex-grow px-3 py-2 bg-sky-50/70 border border-sky-200 rounded-lg text-xs focus:outline-none focus:border-sky-500">
+        <button type="submit" class="btn-glow px-4 py-2 bg-warmorange-500 hover:bg-warmorange-600 text-white rounded-lg text-xs font-bold shadow-sm whitespace-nowrap"><i class="fa-solid fa-plus mr-1"></i> Add Faculty</button>
+      </form>
+      <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="faculty-list-container"></div>
+      <div class="pt-3 border-t border-sky-100 flex justify-end">
+        <button onclick="closeFacultyModal()" class="btn-glow px-4 py-2 bg-sky-500 text-white rounded-xl text-xs font-semibold">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="project-modal" class="modal-overlay hidden fixed inset-0 bg-sky-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-panel glass hud rounded-2xl max-w-xl w-full p-6 space-y-4 relative max-h-[90vh] overflow-y-auto" style="background:rgba(255,255,255,0.93)">
+      <button onclick="closeProjectModal()" class="absolute top-4 right-4 z-10 text-white/90 hover:text-white text-lg bg-sky-900/40 rounded-full w-8 h-8 flex items-center justify-center transition-transform hover:rotate-90"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="h-48 rounded-xl overflow-hidden bg-sky-100 flex items-center justify-center border border-sky-200 relative">
+        <img id="modal-image" src="" alt="Project Image" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80';">
+        <div class="absolute inset-0 img-overlay"></div>
+      </div>
+
+      <div>
+        <span id="modal-category" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-sky-100 text-sky-700 border border-sky-200">Category</span>
+        <h3 id="modal-title" class="font-tech text-lg font-bold text-slate-900 mt-2">Project Title</h3>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 p-3 bg-sky-50/80 rounded-xl border border-sky-100 text-xs text-center">
+        <div><span class="text-slate-400 font-medium text-[10px] block uppercase">Advisor(s)</span><span id="modal-advisor" class="font-bold text-sky-700 text-xs">Dr. Advisor</span></div>
+        <div><span class="text-slate-400 font-medium text-[10px] block uppercase">Semester</span><span id="modal-term" class="font-bold text-slate-800 text-xs">Term</span></div>
+        <div><span class="text-slate-400 font-medium text-[10px] block uppercase">Team</span><span id="modal-team" class="font-bold text-warmorange-600 text-xs">Group</span></div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Abstract & Objectives</h4>
+        <p id="modal-summary" class="text-xs text-slate-600 leading-relaxed bg-sky-50/70 p-3 rounded-lg border border-sky-100">Summary...</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Student Members & Details</h4>
+        <p id="modal-details" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-white/70 p-3 rounded-lg border border-sky-100">Details...</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-1">Key Tags / Members</h4>
+        <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+      </div>
+
+      <div class="pt-4 border-t border-sky-100 flex justify-between items-center">
+        <button id="modal-edit-btn" onclick="" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold"><i class="fa-solid fa-pen mr-1"></i> Edit Post</button>
+        <button onclick="closeProjectModal()" class="btn-glow px-4 py-2 bg-sky-500 text-white rounded-xl text-xs font-semibold">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="floating-chat-container" class="fixed bottom-5 right-5 z-50">
+    <button id="floating-chat-btn" onclick="toggleFloatingChat()" class="chat-fab relative w-14 h-14 bg-gradient-to-br from-sky-400 to-indigo-500 hover:from-sky-500 hover:to-indigo-600 text-white rounded-full flex items-center justify-center shadow-xl border-2 border-white transition-all hover:scale-110">
+      <i id="chat-icon-open" class="fa-solid fa-robot text-lg"></i>
+      <i id="chat-icon-close" class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+
+    <div id="floating-chat-window" class="modal-panel hidden absolute bottom-20 right-0 w-[92vw] sm:w-[360px] h-[450px] bg-white/95 backdrop-blur rounded-2xl shadow-2xl border border-sky-200 flex flex-col overflow-hidden">
+      <div class="p-3.5 bg-gradient-to-r from-sky-500 to-indigo-500 text-white flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-robot text-warmorange-300"></i>
+          <span class="font-bold text-xs">SDP Showcase Assistant</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-300" style="animation: corePulse 1.5s infinite;"></span>
+        </div>
+        <button onclick="toggleFloatingChat()" class="text-slate-100 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="widget-chat-messages" class="flex-grow p-3 overflow-y-auto space-y-3 bg-sky-50/60 text-xs">
+        <div class="msg-in bg-white border border-sky-100 rounded-xl p-3 text-slate-700 shadow-sm">
+          Welcome to the ME Senior Design Showcase! Explore projects from Fall 2022 to Fall 2026 across departmental faculty advisors.
+        </div>
+      </div>
+
+      <form onsubmit="handleWidgetChatSubmit(event)" class="p-2 bg-white border-t border-sky-100 flex gap-1.5">
+        <input type="text" id="widget-chat-input" placeholder="Search faculty or project..." class="flex-grow bg-sky-50 text-slate-800 text-xs px-3 py-2 rounded-lg border border-sky-200 focus:outline-none focus:border-sky-500">
+        <button type="submit" class="btn-glow bg-sky-500 text-white px-3 py-2 rounded-lg text-xs font-semibold"><i class="fa-solid fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const GENERIC_SDP_IMAGE = "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80";
+
+    const DEFAULT_FACULTY = [
+      "Dr. Mamoun Abdel-Hafez",
+      "Dr. Mohamed Abdelgawad",
+      "Dr. Bassam Abu Nabah",
+      "Dr. Wael Abuzaid",
+      "Dr. Maen Alkhader",
+      "Dr. Basil Darras",
+      "Dr. Samir Emam",
+      "Dr. Abdallah Ghazal",
+      "Dr. Mehdi Ghommem",
+      "Dr. Mohammad Hamdan",
+      "Dr. Ahmed Hanafy Ibrahim",
+      "Dr. Abdurrahman Irschied",
+      "Dr. Mohammad Jaradat",
+      "Dr. Saud Khashan",
+      "Dr. Mehmet Fatih Orhan",
+      "Dr. Lotfi Romdhane",
+      "Dr. Mostafa Shaaban"
+    ];
+
+    const DEFAULT_SEMESTERS = [
+      "Fall 2026",
+      "Fall 2025",
+      "Spring 2025",
+      "Fall 2024",
+      "Spring 2024",
+      "Fall 2023",
+      "Spring 2023",
+      "Fall 2022"
+    ];
+
+    let CATEGORY_LIST = [
+      "All",
+      "Robotics & Autonomous Systems",
+      "Thermal & Energy Systems",
+      "Aerospace & Mechatronics",
+      "Manufacturing & Materials",
+      "Bio-Mechatronics",
+      "Fluid Mechanics & Hydraulics",
+      "Solid Mechanics & FEA",
+      "HVAC & Building Systems"
+    ];
+
+    const DEFAULT_PROJECTS = [
+      {
+        id: "sdp-s24-1",
+        title: "Airlift Pump for Microalgae Cultivation in Tubular Photobioreactors",
+        semester: "Spring 2024",
+        category: "Fluid Mechanics & Hydraulics",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 1",
+        image: "",
+        tags: ["Mohammed Al-Hamami", "Hamdan Alghadhrami", "Ibrahim Alkhayat", "Osama Gharabatt"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Mohammed Al-Hamami\n• Hamdan Alghadhrami\n• Ibrahim Alkhayat\n• Osama Gharabatt"
+      },
+      {
+        id: "sdp-f26-4",
+        title: "AI-controlled BMS HVAC System",
+        semester: "Fall 2026",
+        category: "HVAC & Building Systems",
+        faculty: ["Dr. Mehmet Fatih Orhan"],
+        team: "Group 4",
+        image: "",
+        tags: ["Khaled Al Zubaidi", "Omar Ahmed", "Amin Baidas"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Khaled Al Zubaidi\n• Omar Ahmed\n• Amin Baidas"
+      },
+
+      {
+        id: "sdp-f26-15",
+        title: "Adaptive Coolant Flow Distribution for Direct-to-Chip Cooling of AI Data Centers in UAE",
+        semester: "Fall 2026",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Abdallah Ghazal"],
+        team: "Group 15",
+        image: "",
+        tags: ["Safa Umer", "Omar Shraim", "Liu Wei"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Safa Umer\n• Omar Shraim\n• Liu Wei"
+      },
+      {
+        id: "sdp-f26-12",
+        title: "An Autonomous FOD Collection Robotic Rover",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Hamdan", "Dr. Ahmed Hanafy Ibrahim"],
+        team: "Group 12",
+        image: "",
+        tags: ["Zouheir Al Halabi", "Michel Al Durah", "Mahmoud Al Herbawi"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Zouheir Al Halabi\n• Michel Al Durah\n• Mahmoud Al Herbawi"
+      },
+      {
+        id: "sdp-f24-2",
+        title: "Applications of Metamaterials for Enhanced Acoustic Properties in Drones",
+        semester: "Fall 2024",
+        category: "Aerospace & Mechatronics",
+        faculty: ["Dr. Wael Abuzaid"],
+        team: "Group 2",
+        image: "",
+        tags: ["Hadi El Tanoukhi", "Murad Ismail", "Daniela Dawleh"],
+        icon: "fa-plane",
+        summary: "",
+        details: "Student Team:\n• Hadi El Tanoukhi\n• Murad Ismail\n• Daniela Dawleh"
+      },
+      {
+        id: "sdp-f23-2",
+        title: "A Solar-Powered Atmospheric Water Generator for Arid Regions in the UAE",
+        semester: "Fall 2023",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 2",
+        image: "",
+        tags: ["Ahmad Khattab", "Lamees Oudeh", "Amal Al Khawaja", "Omar Alhammadi"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Ahmad Khattab\n• Lamees Oudeh\n• Amal Al Khawaja\n• Omar Alhammadi"
+      },
+      {
+        id: "sdp-s24-2",
+        title: "A Solar-Powered Atmospheric Water Generator for Supplying Fresh Water",
+        semester: "Spring 2024",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mehmet Fatih Orhan"],
+        team: "Group 2",
+        image: "",
+        tags: ["Abdullah Abdulkader", "Mohammad Abu Musabbeh", "Ahmad Abukhalil", "Kareem Youssef"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Abdullah Abdulkader\n• Mohammad Abu Musabbeh\n• Ahmad Abukhalil\n• Kareem Youssef"
+      },
+      {
+        id: "sdp-s23-1",
+        title: "A Small-Scale Solar Energy System for Power Generation",
+        semester: "Spring 2023",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan"],
+        team: "Group 1",
+        image: "",
+        tags: ["Khaled Alfayomy", "Faisal Darwish", "Rao Khan"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Khaled Alfayomy\n• Faisal Darwish\n• Rao Khan"
+      },
+      {
+        id: "sdp-s23-3",
+        title: "A Portable Thermal Cycler for PCR Applications",
+        semester: "Spring 2023",
+        category: "Bio-Mechatronics",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 3",
+        image: "",
+        tags: ["Abdallah Abushahla", "Taha Alrajei", "Hanif Ali", "Omar Mohamed"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Abdallah Abushahla\n• Taha Alrajei\n• Hanif Ali\n• Omar Mohamed"
+      },
+      {
+        id: "sdp-f26-16",
+        title: "Automated Variable Geometry Whiffletree for Active Load Distribution",
+        semester: "Fall 2026",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 16",
+        image: "",
+        tags: ["Abdullahi Abdulle", "Ahmed Seid Ahmed", "Mohamed Al Marzooqi"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Abdullahi Abdulle\n• Ahmed Seid Ahmed\n• Mohamed Al Marzooqi"
+      },
+      {
+        id: "sdp-f26-1",
+        title: "Autonomous Control System for Robotic Detection Collection and Retrieval",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Abdurrahman Irschied", "Dr. Mohammad Jaradat"],
+        team: "Group 1",
+        image: "",
+        tags: ["Mohammed Abdulrahman", "Kasih Khairi", "Abdullah Muhammad"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Mohammed Abdulrahman\n• Kasih Khairi\n• Abdullah Muhammad"
+      },
+      {
+        id: "sdp-f22-8",
+        title: "Autonomous Oil Spill Cleaning Robot (AOSCR)",
+        semester: "Fall 2022",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 8",
+        image: "",
+        tags: ["Vishwesh Kumar Maheshwari", "Hassan Sajid", "Shaikha Al Zarooni", "Muhammad Mubeen"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Vishwesh Kumar Maheshwari\n• Hassan Sajid\n• Shaikha Al Zarooni\n• Muhammad Mubeen"
+      },
+      {
+        id: "sdp-f23-3",
+        title: "Bio-inspired Infrared Real-Time Detection Drone",
+        semester: "Fall 2023",
+        category: "Aerospace & Mechatronics",
+        faculty: ["Dr. Mehdi Ghommem"],
+        team: "Group 3",
+        image: "",
+        tags: ["Alanood Alhajri", "Malek Bachir", "Taif Ibrahim", "Mohammad Al-Barghouthi"],
+        icon: "fa-plane",
+        summary: "",
+        details: "Student Team:\n• Alanood Alhajri\n• Malek Bachir\n• Taif Ibrahim\n• Mohammad Al-Barghouthi"
+      },
+      {
+        id: "sdp-f23-1",
+        title: "Building and Optimizing Piezoelectric Pump for Cooling Purposes",
+        semester: "Fall 2023",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 1",
+        image: "",
+        tags: ["Basel Kordi", "Abdel Rahman Hamzeh", "Yazan Nasir", "Faris Abdelrazeq"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Basel Kordi\n• Abdel Rahman Hamzeh\n• Yazan Nasir\n• Faris Abdelrazeq"
+      },
+      {
+        id: "sdp-s25-1",
+        title: "Deployable Structures for CubeSat",
+        semester: "Spring 2025",
+        category: "Aerospace & Mechatronics",
+        faculty: ["Dr. Wael Abuzaid"],
+        team: "Group 1",
+        image: "",
+        tags: ["Jana Bebars", "Ibrahim Al Mutoori", "Ali Loay Qayed Ahli"],
+        icon: "fa-plane",
+        summary: "",
+        details: "Student Team:\n• Jana Bebars\n• Ibrahim Al Mutoori\n• Ali Loay Qayed Ahli"
+      },
+      {
+        id: "sdp-f26-8",
+        title: "Design and Experimental Testing of an Energy Recovery Ventilator for UAE Conditions",
+        semester: "Fall 2026",
+        category: "HVAC & Building Systems",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 8",
+        image: "",
+        tags: ["Mohammed AlSuqair", "Karim Najjar", "Yahia Mohamed"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Mohammed AlSuqair\n• Karim Najjar\n• Yahia Mohamed"
+      },
+      {
+        id: "sdp-f24-9",
+        title: "Design and Development of a Water Debris Collection Robotic System",
+        semester: "Fall 2024",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 9",
+        image: "",
+        tags: ["Omar Shaghnoubi", "Tarek Kaddoura", "Shaikh Mohammad", "Amro Alatasi"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Omar Shaghnoubi\n• Tarek Kaddoura\n• Shaikh Mohammad\n• Amro Alatasi"
+      },
+      {
+        id: "sdp-f22-10",
+        title: "Design and Manufacturing of a Novel Solar Desalination Pilot Unit",
+        semester: "Fall 2022",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mehmet Fatih Orhan"],
+        team: "Group 10",
+        image: "",
+        tags: ["Amir Ahmed", "Mohamed Mohamed Rafeeq", "Bilal Abdul Jalil", "Tharunjai Lokesh"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Amir Ahmed\n• Mohamed Mohamed Rafeeq\n• Bilal Abdul Jalil\n• Tharunjai Lokesh"
+      },
+      {
+        id: "sdp-f25-1",
+        title: "Design of Landing Gear for Drones",
+        semester: "Fall 2025",
+        category: "Aerospace & Mechatronics",
+        faculty: ["Dr. Basil Darras", "Dr. Maen Alkhader"],
+        team: "Group 1",
+        image: "",
+        tags: ["Anas Saleh", "Abdelrahmnan Yahia", "Saifallah Hewala", "Zeyad Elmenshawy"],
+        icon: "fa-plane",
+        summary: "",
+        details: "Student Team:\n• Anas Saleh\n• Abdelrahmnan Yahia\n• Saifallah Hewala\n• Zeyad Elmenshawy"
+      },
+
+      {
+        id: "sdp-f26-9",
+        title: "Design of a Control System for Leak Detection",
+        semester: "Fall 2026",
+        category: "Fluid Mechanics & Hydraulics",
+        faculty: ["Dr. Samir Emam"],
+        team: "Group 9",
+        image: "",
+        tags: ["Mohamed Ahmed", "Al Harath Sabrah", "Iskander Zakirov"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Mohamed Ahmed\n• Al Harath Sabrah\n• Iskander Zakirov"
+      },
+
+      {
+        id: "sdp-f26-13",
+        title: "Design of an Autonomous Sailing USV Using Wind and Solar Power",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mehdi Ghommem"],
+        team: "Group 13",
+        image: "",
+        tags: ["Raghad Mohammed", "Noura Al-Ali", "Seriena Sela"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Raghad Mohammed\n• Noura Al-Ali\n• Seriena Sela"
+      },
+      {
+        id: "sdp-s24-4",
+        title: "Design of a Solar Powered Car",
+        semester: "Spring 2024",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 4",
+        image: "",
+        tags: ["Ammar Khalid", "Khaled Alfayomy", "Nasser-allah Awad", "Mouhammad Cisse"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Ammar Khalid\n• Khaled Alfayomy\n• Nasser-allah Awad\n• Mouhammad Cisse"
+      },
+
+      {
+        id: "sdp-s24-5",
+        title: "Design of a Smart Irrigation System",
+        semester: "Spring 2024",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Basil Darras"],
+        team: "Group 5",
+        image: "",
+        tags: ["Moza Al Suwaidi", "Lilian Hassan", "Mohammed Faraz Khan", "Abubackar siddiq Sathakathullah"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Moza Al Suwaidi\n• Lilian Hassan\n• Mohammed Faraz Khan\n• Abubackar siddiq Sathakathullah"
+      },
+      {
+        id: "sdp-f26-3",
+        title: "Design Shape Memory Actuator",
+        semester: "Fall 2026",
+        category: "Manufacturing & Materials",
+        faculty: ["Dr. Wael Abuzaid"],
+        team: "Group 3",
+        image: "",
+        tags: ["Nafiz Imteaz", "Abdul Rahman Al Marai", "Hamdan Alsuwaiidi", "Abdulrahman Al Ali"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Nafiz Imteaz\n• Abdul Rahman Al Marai\n• Hamdan Alsuwaiidi\n• Abdulrahman Al Ali"
+      },
+      {
+        id: "sdp-f26-11",
+        title: "Design/Creation of Prefabricated MEP Modules",
+        semester: "Fall 2026",
+        category: "Manufacturing & Materials",
+        faculty: ["Dr. Basil Darras"],
+        team: "Group 11",
+        image: "",
+        tags: ["Yousef Aljallad", "Abdulla Bin Hafiz", "Mohammad Almarri"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Yousef Aljallad\n• Abdulla Bin Hafiz\n• Mohammad Almarri"
+      },
+      {
+        id: "sdp-f22-4",
+        title: "Designing and Manufacturing a Solar-Water Electrolysis System for NGVs",
+        semester: "Fall 2022",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan"],
+        team: "Group 4",
+        image: "",
+        tags: ["Hadj Babouhoun Kerrouchi", "Kareem Morsi", "Murtaza Hasan", "Abdeali Kapadia"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Hadj Babouhoun Kerrouchi\n• Kareem Morsi\n• Murtaza Hasan\n• Abdeali Kapadia"
+      },
+      {
+        id: "sdp-s25-2",
+        title: "Enhanced Fire Detection System",
+        semester: "Spring 2025",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mehdi Ghommem"],
+        team: "Group 2",
+        image: "",
+        tags: ["Khalifa Alawadhi", "Meera Aljasmi"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Khalifa Alawadhi\n• Meera Aljasmi"
+      },
+      {
+        id: "sdp-f26-2",
+        title: "Enhanced Cooling Systems for Data Centers",
+        semester: "Fall 2026",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Ahmed Hanafy Ibrahim", "Dr. Mohammad Hamdan"],
+        team: "Group 2",
+        image: "",
+        tags: ["Abdelrahman Elsamman", "Majd Abu Ghazaleh", "Karim Abdelaziz"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Abdelrahman Elsamman\n• Majd Abu Ghazaleh\n• Karim Abdelaziz"
+      },
+      {
+        id: "sdp-f22-1",
+        title: "Enhancement of a Sewage Pipe Inspection Robot",
+        semester: "Fall 2022",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mamoun Abdel-Hafez", "Dr. Mohammad Jaradat"],
+        team: "Group 1",
+        image: "",
+        tags: ["Omar Abdeldayem", "Kamel Aref Elsayed", "Abdelrahman Toulba", "Karim Diab"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Omar Abdeldayem\n• Kamel Aref Elsayed\n• Abdelrahman Toulba\n• Karim Diab"
+      },
+
+      {
+        id: "sdp-f22-7",
+        title: "Enhancement of Fatigue Properties in TiNB Biocompatible Shape Memory Alloys",
+        semester: "Fall 2022",
+        category: "Manufacturing & Materials",
+        faculty: ["Dr. Wael Abuzaid"],
+        team: "Group 7",
+        image: "",
+        tags: ["Ines Zitouni", "Mohammed Shihab", "Emile Salibi"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Ines Zitouni\n• Mohammed Shihab\n• Emile Salibi"
+      },
+      {
+        id: "sdp-f24-3",
+        title: "Energy Harvesting from Human Body Motion for Powering Wearable Devices",
+        semester: "Fall 2024",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 3",
+        image: "",
+        tags: ["Kanza Khan", "Raghad Alshikh Ali", "Saad Sajid"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Kanza Khan\n• Raghad Alshikh Ali\n• Saad Sajid"
+      },
+
+      {
+        id: "sdp-f24-8",
+        title: "Evaluating and Improving a Handheld Remote Docking Joystick for Unmanned Surface Vessels",
+        semester: "Fall 2024",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mehdi Ghommem", "Dr. Mohammad Jaradat"],
+        team: "Group 8",
+        image: "",
+        tags: ["Mohammad Obeid", "Hisham Tubaishat", "Mohammad Saffarini", "Mohammed Mawlood"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Mohammad Obeid\n• Hisham Tubaishat\n• Mohammad Saffarini\n• Mohammed Mawlood"
+      },
+      {
+        id: "sdp-f24-6",
+        title: "Exploring Pumped Hydro Storage (PHS) Techniques for Renewable Energy",
+        semester: "Fall 2024",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan"],
+        team: "Group 6",
+        image: "",
+        tags: ["Christopher Idoko", "Abdelrahman Abouelyousr", "Samuel Philip Ballesteros", "Mohamed El Mustafa El Hussen"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Christopher Idoko\n• Abdelrahman Abouelyousr\n• Samuel Philip Ballesteros\n• Mohamed El Mustafa El Hussen"
+      },
+
+      {
+        id: "sdp-f24-5",
+        title: "Frame and Suspension of a Space Rover",
+        semester: "Fall 2024",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Samir Emam"],
+        team: "Group 5",
+        image: "",
+        tags: ["Raed Ghayad", "Abdullah Mukahal", "Meera Aljasmi", "Shaikha Alhosani"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Raed Ghayad\n• Abdullah Mukahal\n• Meera Aljasmi\n• Shaikha Alhosani"
+      },
+      {
+        id: "sdp-f24-7",
+        title: "Hydrogen Fuel Cell Powered Scooter/Buggy",
+        semester: "Fall 2024",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mehmet Fatih Orhan"],
+        team: "Group 7",
+        image: "",
+        tags: ["Mohamed Wasel Kallatra", "Mohammad Issa", "Saadullah Syed"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Mohamed Wasel Kallatra\n• Mohammad Issa\n• Saadullah Syed"
+      },
+      {
+        id: "sdp-f23-6",
+        title: "Hydrogen Fuel Cell Powered Scooter",
+        semester: "Fall 2023",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mehmet Fatih Orhan"],
+        team: "Group 6",
+        image: "",
+        tags: ["Mazin Alnajjar", "Ziad Abdelghany", "Utkarsh Chauhan", "Muhammed Omar Ahmed", "Mahmood Nabeel"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Mazin Alnajjar\n• Ziad Abdelghany\n• Utkarsh Chauhan\n• Muhammed Omar Ahmed\n• Mahmood Nabeel"
+      },
+
+      {
+        id: "sdp-s23-2",
+        title: "Implementation of a Moving Robot Arm for Wheelchair",
+        semester: "Spring 2023",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 2",
+        image: "",
+        tags: ["Mikhail Aslam", "Suhayb Mizan", "Hasan Omran", "Adel Safa"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Mikhail Aslam\n• Suhayb Mizan\n• Hasan Omran\n• Adel Safa"
+      },
+
+      {
+        id: "sdp-f25-2",
+        title: "Intelligent Speed Bump",
+        semester: "Fall 2025",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Lotfi Romdhane"],
+        team: "Group 2",
+        image: "",
+        tags: ["Donia El Sayed", "Maahi Saiyed", "Maryam Al Blooshi"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Donia El Sayed\n• Maahi Saiyed\n• Maryam Al Blooshi"
+      },
+
+      {
+        id: "sdp-f22-3",
+        title: "Levitating Frictionless Vertical Windmill",
+        semester: "Fall 2022",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Samir Emam"],
+        team: "Group 3",
+        image: "",
+        tags: ["Ahmed Mohamed", "Mohamed Ibrahim", "Ouhanis Kalajian", "Rola Fayed"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Ahmed Mohamed\n• Mohamed Ibrahim\n• Ouhanis Kalajian\n• Rola Fayed"
+      },
+
+      {
+        id: "sdp-f22-11",
+        title: "Miniature Jet Engine",
+        semester: "Fall 2022",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan"],
+        team: "Group 11",
+        image: "",
+        tags: ["Ali Younes", "Majed Wardeh", "Walid Elmeshad", "Motasem Alshakghanm"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Ali Younes\n• Majed Wardeh\n• Walid Elmeshad\n• Motasem Alshakghanm"
+      },
+
+      {
+        id: "sdp-f24-4",
+        title: "Multifunctional Robotic Arm for Satellite Docking",
+        semester: "Fall 2024",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Maen Alkhader", "Dr. Mamoun Abdel-Hafez"],
+        team: "Group 4",
+        image: "",
+        tags: ["Ibrahim Mohamed", "Ayman Ahmed", "Seifeldin Fayed", "Ziad Alsuluh"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Ibrahim Mohamed\n• Ayman Ahmed\n• Seifeldin Fayed\n• Ziad Alsuluh"
+      },
+
+      {
+        id: "sdp-f25-4",
+        title: "NDT System (Non-Destructive Testing)",
+        semester: "Fall 2025",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 4",
+        image: "",
+        tags: ["Mostafa Fahmy", "Jad Abukhaled", "Omar Eldesoky"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Mostafa Fahmy\n• Jad Abukhaled\n• Omar Eldesoky"
+      },
+
+      {
+        id: "sdp-s25-3",
+        title: "Noise Reduction for Robot Applications",
+        semester: "Spring 2025",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Maen Alkhader", "Dr. Basil Darras"],
+        team: "Group 3",
+        image: "",
+        tags: ["Abdallah Jawad", "Abdullah Mostafa", "Islam Ramadan"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Abdallah Jawad\n• Abdullah Mostafa\n• Islam Ramadan"
+      },
+      {
+        id: "sdp-f26-14",
+        title: "Novel Small-Scale Axial Flow Reaction Turbine for Two-Phase Fluids",
+        semester: "Fall 2026",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Saud Khashan"],
+        team: "Group 14",
+        image: "",
+        tags: ["Taher Bastawala", "Saurav Gupte", "Muhammad Salman Iqbal"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Taher Bastawala\n• Saurav Gupte\n• Muhammad Salman Iqbal"
+      },
+      {
+        id: "sdp-s24-3",
+        title: "OSCB: Oil Spill Cleaning Bot",
+        semester: "Spring 2024",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 3",
+        image: "",
+        tags: ["Asma Alblooshi", "George Hade", "Mazin Dawoud"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Asma Alblooshi\n• George Hade\n• Mazin Dawoud"
+      },
+      {
+        id: "sdp-s23-4",
+        title: "Optimized Design of a Shear Loading Fixture",
+        semester: "Spring 2023",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Maen Alkhader"],
+        team: "Group 4",
+        image: "",
+        tags: ["Hamad Alawadhi", "Karim Elsadek", "Riasat Hossain Khan"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Hamad Alawadhi\n• Karim Elsadek\n• Riasat Hossain Khan"
+      },
+      {
+        id: "sdp-f26-7",
+        title: "Palm Rover: A Multi-Purpose Climbing Robotic Platform for Date Palm Inspection and Treatment",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Maen Alkhader", "Dr. Abdurrahman Irschied"],
+        team: "Group 7",
+        image: "",
+        tags: ["Ashhad Faisal", "Malek Zahir", "Omar Abuelezz"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Ashhad Faisal\n• Malek Zahir\n• Omar Abuelezz"
+      },
+      {
+        id: "sdp-f26-10",
+        title: "Pipe Inspecting Robot",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mamoun Abdel-Hafez", "Dr. Mohammad Jaradat"],
+        team: "Group 10",
+        image: "",
+        tags: ["Abdul Sameen", "Omar Alhabil", "Youssef Elghazi Elhoussaini"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Abdul Sameen\n• Omar Alhabil (ISME)\n• Youssef Elghazi Elhoussaini"
+      },
+
+      {
+        id: "sdp-f22-5",
+        title: "Plastic Deformation Assessment of Al2024-T4 Alloy Using Eddy Current",
+        semester: "Fall 2022",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 5",
+        image: "",
+        tags: ["Fazel Banouei", "Wanes Kalayejian", "Masa Touqan", "Artmiz Mahmoud Zadeh"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Fazel Banouei\n• Wanes Kalayejian\n• Masa Touqan\n• Artmiz Mahmoud Zadeh"
+      },
+      {
+        id: "sdp-f23-5",
+        title: "Pure Shear Loading Fixture for Small Specimens",
+        semester: "Fall 2023",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Maen Alkhader", "Dr. Wael Abuzaid"],
+        team: "Group 5",
+        image: "",
+        tags: ["Anthony Mallouka", "Younes Omar", "Tarek Nasser", "Abdalaziz Alrashid"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Anthony Mallouka\n• Younes Omar\n• Tarek Nasser\n• Abdalaziz Alrashid"
+      },
+      {
+        id: "sdp-f22-2",
+        title: "Ray-Inspired Underwater Vehicle Propulsion System",
+        semester: "Fall 2022",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mehdi Ghommem"],
+        team: "Group 2",
+        image: "",
+        tags: ["Haider Mortadha", "Vishal Padmakumar", "Kareem Mahmoud", "Mohammed Pasha"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Haider Mortadha\n• Vishal Padmakumar\n• Kareem Mahmoud\n• Mohammed Pasha"
+      },
+      {
+        id: "sdp-s25-5",
+        title: "Semi-Autonomous Boat for Collection of Water Samples",
+        semester: "Spring 2025",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 5",
+        image: "",
+        tags: ["Walid Hewidi", "Karan Pagarani", "Asrar Tariq"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Walid Hewidi\n• Karan Pagarani\n• Asrar Tariq"
+      },
+      {
+        id: "sdp-f22-6",
+        title: "Smart Fire Suppression System",
+        semester: "Fall 2022",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Maen Alkhader"],
+        team: "Group 6",
+        image: "",
+        tags: ["Hamda Belhoul", "Youssef Elbehairy", "Shaikha Alalili", "Ghazi Al Shahmani"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Hamda Belhoul\n• Youssef Elbehairy\n• Shaikha Alalili\n• Ghazi Al Shahmani"
+      },
+      {
+        id: "sdp-f25-5",
+        title: "Smart Heat Sink Design for Compact Electronics",
+        semester: "Fall 2025",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Abdallah Ghazal"],
+        team: "Group 5",
+        image: "",
+        tags: ["Alhasan Emam", "Elshafey Elshafey"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Alhasan Emam\n• Elshafey Elshafey"
+      },
+
+      {
+        id: "sdp-f23-4",
+        title: "Smartphone-Based Fluorescent Biosensor",
+        semester: "Fall 2023",
+        category: "Bio-Mechatronics",
+        faculty: ["Dr. Mehdi Ghommem"],
+        team: "Group 4",
+        image: "",
+        tags: ["Jawwad Sheikh", "Dina Baflah", "Fares Barake", "Mohamed Sara"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Jawwad Sheikh\n• Dina Baflah\n• Fares Barake\n• Mohamed Sara"
+      },
+      {
+        id: "sdp-f26-6",
+        title: "Solar Bank",
+        semester: "Fall 2026",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan", "Dr. Mostafa Shaaban"],
+        team: "Group 6",
+        image: "",
+        tags: ["Hamdan Alary", "Ahmed Saif"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Hamdan Alary (ELE)\n• Ahmed Saif"
+      },
+      {
+        id: "sdp-f23-8",
+        title: "Solar Car",
+        semester: "Fall 2023",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 8",
+        image: "",
+        tags: ["Mohammed Faraz Khan", "Ammar Khalid", "Khaled Alfayomy", "Nasser-Allah Awad", "Mouhammad Cisse"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Mohammed Faraz Khan\n• Ammar Khalid\n• Khaled Alfayomy\n• Nasser-Allah Awad\n• Mouhammad Cisse"
+      },
+      {
+        id: "sdp-f25-6",
+        title: "Solar Powered Car",
+        semester: "Fall 2025",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 6",
+        image: "",
+        tags: ["Mohammed Hasan", "Ali Onaisse", "Abdul Wahid Shafiullah"],
+        icon: "fa-solar-panel",
+        summary: "",
+        details: "Student Team:\n• Mohammed Hasan\n• Ali Onaisse\n• Abdul Wahid Shafiullah"
+      },
+      {
+        id: "sdp-f22-9",
+        title: "Solar Powered Marine Robot for Ocean Cleanup",
+        semester: "Fall 2022",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohamed Abdelgawad"],
+        team: "Group 9",
+        image: "",
+        tags: ["Marwan Hashemi", "Abdalhadi Fayad", "Naveed Mohammad Ali", "Mohammed Abusafieh"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Marwan Hashemi\n• Abdalhadi Fayad\n• Naveed Mohammad Ali\n• Mohammed Abusafieh"
+      },
+
+      {
+        id: "sdp-s25-4",
+        title: "Thermal Analysis of a Nano Lunar Rover Structure",
+        semester: "Spring 2025",
+        category: "Thermal & Energy Systems",
+        faculty: ["Dr. Mohammad Hamdan"],
+        team: "Group 4",
+        image: "",
+        tags: ["Saba Alansari", "Rouda Alameeri"],
+        icon: "fa-temperature-arrow-down",
+        summary: "",
+        details: "Student Team:\n• Saba Alansari\n• Rouda Alameeri"
+      },
+
+      {
+        id: "sdp-f26-5",
+        title: "UAE-Based Autonomous Harvesting Agricultural Robot",
+        semester: "Fall 2026",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 5",
+        image: "",
+        tags: ["Zirel Manguiat", "Rand Abo Esmail", "Khaled Alhadhrami"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Zirel Manguiat\n• Rand Abo Esmail\n• Khaled Alhadhrami"
+      },
+      {
+        id: "sdp-f24-1",
+        title: "Ultrasonic Corrosion Testing",
+        semester: "Fall 2024",
+        category: "Solid Mechanics & FEA",
+        faculty: ["Dr. Bassam Abu Nabah"],
+        team: "Group 1",
+        image: "",
+        tags: ["Mouj Al Shaikhkhalil", "Hana Elbehairy", "Abdul Razzaq Mahmood"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Mouj Al Shaikhkhalil\n• Hana Elbehairy\n• Abdul Razzaq Mahmood"
+      },
+      {
+        id: "sdp-f23-9",
+        title: "Ultrasonic Welder of Thermoplastic Composites",
+        semester: "Fall 2023",
+        category: "Manufacturing & Materials",
+        faculty: ["Dr. Wael Abuzaid", "Dr. Maen Alkhader"],
+        team: "Group 9",
+        image: "",
+        tags: ["Mohamed Abdeltawab", "Youssef Eldib", "Omar Salem", "Mohamed Elebshihy"],
+        icon: "fa-gear",
+        summary: "",
+        details: "Student Team:\n• Mohamed Abdeltawab\n• Youssef Eldib\n• Omar Salem\n• Mohamed Elebshihy"
+      },
+      {
+        id: "sdp-f25-3",
+        title: "Warehouse Sorting System Using 3D Mapping Technology",
+        semester: "Fall 2025",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Samir Emam"],
+        team: "Group 3",
+        image: "",
+        tags: ["Ali Berjaoui", "Ziad El Berizi"],
+        icon: "fa-robot",
+        summary: "",
+        details: "Student Team:\n• Ali Berjaoui\n• Ziad El Berizi"
+      },
+      {
+        id: "sdp-f23-7",
+        title: "Water Quality Monitoring Robot",
+        semester: "Fall 2023",
+        category: "Robotics & Autonomous Systems",
+        faculty: ["Dr. Mohammad Jaradat"],
+        team: "Group 7",
+        image: "",
+        tags: ["Ibraheem Kanan", "Momen Aldahshan", "Ahmed Hassan", "Faisal Abu Abed"],
+        icon: "fa-water",
+        summary: "",
+        details: "Student Team:\n• Ibraheem Kanan\n• Momen Aldahshan\n• Ahmed Hassan\n• Faisal Abu Abed"
+      }
+    ];
+
+    let facultyData = [], semesterList = [], projectsData = [];
+    let activeSemester = "Fall 2026", activeCategory = "All", searchQuery = "";
+
+    window.onload = function () {
+      loadLocalStorageData();
+      renderSemesterTabs();
+      renderCategoryPills();
+      renderTicker();
+      renderShowcase();
+      startTyping();
+      initParticles();
+    };
+
+    function loadLocalStorageData() {
+      const sf = localStorage.getItem('me_sdp_faculty');
+      const ss = localStorage.getItem('me_sdp_semesters');
+      const sp = localStorage.getItem('me_sdp_projects');
+      const sc = localStorage.getItem('me_sdp_categories');
+
+      if (sf) facultyData = JSON.parse(sf); else { facultyData = [...DEFAULT_FACULTY]; saveFacultyToStorage(); }
+      if (ss) semesterList = JSON.parse(ss); else { semesterList = [...DEFAULT_SEMESTERS]; saveSemestersToStorage(); }
+      if (sc) CATEGORY_LIST = JSON.parse(sc); else { saveCategoriesToStorage(); }
+
+      if (sp) {
+        projectsData = JSON.parse(sp);
+        projectsData.forEach(p => { if (typeof p.faculty === 'string') p.faculty = [p.faculty]; });
+      } else { projectsData = [...DEFAULT_PROJECTS]; saveProjectsToStorage(); }
+    }
+
+    function saveFacultyToStorage() { localStorage.setItem('me_sdp_faculty', JSON.stringify(facultyData)); }
+    function saveSemestersToStorage() { localStorage.setItem('me_sdp_semesters', JSON.stringify(semesterList)); }
+    function saveCategoriesToStorage() { localStorage.setItem('me_sdp_categories', JSON.stringify(CATEGORY_LIST)); }
+    function saveProjectsToStorage() { localStorage.setItem('me_sdp_projects', JSON.stringify(projectsData)); }
+
+    function resetToDemoData() {
+      if (confirm("Reset showcase back to standard compiled project dataset (Fall 2022 - Fall 2026)?")) {
+        facultyData = [...DEFAULT_FACULTY];
+        semesterList = [...DEFAULT_SEMESTERS];
+        projectsData = [...DEFAULT_PROJECTS];
+        CATEGORY_LIST = [
+          "All",
+          "Robotics & Autonomous Systems",
+          "Thermal & Energy Systems",
+          "Aerospace & Mechatronics",
+          "Manufacturing & Materials",
+          "Bio-Mechatronics",
+          "Fluid Mechanics & Hydraulics",
+          "Solid Mechanics & FEA",
+          "HVAC & Building Systems"
+        ];
+        saveFacultyToStorage(); saveSemestersToStorage(); saveCategoriesToStorage(); saveProjectsToStorage();
+        activeSemester = "Fall 2026";
+        renderSemesterTabs(); renderCategoryPills(); renderTicker(); renderShowcase();
+        alert("Showcase successfully restored to standard compiled dataset.");
+      }
+    }
+
+    function renderSemesterTabs() {
+      const c = document.getElementById('semester-tabs-container');
+      c.innerHTML = semesterList.map(sem => `
+        <button data-sem="${escapeHTML(sem)}" class="sem-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg whitespace-nowrap transition-all ${activeSemester === sem ? 'tab-active' : 'tab-idle'}">
+          <i class="fa-solid fa-graduation-cap mr-1.5 ${activeSemester === sem ? 'text-white' : 'text-warmorange-500'}"></i>${escapeHTML(sem)}
+        </button>`).join('');
+      c.querySelectorAll('.sem-tab').forEach(b => b.addEventListener('click', () => selectSemester(b.dataset.sem)));
+    }
+
+    function renderCategoryPills() {
+      const c = document.getElementById('category-pills-container');
+      c.innerHTML = CATEGORY_LIST.map(cat => `
+        <button data-cat="${escapeHTML(cat)}" class="cat-pill px-2.5 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${activeCategory === cat ? 'pill-active' : 'pill-idle'}">${escapeHTML(cat)}</button>`).join('');
+      c.querySelectorAll('.cat-pill').forEach(b => b.addEventListener('click', () => selectCategory(b.dataset.cat)));
+    }
+
+    function renderTicker() {
+      const items = CATEGORY_LIST.filter(c => c !== 'All').map(c => `<span><i class="fa-solid fa-bolt text-warmorange-500 mr-2"></i>${c}</span>`).join('');
+      document.getElementById('ticker-track').innerHTML = items + items;
+    }
+
+    function renderShowcase() {
+      const grid = document.getElementById('sdp-grid');
+      const emptyState = document.getElementById('empty-state');
+
+      const filtered = projectsData.filter(p => {
+        const matchSemester = p.semester === activeSemester;
+        const matchCategory = activeCategory === 'All' || p.category === activeCategory;
+        const q = searchQuery.toLowerCase();
+        const fac = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+        const matchFaculty = fac.some(f => f.toLowerCase().includes(q));
+        const matchSearch = !q || p.title.toLowerCase().includes(q) || matchFaculty ||
+          p.team.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q)) ||
+          p.summary.toLowerCase().includes(q) || (p.details && p.details.toLowerCase().includes(q));
+        return matchSemester && matchCategory && matchSearch;
+      });
+
+      document.getElementById('semester-badge').innerText = `${activeSemester} Showcase`;
+      document.getElementById('semester-title').innerText = `Senior Design Projects — ${activeSemester}`;
+      updateStats();
+      if (currentView === 'news') renderNews(true);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map((p, idx) => {
+        const fl = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+        const facultyDisplay = fl.map(f => escapeHTML(f)).join(', ');
+        const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+        return `
+        <div class="tilt-wrap">
+          <div class="tilt-card glass" style="animation-delay:${idx * 80}ms">
+            <div class="glare"></div>
+            <div>
+              <div class="h-44 bg-sky-100 relative overflow-hidden flex items-center justify-center border-b border-sky-100">
+                <img src="${imgSrc}" alt="${escapeHTML(p.title)}" class="card-img w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+                <div class="absolute inset-0 img-overlay"></div>
+                <span class="badge-float absolute top-3 right-3 bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
+                  <i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}
+                </span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-bold text-base text-slate-900 leading-snug">${escapeHTML(p.title)}</h3>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">${escapeHTML(p.summary)}</p>
+                <div class="mt-4 pt-3 border-t border-sky-100 flex items-center justify-between gap-2">
+                  <div>
+                    <span class="text-[10px] text-slate-400 font-medium block uppercase">Faculty Advisor(s)</span>
+                    <span class="inline-flex items-center gap-1 text-xs font-extrabold text-sky-700"><i class="fa-solid fa-user-tie text-warmorange-500"></i> ${facultyDisplay}</span>
+                  </div>
+                  <div class="text-right whitespace-nowrap">
+                    <span class="text-[10px] text-slate-400 font-medium block uppercase">Team</span>
+                    <span class="text-xs font-bold text-slate-700">${escapeHTML(p.team)}</span>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-1 mt-3">
+                  ${p.tags.map(t => `<span class="tech-pill px-1.5 py-0.5 text-[9px] bg-sky-50 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+            <div class="p-4 border-t border-sky-100 mt-2 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-3">
+                <button onclick="openEditProject('${escapeHTML(p.id)}')" class="text-slate-400 hover:text-sky-600 transition-transform hover:scale-125" title="Edit Post"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button onclick="deleteProject('${escapeHTML(p.id)}')" class="text-slate-400 hover:text-red-600 transition-transform hover:scale-125" title="Delete Post"><i class="fa-solid fa-trash"></i></button>
+              </div>
+              <button onclick="openProjectDetails('${escapeHTML(p.id)}')" class="font-bold text-sky-600 hover:text-warmorange-600 flex items-center gap-1 group">
+                <span>View Details</span> <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      initTilt();
+    }
+
+    function initTilt() {
+      document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left, y = e.clientY - r.top;
+          const rx = ((y / r.height) - 0.5) * -10;
+          const ry = ((x / r.width) - 0.5) * 10;
+          card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+          card.style.setProperty('--gx', (x / r.width * 100) + '%');
+          card.style.setProperty('--gy', (y / r.height * 100) + '%');
+        });
+        card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+      });
+    }
+
+    function animateCount(el, target) {
+      const start = parseInt(el.innerText) || 0;
+      if (start === target) { el.innerText = target; return; }
+      const dur = 800, t0 = performance.now();
+      (function step(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.innerText = Math.round(start + (target - start) * e);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    }
+    function updateStats() {
+      const totalAdvisors = new Set();
+  projectsData.forEach(p => {
+    (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).forEach(f => totalAdvisors.add(f));
+  });
+
+  animateCount(document.getElementById('stat-projects'), projectsData.length);
+  animateCount(document.getElementById('stat-faculty'), totalAdvisors.size);
+  animateCount(document.getElementById('stat-terms'), semesterList.length);
+    }
+
+    let typingStarted = false;
+    function startTyping() {
+      if (typingStarted) return; typingStarted = true;
+      const phrases = [
+        "Comprehensive Departmental Senior Design Project Archive.",
+        "Browse capstone projects from Fall 2022 to Fall 2026.",
+        "Search by advisor, project title, or student names.",
+        "Engineering the future through mechanical design."
+      ];
+      const el = document.getElementById('typed-text');
+      let pi = 0, ci = 0, del = false;
+      (function tick() {
+        const word = phrases[pi];
+        el.textContent = word.substring(0, ci);
+        if (!del && ci < word.length) { ci++; setTimeout(tick, 45); }
+        else if (!del) { del = true; setTimeout(tick, 1800); }
+        else if (ci > 0) { ci--; setTimeout(tick, 22); }
+        else { del = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 350); }
+      })();
+    }
+
+    function initParticles() {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles = [];
+      const mouse = { x: -999, y: -999 };
+      const colors = ['14,165,233', '99,102,241', '56,189,248'];
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        const count = Math.min(110, Math.floor((w * h) / 16000));
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5,
+          r: Math.random() * 2 + 1, c: colors[Math.floor(Math.random() * colors.length)]
+        }));
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      resize();
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          const dxm = p.x - mouse.x, dym = p.y - mouse.y, dm = Math.hypot(dxm, dym);
+          if (dm < 130) { p.x += dxm / dm * 1.3; p.y += dym / dm * 1.3; }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.c},0.75)`;
+          ctx.shadowColor = `rgba(${p.c},0.9)`; ctx.shadowBlur = 10;
+          ctx.fill(); ctx.shadowBlur = 0;
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const d = Math.hypot(p.x - q.x, p.y - q.y);
+            if (d < 140) {
+              ctx.strokeStyle = `rgba(14,165,233,${(1 - d / 140) * 0.28})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            }
+          }
+          if (dm < 170) {
+            ctx.strokeStyle = `rgba(249,115,22,${(1 - dm / 170) * 0.45})`;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    function populateSemesterDropdown(selected = activeSemester) {
+      document.getElementById('form-semester').innerHTML = semesterList.map(s =>
+        `<option value="${escapeHTML(s)}" ${s === selected ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('');
+    }
+    function toggleNewSemesterInput() { document.getElementById('new-semester-block').classList.toggle('hidden'); }
+    function addNewSemester() {
+      const input = document.getElementById('new-semester-name');
+      const s = input.value.trim();
+      if (!s) return;
+      if (!semesterList.includes(s)) {
+        semesterList.unshift(s);
+        saveSemestersToStorage(); renderSemesterTabs(); populateSemesterDropdown(s);
+        input.value = ''; toggleNewSemesterInput(); updateStats();
+        alert(`New semester term "${s}" created!`);
+      } else alert('Semester already exists.');
+    }
+
+    function populateCategoryDropdown(selected = CATEGORY_LIST[1]) {
+      const select = document.getElementById('form-category');
+      select.innerHTML = CATEGORY_LIST.filter(c => c !== 'All').map(c =>
+        `<option value="${escapeHTML(c)}" ${c === selected ? 'selected' : ''}>${escapeHTML(c)}</option>`
+      ).join('');
+    }
+    function toggleNewCategoryInput() { document.getElementById('new-category-block').classList.toggle('hidden'); }
+    function addNewCategory() {
+      const input = document.getElementById('new-category-name');
+      const cat = input.value.trim();
+      if (!cat) return;
+      if (!CATEGORY_LIST.includes(cat)) {
+        CATEGORY_LIST.push(cat);
+        saveCategoriesToStorage();
+        renderCategoryPills();
+        renderTicker();
+        populateCategoryDropdown(cat);
+        input.value = '';
+        toggleNewCategoryInput();
+        alert(`New category domain "${cat}" added successfully!`);
+      } else alert('Category already exists.');
+    }
+
+    function openFacultyModal() { renderFacultyList(); document.getElementById('faculty-modal').classList.remove('hidden'); }
+    function closeFacultyModal() { document.getElementById('faculty-modal').classList.add('hidden'); }
+    function renderFacultyList() {
+      document.getElementById('faculty-list-container').innerHTML = facultyData.map((f, idx) => `
+        <div class="flex items-center justify-between p-2.5 bg-sky-50/80 rounded-xl border border-sky-100 text-xs msg-in" style="animation-delay:${idx * 30}ms">
+          <div class="flex items-center space-x-2"><i class="fa-solid fa-user-tie text-warmorange-500"></i><span class="font-bold text-slate-800">${escapeHTML(f)}</span></div>
+          <div class="flex items-center gap-2">
+            <button onclick="editFacultyPrompt(${idx})" class="text-slate-400 hover:text-sky-600"><i class="fa-solid fa-pen"></i></button>
+            <button onclick="removeFaculty(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>`).join('');
+    }
+    function handleAddFaculty(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-faculty-name');
+      const name = input.value.trim();
+      if (!name) return;
+      if (!facultyData.includes(name)) {
+        facultyData.push(name); saveFacultyToStorage(); renderFacultyList(); renderShowcase(); input.value = '';
+      } else alert('Faculty member already exists.');
+    }
+    function editFacultyPrompt(idx) {
+      const oldName = facultyData[idx];
+      const nn = prompt("Edit Faculty Name:", oldName);
+      if (nn && nn.trim() !== "") {
+        const t = nn.trim();
+        facultyData[idx] = t;
+        projectsData.forEach(p => { if (Array.isArray(p.faculty)) p.faculty = p.faculty.map(f => f === oldName ? t : f); });
+        saveFacultyToStorage(); saveProjectsToStorage(); renderFacultyList(); renderShowcase();
+      }
+    }
+    function removeFaculty(idx) {
+      const name = facultyData[idx];
+      if (confirm(`Remove ${name} from directory?`)) {
+        facultyData.splice(idx, 1); saveFacultyToStorage(); renderFacultyList(); renderShowcase();
+      }
+    }
+
+    function openPostModal() {
+      populateSemesterDropdown(activeSemester);
+      populateFacultyDropdown();
+      populateCategoryDropdown();
+      document.getElementById('sdp-form').reset();
+      document.getElementById('edit-project-id').value = '';
+      document.getElementById('new-semester-block').classList.add('hidden');
+      document.getElementById('new-category-block').classList.add('hidden');
+      document.getElementById('post-modal-heading').innerText = "Post New Senior Design Project";
+      document.getElementById('post-modal').classList.remove('hidden');
+    }
+    function closePostModal() { document.getElementById('post-modal').classList.add('hidden'); }
+    function populateFacultyDropdown(selected = []) {
+      document.getElementById('form-faculty').innerHTML = facultyData.map(f =>
+        `<option value="${escapeHTML(f)}" ${selected.includes(f) ? 'selected' : ''}>${escapeHTML(f)}</option>`).join('');
+    }
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-project-id').value;
+      const title = document.getElementById('form-title').value.trim();
+      const semester = document.getElementById('form-semester').value;
+      const category = document.getElementById('form-category').value;
+      const image = document.getElementById('form-image').value.trim();
+      const faculty = Array.from(document.getElementById('form-faculty').selectedOptions).map(o => o.value);
+      if (faculty.length === 0) { alert("Please select at least one faculty advisor."); return; }
+      const team = document.getElementById('form-team').value.trim();
+      const tagsStr = document.getElementById('form-tags').value.trim();
+      const icon = document.getElementById('form-icon').value;
+      const summary = document.getElementById('form-summary').value.trim();
+      const details = document.getElementById('form-details').value.trim();
+      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : ['ME Capstone'];
+
+      if (editId) {
+        const i = projectsData.findIndex(p => p.id === editId);
+        if (i !== -1) projectsData[i] = { id: editId, title, semester, category, image, faculty, team, tags, icon, summary, details };
+      } else {
+        projectsData.unshift({ id: 'sdp-' + Date.now(), title, semester, category, image, faculty, team, tags, icon, summary, details });
+      }
+      saveProjectsToStorage(); closePostModal(); selectSemester(semester); renderShowcase();
+    }
+    function openEditProject(id) {
+      const p = projectsData.find(i => i.id === id);
+      if (!p) return;
+      populateSemesterDropdown(p.semester);
+      populateCategoryDropdown(p.category);
+      populateFacultyDropdown(Array.isArray(p.faculty) ? p.faculty : [p.faculty]);
+      document.getElementById('edit-project-id').value = p.id;
+      document.getElementById('form-title').value = p.title;
+      document.getElementById('form-category').value = p.category;
+      document.getElementById('form-image').value = p.image || '';
+      document.getElementById('form-team').value = p.team;
+      document.getElementById('form-tags').value = p.tags.join(', ');
+      document.getElementById('form-icon').value = p.icon || 'fa-gear';
+      document.getElementById('form-summary').value = p.summary;
+      document.getElementById('form-details').value = p.details;
+      document.getElementById('post-modal-heading').innerText = "Edit Senior Design Project";
+      document.getElementById('post-modal').classList.remove('hidden');
+    }
+    function deleteProject(id) {
+      if (confirm("Are you sure you want to delete this SDP post?")) {
+        projectsData = projectsData.filter(p => p.id !== id);
+        saveProjectsToStorage(); renderShowcase();
+      }
+    }
+
+    function openProjectDetails(id) {
+      const p = projectsData.find(i => i.id === id);
+      if (!p) return;
+      const fl = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+      document.getElementById('modal-image').src = p.image && p.image.trim() !== "" ? p.image : GENERIC_SDP_IMAGE;
+      document.getElementById('modal-title').innerText = p.title;
+      document.getElementById('modal-category').innerText = p.category;
+      document.getElementById('modal-advisor').innerText = fl.join(', ');
+      document.getElementById('modal-term').innerText = p.semester;
+      document.getElementById('modal-team').innerText = p.team;
+      document.getElementById('modal-summary').innerText = p.summary;
+      document.getElementById('modal-details').innerText = p.details || "No extended team member details specified.";
+      document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="tech-pill px-2 py-0.5 text-[10px] bg-sky-50 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('');
+      document.getElementById('modal-edit-btn').onclick = function () { closeProjectModal(); openEditProject(p.id); };
+      document.getElementById('project-modal').classList.remove('hidden');
+    }
+    function closeProjectModal() { document.getElementById('project-modal').classList.add('hidden'); }
+
+    function selectSemester(sem) { activeSemester = sem; renderSemesterTabs(); renderShowcase(); }
+    function selectCategory(cat) { activeCategory = cat; renderCategoryPills(); renderShowcase(); }
+    function handleSearch() { searchQuery = document.getElementById('search-input').value; renderShowcase(); }
+    function toggleDataMenu() { document.getElementById('data-menu').classList.toggle('hidden'); }
+
+    function exportDataJSON() {
+      const data = { faculty: facultyData, semesters: semesterList, categories: CATEGORY_LIST, projects: projectsData };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `ME_SDP_Full_Database_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+    function importDataJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (parsed.faculty && parsed.projects) {
+            facultyData = parsed.faculty; projectsData = parsed.projects;
+            if (parsed.semesters) semesterList = parsed.semesters;
+            if (parsed.categories) CATEGORY_LIST = parsed.categories;
+            saveFacultyToStorage(); saveSemestersToStorage(); saveCategoriesToStorage(); saveProjectsToStorage();
+            renderSemesterTabs(); renderCategoryPills(); renderTicker(); renderShowcase();
+            alert('Showcase dataset imported successfully!');
+          } else alert('Invalid backup file format.');
+        } catch (err) { alert('Error parsing JSON file.'); }
+      };
+      reader.readAsText(file);
+    }
+
+    function toggleFloatingChat() {
+      document.getElementById('floating-chat-window').classList.toggle('hidden');
+      document.getElementById('chat-icon-open').classList.toggle('hidden');
+      document.getElementById('chat-icon-close').classList.toggle('hidden');
+    }
+    function handleWidgetChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('widget-chat-input');
+      const query = input.value.trim();
+      if (!query) return;
+      const win = document.getElementById('widget-chat-messages');
+      const u = document.createElement('div');
+      u.className = 'text-right msg-in';
+      u.innerHTML = `<span class="inline-block bg-gradient-to-r from-sky-500 to-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs">${escapeHTML(query)}</span>`;
+      win.appendChild(u); input.value = ''; win.scrollTop = win.scrollHeight;
+
+      setTimeout(() => {
+        const b = document.createElement('div');
+        b.className = 'msg-in bg-white border border-sky-100 rounded-xl p-3 text-slate-800 text-xs shadow-sm';
+        const lq = query.toLowerCase();
+        let r = `Searching for: <strong>${escapeHTML(query)}</strong>. `;
+        if (lq.includes('faculty') || lq.includes('dr')) r += `Registered active faculty: ${facultyData.slice(0, 6).map(escapeHTML).join(', ')}... (use search bar to view all projects).`;
+        else if (lq.includes('post') || lq.includes('add')) r += `Click "Post New SDP" to enter new projects or add new semester terms!`;
+        else r += `You can search by student names, advisor names, or project titles directly in the search bar!`;
+        b.innerHTML = r; win.appendChild(b); win.scrollTop = win.scrollHeight;
+      }, 350);
+    }
+
+    const NEWS_INTERVAL = 6500;
+    let currentView = 'showcase';
+    let newsItems = [], newsIndex = 0, newsPlaying = true, newsHover = false;
+    let newsElapsed = 0, newsLast = 0, newsRaf = null, newsSemester = 'All';
+
+    function viewTabClass(active) {
+      return 'px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 ' + (active ? 'tab-active' : 'tab-idle');
+    }
+
+    function setView(v) {
+      currentView = v;
+      document.getElementById('view-showcase').classList.toggle('hidden', v !== 'showcase');
+      document.getElementById('view-news').classList.toggle('hidden', v !== 'news');
+      document.getElementById('tab-showcase').className = viewTabClass(v === 'showcase');
+      document.getElementById('tab-news').className = viewTabClass(v === 'news');
+      if (v === 'news') { renderNews(); newsElapsed = 0; startNewsLoop(); }
+      else stopNewsLoop();
+    }
+
+    function getNewsProjects() {
+      const idx = s => { const i = semesterList.indexOf(s); return i === -1 ? 999 : i; };
+      return projectsData
+        .map((p, i) => ({ p, i }))
+        .filter(x => newsSemester === 'All' || x.p.semester === newsSemester)
+        .sort((a, b) => idx(a.p.semester) - idx(b.p.semester) || a.i - b.i)
+        .map(x => x.p);
+    }
+
+    function renderNews(keep) {
+      if (newsSemester !== 'All' && !semesterList.includes(newsSemester)) newsSemester = 'All';
+      document.getElementById('news-semester').innerHTML = ['All', ...semesterList].map(s =>
+        `<option value="${escapeHTML(s)}" ${s === newsSemester ? 'selected' : ''}>${s === 'All' ? 'All Semesters' : escapeHTML(s)}</option>`).join('');
+
+      newsItems = getNewsProjects();
+      const n = newsItems.length;
+      const track = document.getElementById('news-track');
+      const dots = document.getElementById('news-dots');
+      const thumbs = document.getElementById('news-thumbs');
+      document.getElementById('news-count-label').innerText = `${n} PROJECT${n === 1 ? '' : 'S'} ON AIR`;
+      if (!keep || newsIndex >= n) newsIndex = 0;
+
+      if (n === 0) {
+        track.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center text-center text-slate-500"><i class="fa-solid fa-satellite-dish text-4xl text-sky-400 mb-3 badge-float"></i><p class="text-sm font-semibold">No projects to broadcast yet</p></div>`;
+        dots.innerHTML = ''; thumbs.innerHTML = '';
+        return;
+      }
+
+      const pad = x => String(x).padStart(2, '0');
+      track.innerHTML = newsItems.map((p, i) => {
+        const fl = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).map(f => escapeHTML(f)).join(', ');
+        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+        return `
+        <div class="news-slide">
+          <img class="bg" src="${img}" alt="" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+          <div class="veil"></div>
+          <div class="panel">
+            <div class="news-count news-anim" style="--d:0">${pad(i + 1)}<small>/ ${pad(n)}</small></div>
+            <div class="flex flex-wrap items-center gap-2 news-anim" style="--d:1">
+              <span class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow"><i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}</span>
+              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 text-sky-700 border border-sky-200"><i class="fa-solid fa-graduation-cap text-warmorange-500 mr-1"></i>${escapeHTML(p.semester)}</span>
+            </div>
+            <h3 class="news-title font-tech text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-3 news-anim" style="--d:2">${escapeHTML(p.title)}</h3>
+            <p class="text-sm text-slate-700 mt-3 leading-relaxed line-clamp-3 news-anim" style="--d:3">${escapeHTML(p.summary)}</p>
+            <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs news-anim" style="--d:4">
+              <span class="font-extrabold text-sky-700"><i class="fa-solid fa-user-tie text-warmorange-500 mr-1.5"></i>${fl}</span>
+              <span class="font-bold text-slate-700"><i class="fa-solid fa-people-group text-indigo-500 mr-1.5"></i>${escapeHTML(p.team)}</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mt-3 news-anim" style="--d:5">
+              ${p.tags.slice(0, 5).map(t => `<span class="px-1.5 py-0.5 text-[9px] bg-white/80 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('')}
+            </div>
+            <div class="mt-5 news-anim" style="--d:6">
+              <button onclick="openProjectDetails('${escapeHTML(p.id)}')" class="btn-glow px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md">
+                View Details <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      dots.innerHTML = newsItems.map((p, i) => `<button class="news-dot" onclick="showSlide(${i})" aria-label="Go to project ${i + 1}"></button>`).join('');
+
+      thumbs.innerHTML = newsItems.map((p, i) => {
+        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+        return `
+        <button class="news-thumb" onclick="showSlide(${i})" title="${escapeHTML(p.title)}">
+          <img src="${img}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+          <span class="absolute inset-x-0 bottom-0 p-2 text-[10px] font-bold text-white bg-gradient-to-t from-sky-950/85 to-transparent text-left truncate">${escapeHTML(p.title)}</span>
+        </button>`;
+      }).join('');
+
+      showSlide(newsIndex);
+    }
+
+    function showSlide(i) {
+      const n = newsItems.length;
+      if (!n) return;
+      newsIndex = ((i % n) + n) % n;
+      newsElapsed = 0;
+      document.querySelectorAll('.news-slide').forEach((el, k) => el.classList.toggle('active', k === newsIndex));
+      document.querySelectorAll('.news-dot').forEach((el, k) => el.classList.toggle('active', k === newsIndex));
+      const ths = document.querySelectorAll('.news-thumb');
+      ths.forEach((el, k) => el.classList.toggle('active', k === newsIndex));
+      const t = ths[newsIndex], box = document.getElementById('news-thumbs');
+      if (t) box.scrollTo({ left: t.offsetLeft - (box.clientWidth - t.clientWidth) / 2, behavior: 'smooth' });
+    }
+
+    function newsNext() { showSlide(newsIndex + 1); }
+    function newsPrev() { showSlide(newsIndex - 1); }
+
+    function toggleNewsPlay() {
+      newsPlaying = !newsPlaying;
+      document.querySelector('#news-play-btn i').className = 'fa-solid ' + (newsPlaying ? 'fa-pause' : 'fa-play');
+    }
+
+    function toggleNewsFullscreen() {
+      const el = document.getElementById('news-stage');
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (el.requestFullscreen) el.requestFullscreen();
+    }
+
+    function handleNewsSemester(v) { newsSemester = v; newsIndex = 0; renderNews(); newsElapsed = 0; }
+
+    function startNewsLoop() {
+      if (newsRaf) return;
+      newsLast = performance.now();
+      newsRaf = requestAnimationFrame(newsLoop);
+    }
+    function stopNewsLoop() {
+      if (newsRaf) cancelAnimationFrame(newsRaf);
+      newsRaf = null;
+    }
+    function newsLoop(t) {
+      if (currentView !== 'news') { newsRaf = null; return; }
+      const dt = Math.min(t - newsLast, 100);
+      newsLast = t;
+      const modalOpen = ['project-modal', 'post-modal', 'faculty-modal'].some(id => !document.getElementById(id).classList.contains('hidden'));
+      const hoverPause = newsHover && !document.fullscreenElement;
+      if (newsPlaying && !hoverPause && !modalOpen && !document.hidden && newsItems.length > 1) newsElapsed += dt;
+      document.getElementById('news-progress-bar').style.width = Math.min(newsElapsed / NEWS_INTERVAL * 100, 100) + '%';
+      if (newsElapsed >= NEWS_INTERVAL) showSlide(newsIndex + 1);
+      newsRaf = requestAnimationFrame(newsLoop);
+    }
+
+    (function initNewsControls() {
+      const el = document.getElementById('news-slides');
+      let sx = null;
+      el.addEventListener('mouseenter', () => { newsHover = true; });
+      el.addEventListener('mouseleave', () => { newsHover = false; });
+      el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      el.addEventListener('touchend', e => {
+        if (sx === null) return;
+        const dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 50) { dx < 0 ? newsNext() : newsPrev(); }
+        sx = null;
+      });
+      document.addEventListener('keydown', e => {
+        if (currentView !== 'news') return;
+        const tag = e.target.tagName;
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
+        if (e.key === 'ArrowRight') newsNext();
+        else if (e.key === 'ArrowLeft') newsPrev();
+        else if (e.key === ' ' && tag !== 'BUTTON') { e.preventDefault(); toggleNewsPlay(); }
+      });
+    })();
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t));
+    }
+  </script>
+</body>
+</html>

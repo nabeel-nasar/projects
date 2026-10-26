@@ -386,14 +386,20 @@
       <div class="space-y-4 mb-6">
         <div class="glass flex overflow-x-auto pb-1 space-x-1 p-1.5 rounded-xl" id="semester-tabs-container"></div>
 
-        <div class="glass flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between p-3.5 rounded-xl">
+<div class="glass flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between p-3.5 rounded-xl">
           <div class="relative flex-grow max-w-md">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sky-500 text-xs"></i>
             <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search title, student, faculty (e.g. Dr. Jaradat), or team..." class="w-full pl-9 pr-3 py-2 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-sky-500 focus:bg-white transition-all">
           </div>
+          
+          <!-- ADD THIS SELECT DROPDOWN -->
+          <div class="flex items-center gap-2">
+            <select id="faculty-filter" onchange="handleFacultyFilter(this.value)" class="px-3 py-2 bg-white/80 border border-sky-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-sky-500 font-semibold transition-all">
+            </select>
+          </div>
+
           <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0" id="category-pills-container"></div>
         </div>
-      </div>
 
       <div id="sdp-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
@@ -1540,12 +1546,12 @@
     ];
 
     let facultyData = [], semesterList = [], projectsData = [];
-    let activeSemester = "Fall 2026", activeCategory = "All", searchQuery = "";
-
+    let activeSemester = "Fall 2026", activeCategory = "All", activeFaculty = "All", searchQuery = "";
     window.onload = function () {
       loadLocalStorageData();
       renderSemesterTabs();
       renderCategoryPills();
+      populateFacultyFilterDropdown(); 
       renderTicker();
       renderShowcase();
       startTyping();
@@ -1611,6 +1617,22 @@
         <button data-cat="${escapeHTML(cat)}" class="cat-pill px-2.5 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${activeCategory === cat ? 'pill-active' : 'pill-idle'}">${escapeHTML(cat)}</button>`).join('');
       c.querySelectorAll('.cat-pill').forEach(b => b.addEventListener('click', () => selectCategory(b.dataset.cat)));
     }
+    function populateFacultyFilterDropdown() {
+      const select = document.getElementById('faculty-filter');
+      if (!select) return;
+      const sortedFaculty = [...facultyData].sort((a, b) => {
+        const lastNameA = a.replace(/^Dr\.\s+/, '').split(' ').pop();
+        const lastNameB = b.replace(/^Dr\.\s+/, '').split(' ').pop();
+        return lastNameA.localeCompare(lastNameB);
+      });
+      select.innerHTML = `<option value="All">All Faculty Advisors</option>` +
+        sortedFaculty.map(f => `<option value="${escapeHTML(f)}" ${activeFaculty === f ? 'selected' : ''}>${escapeHTML(f)}</option>`).join('');
+    }
+
+    function handleFacultyFilter(val) {
+      activeFaculty = val;
+      renderShowcase();
+    }
 
     function renderTicker() {
       const items = CATEGORY_LIST.filter(c => c !== 'All').map(c => `<span><i class="fa-solid fa-bolt text-warmorange-500 mr-2"></i>${c}</span>`).join('');
@@ -1624,13 +1646,14 @@
       const filtered = projectsData.filter(p => {
         const matchSemester = p.semester === activeSemester;
         const matchCategory = activeCategory === 'All' || p.category === activeCategory;
+        const facList = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
+        const matchFacultyFilter = activeFaculty === 'All' || facList.includes(activeFaculty);
         const q = searchQuery.toLowerCase();
-        const fac = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
-        const matchFaculty = fac.some(f => f.toLowerCase().includes(q));
-        const matchSearch = !q || p.title.toLowerCase().includes(q) || matchFaculty ||
+        const matchFacultySearch = facList.some(f => f.toLowerCase().includes(q));
+        const matchSearch = !q || p.title.toLowerCase().includes(q) || matchFacultySearch ||
           p.team.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q)) ||
           p.summary.toLowerCase().includes(q) || (p.details && p.details.toLowerCase().includes(q));
-        return matchSemester && matchCategory && matchSearch;
+        return matchSemester && matchCategory && matchFacultyFilter && matchSearch;
       });
 
       document.getElementById('semester-badge').innerText = `${activeSemester} Showcase`;

@@ -1579,8 +1579,10 @@
     function saveCategoriesToStorage() { localStorage.setItem('me_sdp_categories', JSON.stringify(CATEGORY_LIST)); }
     function saveProjectsToStorage() { localStorage.setItem('me_sdp_projects', JSON.stringify(projectsData)); }
 
-    function resetToDemoData() {
+  
+   function resetToDemoData() {
       if (confirm("Reset showcase back to standard compiled project dataset (Fall 2022 - Fall 2026)?")) {
+        localStorage.clear();
         facultyData = [...DEFAULT_FACULTY];
         semesterList = [...DEFAULT_SEMESTERS];
         projectsData = [...DEFAULT_PROJECTS];
@@ -1597,7 +1599,11 @@
         ];
         saveFacultyToStorage(); saveSemestersToStorage(); saveCategoriesToStorage(); saveProjectsToStorage();
         activeSemester = "Fall 2026";
+        activeFaculty = "All";
+        activeCategory = "All";
+        if (typeof populateFacultyFilterDropdown === 'function') populateFacultyFilterDropdown();
         renderSemesterTabs(); renderCategoryPills(); renderTicker(); renderShowcase();
+        if (currentView === 'news') renderNews();
         alert("Showcase successfully restored to standard compiled dataset.");
       }
     }
@@ -2073,11 +2079,14 @@
       else stopNewsLoop();
     }
 
+    
     function getNewsProjects() {
       const idx = s => { const i = semesterList.indexOf(s); return i === -1 ? 999 : i; };
-      return projectsData
+      return (projectsData || [])
         .map((p, i) => ({ p, i }))
         .filter(x => newsSemester === 'All' || x.p.semester === newsSemester)
+        .filter(x => activeCategory === 'All' || x.p.category === activeCategory)
+        .filter(x => activeFaculty === 'All' || (Array.isArray(x.p.faculty) ? x.p.faculty : [x.p.faculty]).includes(activeFaculty))
         .sort((a, b) => idx(a.p.semester) - idx(b.p.semester) || a.i - b.i)
         .map(x => x.p);
     }

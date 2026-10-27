@@ -1907,26 +1907,66 @@ ${p.sponsor ? `
       if (newsIndex >= list.length) newsIndex = 0;
       if (countLabel) countLabel.innerText = `PROJECT ${newsIndex + 1} OF ${list.length}`;
 
-      track.innerHTML = list.map((p, i) => {
-        const active = i === newsIndex ? 'active' : '';
-        const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
-        const facList = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).join(', ');
-        const countStr = (i + 1) < 10 ? `0${i + 1}` : `${i + 1}`;
+// INSIDE renderNews():
+      track.innerHTML = newsItems.map((p, i) => {
+        const fl = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).map(f => escapeHTML(f)).join(', ');
+        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
         return `
-          <div class="news-slide ${active}">
-            <img src="${imgSrc}" class="bg" alt="${escapeHTML(p.title)}" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
-            <div class="veil"></div>
-            <div class="panel">
-              <div class="news-count news-anim" style="--d:0">${countStr}<small>/ ${list.length}</small></div>
-              <span class="news-anim inline-block px-3 py-1 bg-sky-500/20 text-sky-800 border border-sky-400/40 rounded-full text-xs font-bold uppercase tracking-wider mb-2" style="--d:1">${escapeHTML(p.category)}</span>
-              <h3 class="news-title news-anim font-tech text-xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3" style="--d:2">${escapeHTML(p.title)}</h3>
-              <p class="news-anim text-slate-700 text-xs sm:text-sm line-clamp-3 mb-4 leading-relaxed max-w-xl" style="--d:3">${escapeHTML(p.summary || 'Capstone engineering design project.')}</p>
-              <div class="news-anim flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-800" style="--d:4">
-                <span class="bg-white/80 px-3 py-1.5 rounded-lg border border-sky-200"><i class="fa-solid fa-user-tie text-warmorange-500 mr-1.5"></i>${escapeHTML(facList)}</span>
-                <span class="bg-white/80 px-3 py-1.5 rounded-lg border border-sky-200"><i class="fa-solid fa-users text-sky-600 mr-1.5"></i>${escapeHTML(p.team)}</span>
-              </div>
+        <div class="news-slide ${i === newsIndex ? 'active' : ''}">
+          <img class="bg" src="${img}" alt="" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+          <div class="veil"></div>
+          <div class="panel">
+            <div class="news-count news-anim" style="--d:0">${pad(i + 1)}<small>/ ${pad(n)}</small></div>
+            
+            <div class="flex flex-wrap items-center gap-2 news-anim" style="--d:1">
+              <!-- CATEGORY BADGE -->
+              <span class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow">
+                <i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}
+              </span>
+              
+              <!-- SEMESTER BADGE -->
+              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 text-sky-700 border border-sky-200">
+                <i class="fa-solid fa-graduation-cap text-warmorange-500 mr-1"></i>${escapeHTML(p.semester)}
+              </span>
+
+              <!-- NEW: INDUSTRY SPONSOR BADGE (ORANGE) -->
+              ${p.sponsor ? `
+                <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-gradient-to-r from-warmorange-500 to-warmorange-600 text-white shadow">
+                  <i class="fa-solid fa-handshake mr-1"></i>${escapeHTML(p.sponsor)}
+                </span>
+              ` : ''}
             </div>
-          </div>`;
+
+            <!-- TITLE -->
+            <h3 class="news-title font-tech text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-3 news-anim" style="--d:2">${escapeHTML(p.title)}</h3>
+
+            <!-- NEW: PRIZE BANNER -->
+            ${p.prize ? `
+              <div class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg flex items-center gap-2 shadow-sm w-fit news-anim" style="--d:2.5">
+                <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
+                <span class="text-[11px] font-bold text-amber-900">${escapeHTML(p.prize)}</span>
+              </div>
+            ` : ''}
+
+            <!-- SUMMARY -->
+            <p class="text-sm text-slate-700 mt-3 leading-relaxed line-clamp-3 news-anim" style="--d:3">${escapeHTML(p.summary || 'Capstone mechanical engineering project.')}</p>
+
+            <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs news-anim" style="--d:4">
+              <span class="font-extrabold text-sky-700"><i class="fa-solid fa-user-tie text-warmorange-500 mr-1.5"></i>${fl}</span>
+              <span class="font-bold text-slate-700"><i class="fa-solid fa-people-group text-indigo-500 mr-1.5"></i>${escapeHTML(p.team)}</span>
+            </div>
+            
+            <div class="flex flex-wrap gap-1 mt-3 news-anim" style="--d:5">
+              ${(p.tags || []).slice(0, 5).map(t => `<span class="px-1.5 py-0.5 text-[9px] bg-white/80 font-mono text-sky-700 rounded border border-sky-200">${escapeHTML(t)}</span>`).join('')}
+            </div>
+            
+            <div class="mt-5 news-anim" style="--d:6">
+              <button onclick="openProjectDetails('${escapeHTML(p.id)}')" class="btn-glow px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md">
+                View Details <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>`;
       }).join('');
 
       dots.innerHTML = list.map((_, i) => `<button onclick="setNewsIndex(${i})" class="news-dot ${i === newsIndex ? 'active' : ''}"></button>`).join('');

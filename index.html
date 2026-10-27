@@ -252,10 +252,57 @@
     }
     .news-thumb:hover { opacity: .9; }
     .news-thumb.active { opacity: 1; border-color: #0ea5e9; box-shadow: 0 8px 24px rgba(14,165,233,.4); transform: translateY(-3px); }
-    #news-stage:fullscreen { display: flex; flex-direction: column; border-radius: 0; background: linear-gradient(135deg, #e6f4ff, #b9defc); }
-    #news-stage:fullscreen .news-slides { flex: 1; height: auto; }
-    #news-stage:fullscreen .news-slide .panel { padding-left: 6rem; }
-    #news-stage:fullscreen h3.news-title { font-size: 3rem; }
+    /* AFTER: Fullscreen High-Visibility Typography */
+#news-stage:fullscreen { 
+  display: flex; 
+  flex-direction: column; 
+  border-radius: 0; 
+  background: linear-gradient(135deg, #e6f4ff, #b9defc); 
+}
+#news-stage:fullscreen .news-slides { 
+  flex: 1; 
+  height: auto; 
+}
+#news-stage:fullscreen .news-slide .panel { 
+  padding-left: 5rem; 
+  padding-right: 5rem; 
+  width: min(900px, 100%); 
+}
+
+/* Make Project Counter huge */
+#news-stage:fullscreen .news-count { 
+  font-size: 7rem; 
+}
+
+/* Make Project Title large & clear */
+#news-stage:fullscreen h3.news-title { 
+  font-size: 3.25rem !important; 
+  line-height: 1.15 !important; 
+}
+
+/* Make Abstract Summary text larger */
+#news-stage:fullscreen p.text-sm { 
+  font-size: 1.25rem !important; 
+  line-height: 1.75 !important; 
+  -webkit-line-clamp: 4 !important; 
+}
+
+/* Scale up Faculty Advisor & Team info */
+#news-stage:fullscreen .news-anim span { 
+  font-size: 1rem !important; 
+}
+
+/* Enlarge category & sponsor badges */
+#news-stage:fullscreen .flex-wrap span { 
+  font-size: 0.85rem !important; 
+  padding: 0.35rem 0.85rem !important; 
+}
+
+/* Scale up buttons */
+#news-stage:fullscreen button.btn-glow { 
+  font-size: 1rem !important; 
+  padding: 0.75rem 1.5rem !important; 
+}
     @media (max-width: 640px) {
       .news-slides { height: 580px; }
       .news-slide .panel { width: 100%; padding: 1.2rem 1.2rem 3.5rem; justify-content: flex-end; }
@@ -1567,7 +1614,7 @@ id: "sdp-f25-6",
     let currentView = 'showcase';
     
     // News feed state
-    let newsSemester = "Fall 2026";
+    let newsSemester = "All";
     let newsIndex = 0;
     let newsPlaying = true;
     let newsInterval = null;
@@ -1887,7 +1934,8 @@ ${p.sponsor ? `
       renderNews();
     }
 
-function setView(v) {
+// --- News Feed View Implementation ---
+    function setView(v) {
       currentView = v;
       document.getElementById('view-showcase').classList.toggle('hidden', v !== 'showcase');
       document.getElementById('view-news').classList.toggle('hidden', v !== 'news');
@@ -1896,12 +1944,16 @@ function setView(v) {
       if (v === 'news') { 
         newsIndex = 0;
         renderNews(); 
-        showSlide(0);
-        newsElapsed = 0; 
-        startNewsLoop(); 
+        startNewsTimer(); 
       } else {
-        stopNewsLoop();
+        stopNewsTimer();
       }
+    }
+
+    function viewTabClass(active) {
+      return active 
+        ? "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-active"
+        : "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 tab-idle";
     }
 
     function getNewsProjects() {
@@ -1918,7 +1970,7 @@ function setView(v) {
       document.getElementById('news-semester').innerHTML = ['All', ...semesterList].map(s =>
         `<option value="${escapeHTML(s)}" ${s === newsSemester ? 'selected' : ''}>${s === 'All' ? 'All Semesters' : escapeHTML(s)}</option>`).join('');
 
-      newsItems = getNewsProjects();
+      const newsItems = getNewsProjects();
       const n = newsItems.length;
       const track = document.getElementById('news-track');
       const dots = document.getElementById('news-dots');
@@ -1952,6 +2004,7 @@ function setView(v) {
                 <i class="fa-solid fa-graduation-cap text-warmorange-500 mr-1"></i>${escapeHTML(p.semester)}
               </span>
 
+              <!-- ORANGE INDUSTRY SPONSOR BADGE -->
               ${p.sponsor ? `
                 <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-gradient-to-r from-warmorange-500 to-warmorange-600 text-white shadow">
                   <i class="fa-solid fa-handshake mr-1"></i>${escapeHTML(p.sponsor)}
@@ -1961,6 +2014,7 @@ function setView(v) {
 
             <h3 class="news-title font-tech text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-3 news-anim" style="--d:2">${escapeHTML(p.title)}</h3>
 
+            <!-- COMPETITION PRIZE BANNER -->
             ${p.prize ? `
               <div class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg flex items-center gap-2 shadow-sm w-fit news-anim" style="--d:2.5">
                 <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
@@ -1988,42 +2042,51 @@ function setView(v) {
         </div>`;
       }).join('');
 
-      dots.innerHTML = newsItems.map((p, i) => `<button class="news-dot" onclick="showSlide(${i})" aria-label="Go to project ${i + 1}"></button>`).join('');
+      dots.innerHTML = newsItems.map((p, i) => `<button class="news-dot ${i === newsIndex ? 'active' : ''}" onclick="showSlide(${i})" aria-label="Go to project ${i + 1}"></button>`).join('');
 
       thumbs.innerHTML = newsItems.map((p, i) => {
         const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
         return `
-        <button class="news-thumb" onclick="showSlide(${i})" title="${escapeHTML(p.title)}">
+        <button class="news-thumb ${i === newsIndex ? 'active' : ''}" onclick="showSlide(${i})" title="${escapeHTML(p.title)}">
           <img src="${img}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
           <span class="absolute inset-x-0 bottom-0 p-2 text-[10px] font-bold text-white bg-gradient-to-t from-sky-950/85 to-transparent text-left truncate">${escapeHTML(p.title)}</span>
         </button>`;
       }).join('');
-
-      showSlide(newsIndex);
     }
 
+    function showSlide(idx) {
+      const newsItems = getNewsProjects();
+      if (newsItems.length === 0) return;
+      newsIndex = (idx + newsItems.length) % newsItems.length;
+      
+      const slides = document.querySelectorAll('.news-slide');
+      slides.forEach((s, i) => s.classList.toggle('active', i === newsIndex));
 
+      const dots = document.querySelectorAll('.news-dot');
+      dots.forEach((d, i) => d.classList.toggle('active', i === newsIndex));
 
-      startNewsTimer();
-    }
+      const thumbs = document.querySelectorAll('.news-thumb');
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('active', i === newsIndex);
+        if (i === newsIndex) t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
 
-    function setNewsIndex(idx) {
-      newsIndex = idx;
-      renderNews();
+      if (newsPlaying) startNewsTimer();
     }
 
     function newsNext() {
-      const list = projectsData.filter(p => p.semester === newsSemester);
-      if (list.length === 0) return;
-      newsIndex = (newsIndex + 1) % list.length;
-      renderNews();
+      showSlide(newsIndex + 1);
     }
 
     function newsPrev() {
-      const list = projectsData.filter(p => p.semester === newsSemester);
-      if (list.length === 0) return;
-      newsIndex = (newsIndex - 1 + list.length) % list.length;
+      showSlide(newsIndex - 1);
+    }
+
+    function handleNewsSemester(val) {
+      newsSemester = val;
+      newsIndex = 0;
       renderNews();
+      showSlide(0);
     }
 
     function toggleNewsPlay() {
@@ -2039,7 +2102,7 @@ function setView(v) {
       newsProgressVal = 0;
       const bar = document.getElementById('news-progress-bar');
       newsProgressInterval = setInterval(() => {
-        newsProgressVal += 1.5;
+        newsProgressVal += 2;
         if (bar) bar.style.width = `${newsProgressVal}%`;
         if (newsProgressVal >= 100) {
           newsNext();
@@ -2052,7 +2115,7 @@ function setView(v) {
       const bar = document.getElementById('news-progress-bar');
       if (bar) bar.style.width = '0%';
     }
-
+    
     function toggleNewsFullscreen() {
       const stage = document.getElementById('news-stage');
       if (!document.fullscreenElement) {

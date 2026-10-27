@@ -1761,12 +1761,12 @@ grid.innerHTML = filtered.map((p, idx) => {
                 <img src="${imgSrc}" alt="${escapeHTML(p.title)}" class="card-img w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
                 <div class="absolute inset-0 img-overlay"></div>
                 
-                <!-- INDUSTRY SPONSOR BADGE (Top Left) -->
-                ${p.sponsor ? `
-                  <span class="absolute top-3 left-3 bg-slate-900/85 text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-amber-400/40 backdrop-blur z-10">
-                    <i class="fa-solid fa-handshake mr-1"></i>${escapeHTML(p.sponsor)}
-                  </span>
-                ` : ''}
+<!-- AFTER (Orange Background with White Text) -->
+${p.sponsor ? `
+  <span class="absolute top-3 left-3 bg-gradient-to-r from-warmorange-500 to-warmorange-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-orange-300/40 backdrop-blur z-10">
+    <i class="fa-solid fa-handshake mr-1 text-white"></i>${escapeHTML(p.sponsor)}
+  </span>
+` : ''}
 
                 <!-- CATEGORY BADGE (Top Right) -->
                 <span class="badge-float absolute top-3 right-3 bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg z-10">

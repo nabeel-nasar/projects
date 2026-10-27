@@ -864,17 +864,19 @@
         details: "Student Team:\n• Basel Kordi\n• Abdel Rahman Hamzeh\n• Yazan Nasir\n• Faris Abdelrazeq"
       },
       {
-        id: "sdp-s25-1",
-        title: "Deployable Structures for CubeSat",
-        semester: "Spring 2025",
-        category: "Aerospace & Mechatronics",
-        faculty: ["Dr. Wael Abuzaid"],
-        team: "Group 1",
-        image: "",
-        tags: ["Jana Bebars", "Ibrahim Al Mutoori", "Ali Loay Qayed Ahli"],
-        icon: "fa-plane",
-        summary: "",
-        details: "Student Team:\n• Jana Bebars\n• Ibrahim Al Mutoori\n• Ali Loay Qayed Ahli"
+id: "sdp-s25-1",
+  title: "Solar Array Deployment System for CubeSats",
+  semester: "Spring 2025",
+  category: "Aerospace & Mechatronics",
+  faculty: ["Dr. Wael Abuzaid"],
+  team: "Group 3",
+  prize: "3rd Place — 2026 CEN SDP Competition",
+  sponsor: "MBRSC",
+  image: "",
+  tags: ["Jana Bebars"],
+  icon: "fa-plane",
+  summary: "",
+  details: "Student Team:\n• Jana Bebars\n\nIndustry Sponsor: Mohammed Bin Rashid Space Centre (MBRSC)\nAward: 3rd Place - 2026 CEN Senior Design Projects Competition"
       },
       {
         id: "sdp-f26-8",
@@ -1371,17 +1373,19 @@
         details: "Student Team:\n• Hamda Belhoul\n• Youssef Elbehairy\n• Shaikha Alalili\n• Ghazi Al Shahmani"
       },
       {
-        id: "sdp-f25-5",
-        title: "Smart Heat Sink Design for Compact Electronics",
-        semester: "Fall 2025",
-        category: "Thermal & Energy Systems",
-        faculty: ["Dr. Abdallah Ghazal"],
-        team: "Group 5",
-        image: "",
-        tags: ["Alhasan Emam", "Elshafey Elshafey"],
-        icon: "fa-temperature-arrow-down",
-        summary: "",
-        details: "Student Team:\n• Alhasan Emam\n• Elshafey Elshafey"
+id: "sdp-f25-5",
+  title: "Smart Hybrid Heat Sink Design for Compact Electronics",
+  semester: "Fall 2025",
+  category: "Thermal & Energy Systems",
+  faculty: ["Dr. Abdallah Ghazal", "Dr. Fazal Hameed"],
+  team: "Group 1",
+  prize: "1st Place — 2026 CEN SDP Competition",
+  sponsor: "Besomi Electronic Group",
+  image: "",
+  tags: ["Alhasan Emam", "Elshafey Elshafey", "Mohammad Awadallah"],
+  icon: "fa-temperature-arrow-down",
+  summary: "",
+  details: "Student Team:\n• Alhasan Emam\n• Elshafey Elshafey\n• Mohammad Awadallah\n\nIndustry Sponsor: Besomi Electronic Group\nAward: 1st Place - 2026 CEN Senior Design Projects Competition"
       },
       {
         id: "sdp-f23-4",
@@ -1423,17 +1427,18 @@
         details: "Student Team:\n• Mohammed Faraz Khan\n• Ammar Khalid\n• Khaled Alfayomy\n• Nasser-Allah Awad\n• Mouhammad Cisse"
       },
       {
-        id: "sdp-f25-6",
-        title: "Solar Powered Car",
-        semester: "Fall 2025",
-        category: "Thermal & Energy Systems",
-        faculty: ["Dr. Bassam Abu Nabah"],
-        team: "Group 6",
-        image: "",
-        tags: ["Mohammed Hasan", "Ali Onaisse", "Abdul Wahid Shafiullah"],
-        icon: "fa-solar-panel",
-        summary: "",
-        details: "Student Team:\n• Mohammed Hasan\n• Ali Onaisse\n• Abdul Wahid Shafiullah"
+id: "sdp-f25-6",
+  title: "Solar Powered Car",
+  semester: "Fall 2025",
+  category: "Thermal & Energy Systems",
+  faculty: ["Dr. Bassam Abu Nabah"],
+  team: "Group 2",
+  prize: "2nd Place — 2026 CEN SDP Competition",
+  image: "",
+  tags: ["Mohammed Hasan", "Ali Onaisse", "Abdul Wahid Shafiullah"],
+  icon: "fa-solar-panel",
+  summary: "",
+  details: "Student Team:\n• Mohammed Hasan\n• Ali Onaisse\n• Abdul Wahid Shafiullah\n\nAward: 2nd Place - 2026 CEN Senior Design Projects Competition"
       },
       {
         id: "sdp-f22-9",
@@ -1714,8 +1719,7 @@
         return;
       }
       emptyState.classList.add('hidden');
-
-      grid.innerHTML = filtered.map((p, idx) => {
+grid.innerHTML = filtered.map((p, idx) => {
         const fl = Array.isArray(p.faculty) ? p.faculty : [p.faculty];
         const facultyDisplay = fl.map(f => escapeHTML(f)).join(', ');
         const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
@@ -1727,12 +1731,37 @@
               <div class="h-44 bg-sky-100 relative overflow-hidden flex items-center justify-center border-b border-sky-100">
                 <img src="${imgSrc}" alt="${escapeHTML(p.title)}" class="card-img w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
                 <div class="absolute inset-0 img-overlay"></div>
-                <span class="badge-float absolute top-3 right-3 bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
+                
+                <!-- INDUSTRY SPONSOR BADGE (Top Left) -->
+                ${p.sponsor ? `
+                  <span class="absolute top-3 left-3 bg-slate-900/85 text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-amber-400/40 backdrop-blur z-10">
+                    <i class="fa-solid fa-handshake mr-1"></i>${escapeHTML(p.sponsor)}
+                  </span>
+                ` : ''}
+
+                <!-- CATEGORY BADGE (Top Right) -->
+                <span class="badge-float absolute top-3 right-3 bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg z-10">
                   <i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}
                 </span>
               </div>
               <div class="p-5">
                 <h3 class="font-bold text-base text-slate-900 leading-snug">${escapeHTML(p.title)}</h3>
+
+${p.prize ? `
+  <div class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg flex items-center gap-2">
+    <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
+    <span class="text-[11px] font-bold text-amber-900">${escapeHTML(p.prize)}</span>
+  </div>
+` : ''}
+
+                <!-- COMPETITION PRIZE BANNER (Directly below Title) -->
+                ${p.prize ? `
+                  <div class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
+                    <span class="text-[11px] font-bold text-amber-900">${escapeHTML(p.prize)}</span>
+                  </div>
+                ` : ''}
+
                 <p class="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">${escapeHTML(p.summary || 'Capstone mechanical engineering research project.')}</p>
                 <div class="mt-4 pt-3 border-t border-sky-100 flex items-center justify-between gap-2">
                   <div>

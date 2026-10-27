@@ -1887,27 +1887,52 @@ ${p.sponsor ? `
       renderNews();
     }
 
-    function renderNews() {
-      populateNewsSemesterDropdown();
-      const list = projectsData.filter(p => p.semester === newsSemester);
+function setView(v) {
+      currentView = v;
+      document.getElementById('view-showcase').classList.toggle('hidden', v !== 'showcase');
+      document.getElementById('view-news').classList.toggle('hidden', v !== 'news');
+      document.getElementById('tab-showcase').className = viewTabClass(v === 'showcase');
+      document.getElementById('tab-news').className = viewTabClass(v === 'news');
+      if (v === 'news') { 
+        newsIndex = 0;
+        renderNews(); 
+        showSlide(0);
+        newsElapsed = 0; 
+        startNewsLoop(); 
+      } else {
+        stopNewsLoop();
+      }
+    }
+
+    function getNewsProjects() {
+      const idx = s => { const i = semesterList.indexOf(s); return i === -1 ? 999 : i; };
+      return (projectsData || [])
+        .map((p, i) => ({ p, i }))
+        .filter(x => newsSemester === 'All' || x.p.semester === newsSemester)
+        .sort((a, b) => idx(a.p.semester) - idx(b.p.semester) || a.i - b.i)
+        .map(x => x.p);
+    }
+
+    function renderNews(keep) {
+      if (newsSemester !== 'All' && !semesterList.includes(newsSemester)) newsSemester = 'All';
+      document.getElementById('news-semester').innerHTML = ['All', ...semesterList].map(s =>
+        `<option value="${escapeHTML(s)}" ${s === newsSemester ? 'selected' : ''}>${s === 'All' ? 'All Semesters' : escapeHTML(s)}</option>`).join('');
+
+      newsItems = getNewsProjects();
+      const n = newsItems.length;
       const track = document.getElementById('news-track');
       const dots = document.getElementById('news-dots');
       const thumbs = document.getElementById('news-thumbs');
-      const countLabel = document.getElementById('news-count-label');
+      document.getElementById('news-count-label').innerText = `${n} PROJECT${n === 1 ? '' : 'S'} ON AIR`;
+      if (!keep || newsIndex >= n) newsIndex = 0;
 
-      if (!list || list.length === 0) {
-        track.innerHTML = `<div class="p-12 text-center text-slate-500 font-semibold">No news entries available for ${escapeHTML(newsSemester)}.</div>`;
-        dots.innerHTML = '';
-        thumbs.innerHTML = '';
-        if (countLabel) countLabel.innerText = '';
-        stopNewsTimer();
+      if (n === 0) {
+        track.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center text-center text-slate-500"><i class="fa-solid fa-satellite-dish text-4xl text-sky-400 mb-3 badge-float"></i><p class="text-sm font-semibold">No projects to broadcast yet</p></div>`;
+        dots.innerHTML = ''; thumbs.innerHTML = '';
         return;
       }
 
-      if (newsIndex >= list.length) newsIndex = 0;
-      if (countLabel) countLabel.innerText = `PROJECT ${newsIndex + 1} OF ${list.length}`;
-
-// INSIDE renderNews():
+      const pad = x => String(x).padStart(2, '0');
       track.innerHTML = newsItems.map((p, i) => {
         const fl = (Array.isArray(p.faculty) ? p.faculty : [p.faculty]).map(f => escapeHTML(f)).join(', ');
         const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
@@ -1919,17 +1944,14 @@ ${p.sponsor ? `
             <div class="news-count news-anim" style="--d:0">${pad(i + 1)}<small>/ ${pad(n)}</small></div>
             
             <div class="flex flex-wrap items-center gap-2 news-anim" style="--d:1">
-              <!-- CATEGORY BADGE -->
               <span class="bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow">
                 <i class="fa-solid ${escapeHTML(p.icon || 'fa-gear')} mr-1"></i>${escapeHTML(p.category)}
               </span>
               
-              <!-- SEMESTER BADGE -->
               <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 text-sky-700 border border-sky-200">
                 <i class="fa-solid fa-graduation-cap text-warmorange-500 mr-1"></i>${escapeHTML(p.semester)}
               </span>
 
-              <!-- NEW: INDUSTRY SPONSOR BADGE (ORANGE) -->
               ${p.sponsor ? `
                 <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-gradient-to-r from-warmorange-500 to-warmorange-600 text-white shadow">
                   <i class="fa-solid fa-handshake mr-1"></i>${escapeHTML(p.sponsor)}
@@ -1937,10 +1959,8 @@ ${p.sponsor ? `
               ` : ''}
             </div>
 
-            <!-- TITLE -->
             <h3 class="news-title font-tech text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-3 news-anim" style="--d:2">${escapeHTML(p.title)}</h3>
 
-            <!-- NEW: PRIZE BANNER -->
             ${p.prize ? `
               <div class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg flex items-center gap-2 shadow-sm w-fit news-anim" style="--d:2.5">
                 <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
@@ -1948,7 +1968,6 @@ ${p.sponsor ? `
               </div>
             ` : ''}
 
-            <!-- SUMMARY -->
             <p class="text-sm text-slate-700 mt-3 leading-relaxed line-clamp-3 news-anim" style="--d:3">${escapeHTML(p.summary || 'Capstone mechanical engineering project.')}</p>
 
             <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs news-anim" style="--d:4">
@@ -1969,19 +1988,21 @@ ${p.sponsor ? `
         </div>`;
       }).join('');
 
-      dots.innerHTML = list.map((_, i) => `<button onclick="setNewsIndex(${i})" class="news-dot ${i === newsIndex ? 'active' : ''}"></button>`).join('');
+      dots.innerHTML = newsItems.map((p, i) => `<button class="news-dot" onclick="showSlide(${i})" aria-label="Go to project ${i + 1}"></button>`).join('');
 
-      thumbs.innerHTML = list.map((p, i) => {
-        const active = i === newsIndex ? 'active' : '';
-        const imgSrc = p.image && p.image.trim() !== "" ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
+      thumbs.innerHTML = newsItems.map((p, i) => {
+        const img = p.image && p.image.trim() !== '' ? escapeHTML(p.image) : GENERIC_SDP_IMAGE;
         return `
-          <div onclick="setNewsIndex(${i})" class="news-thumb ${active}">
-            <img src="${imgSrc}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent p-2 flex flex-col justify-end">
-              <span class="text-[10px] font-bold text-white truncate">${escapeHTML(p.title)}</span>
-            </div>
-          </div>`;
+        <button class="news-thumb" onclick="showSlide(${i})" title="${escapeHTML(p.title)}">
+          <img src="${img}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${GENERIC_SDP_IMAGE}';">
+          <span class="absolute inset-x-0 bottom-0 p-2 text-[10px] font-bold text-white bg-gradient-to-t from-sky-950/85 to-transparent text-left truncate">${escapeHTML(p.title)}</span>
+        </button>`;
       }).join('');
+
+      showSlide(newsIndex);
+    }
+
+
 
       startNewsTimer();
     }
